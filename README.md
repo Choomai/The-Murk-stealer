@@ -1,9 +1,9 @@
 <a id ="up"></a>
 ![LOGO](files/pxfulllogo.png)
 
-###ASSWORD STEALER
+                                                                      PASSWORD STEALER
 
-####Stealer written on Phyton, results will be sent to Telegram bot
+                                             Stealer written on Phyton, results will be sent to Telegram bot
 ---
 ### ⛔Disclaimer⛔
 
