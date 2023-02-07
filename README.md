@@ -3,7 +3,7 @@
 
 PASSWORD STEALER
 ---
-Stealer written on Phyton, results will be sent to Telegram bot
+Stealer written on Python, results will be sent to Telegram bot
 ***
 ### ⛔Disclaimer⛔
 
