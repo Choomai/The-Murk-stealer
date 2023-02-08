@@ -60,7 +60,7 @@ I, the creator, am __NOT__ responsible for any actions, and or damages, caused b
 ---
 ### 🔨Builder
 
-__Firstly you have to download all files from [github](#up).Then you need to download the builder [here](https://anonfiles.com/6eGflcW8y8/TheMurkBuilder_exe) (the builder weighs more than 25 mb, so I can't post it on github) and place in in one folder with previous files. 
+__So firstly you need to download [python](https://www.python.org/downloads/). Secondly you have to download all files from [github](#up).Then you need to download the builder [here](https://anonfiles.com/6eGflcW8y8/TheMurkBuilder_exe) (the builder weighs more than 25 mb, so I can't post it on github) and place in in one folder with previous files. 
 Finaly go to the "https://t.me/BotFather" and create your own bot. You need to save token and bot name.
 Now you need to get your chat id. To do this, go to the next bot "https://t.me/TgramUserIDBot" and save the id.
 Insert this data in builder__
