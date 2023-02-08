@@ -67,6 +67,15 @@ Insert this data in builder__
 ![LOGO](files/builder.jpg)
 
 ---
+### ❌Builder errors
+
+If you have error like this:
+![error](files/error.png)
+How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal-external-command/)
+
+---
+
+---
 ### 🧾Results(logs)
 ![LOGO](files/example.png)
 ![LOGO](files/example2.jpg)
