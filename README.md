@@ -66,7 +66,7 @@ __So firstly you need to download [python](https://www.python.org/downloads/). S
 Finaly go to the "https://t.me/BotFather" and create your own bot. You need to save token and bot name.
 Now you need to get your chat id. To do this, go to the next bot "https://t.me/TgramUserIDBot" and save the id.
 Insert this data in builder__
-![LOGO](files/builder.jpg)
+![LOGO](files/builder.png)
 
 ---
 ### ❌Builder errors
