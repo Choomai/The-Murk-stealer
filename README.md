@@ -84,6 +84,6 @@ How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal
 
 ---
 ### 📲Contacts
-##### __Discord: 𝔰𝔦𝔩𝔳𝔢𝔯 𝔰𝔥𝔞𝔡𝔬𝔴#5304__
+__Discord: 𝔰𝔦𝔩𝔳𝔢𝔯 𝔰𝔥𝔞𝔡𝔬𝔴#5304__
 ---
 [go up](#up)
