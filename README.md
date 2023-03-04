@@ -1,6 +1,5 @@
 <a id ="up"></a>
 ![LOGO](files/pxfulllogo.png)
-
 PASSWORD STEALER
 ---
 Stealer written on Python, results will be sent to Telegram bot.
