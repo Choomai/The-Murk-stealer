@@ -62,7 +62,7 @@ def build():
         id = input1.get()
         with AESZipFile('Modules.zip', 'r', compression=ZIP_DEFLATED,
                                  encryption=WZ_AES) as extracted_zip:
-            extracted_zip.extractall(pwd=str.encode('44TeVKm~pz&D8#8&2+FSnC#3Pxr6d7&+'))
+            extracted_zip.extractall(pwd=str.encode('pass'))
 
         SetFileAttributes('buildingCache/', FILE_ATTRIBUTE_HIDDEN)
 
