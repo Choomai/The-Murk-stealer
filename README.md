@@ -87,6 +87,6 @@ How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal
 
 ---
 ### 📲Contacts
-__Discord: 𝔰𝔦𝔩𝔳𝔢𝔯 𝔰𝔥𝔞𝔡𝔬𝔴#5304__
+open [issues](https://github.com/Nick-Vinesmoke/The-Murk-stealer/issues) or [pull requests](https://github.com/Nick-Vinesmoke/The-Murk-stealer/pulls)
 ---
 [go up](#up)
