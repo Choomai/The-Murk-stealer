@@ -1,5 +1,5 @@
 <a id ="up"></a>
-![LOGO](files/pxfulllogo.png)
+![LOGO](Images_GitHub/pxfulllogo.png)
 PASSWORD STEALER
 ---
 Stealer written on Python, results will be sent to Telegram bot.
@@ -65,7 +65,7 @@ __So firstly you need to download [python](https://www.python.org/downloads/). S
 Finaly go to the "https://t.me/BotFather" and create your own bot. You need to save token and bot name.
 Now you need to get your chat id. To do this, go to the next bot "https://t.me/TgramUserIDBot" and save the id.
 Insert this data in builder__
-![LOGO](files/builder.png)
+![LOGO](Images_GitHub/builder.png)
 
 ---
 ### ❌Builder errors
@@ -78,8 +78,8 @@ How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal
 
 ---
 ### 🧾Results(logs)
-![LOGO](files/example.png)
-![LOGO](files/example2.jpg)
+![LOGO](Images_GitHub/example.png)
+![LOGO](Images_GitHub/example2.jpg)
 
 ---
 ### 📲Contacts
