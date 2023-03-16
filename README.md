@@ -82,6 +82,10 @@ How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal
 ![LOGO](Images_GitHub/example2.jpg)
 
 ---
+### 💰 Donate
+   <a href="https://www.donationalerts.com/r/nick_vinesmoke"><img src="https://img.shields.io/badge/Donationalerts-F37623?style=for-the-badge&logo=Cash%20App&logoColor=white"></a>
+
+---
 ### 📲Contacts
 __Discord: 𝔰𝔦𝔩𝔳𝔢𝔯 𝔰𝔥𝔞𝔡𝔬𝔴#5304__
 ---
