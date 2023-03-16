@@ -72,7 +72,7 @@ Insert this data in builder__
 
 If you have error like this:
 
-![error](files/error.png)
+![error](Images_GitHub/error.png)
 
 How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal-external-command/)
 
