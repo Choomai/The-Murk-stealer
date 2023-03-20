@@ -17,6 +17,11 @@ Stealer written on Python, results will be sent to Telegram bot.
 I, the creator, am __NOT__ responsible for any actions, and or damages, caused by this software. You __BEAR__ the full responsibility of your actions and acknowledge that this software was created for educational purposes only. This software's main purpose is __NOT__ to be used maliciously, or on any system that you do not own, or have the right to use. __By using this software, you automatically agree to the above.__
 
 ---
+### ❗❗Request❗❗
+
+__Don't upload builded stealer to Virustotal__. The more often you upload it, the more and faster antiviruses begin to recognize its signature.
+
+---
 ### ❕❕Data grubed❕❕
 * ✅System info
     * ⌚Time
