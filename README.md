@@ -212,5 +212,10 @@ How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal
 ---
 ### 📲Contacts
 open [issues](https://github.com/Nick-Vinesmoke/The-Murk-stealer/issues) or [pull requests](https://github.com/Nick-Vinesmoke/The-Murk-stealer/pulls)
+
+or 
+
+<a href="https://github.com/Nick-Vinesmoke"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"></a>
+   <a href="https://discordapp.com/users/798503509522645012/"><img src="https://img.shields.io/badge/Discord-003E54?style=for-the-badge&logo=Discord&logoColor=white"></a>
 ---
 [go up](#up)
