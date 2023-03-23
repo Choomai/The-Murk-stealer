@@ -211,7 +211,7 @@ How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal
 
 ---
 ### 📲Contacts
-open [issues](https://github.com/Nick-Vinesmoke/The-Murk-stealer/issues) or [pull requests](https://github.com/Nick-Vinesmoke/The-Murk-stealer/pulls)
+open [issues](https://github.com/Nick-Vinesmoke/IP-logger/issues) or [pull requests](https://github.com/Nick-Vinesmoke/IP-logger/pulls)
 
 or 
 
