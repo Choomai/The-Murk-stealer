@@ -1,4 +1,13 @@
 --------------------------------------
+24.03.2023
+v5.0.0
+↓changes↓
+◦ fixed some bugs
+◦ improved send security
+◦ changed system of grabbing logs
+◦ added new steal data
+◦ improved antivirus bypass
+--------------------------------------
 19.03.2023
 v4.5.0
 ↓changes↓
