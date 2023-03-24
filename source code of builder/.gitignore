@@ -18,7 +18,9 @@ lib/
 lib64/
 parts/
 sdist/
+old/
 var/
+buildingCache/
 wheels/
 pip-wheel-metadata/
 share/python-wheels/
