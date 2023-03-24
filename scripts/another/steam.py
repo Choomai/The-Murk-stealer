@@ -13,6 +13,7 @@ import os
 import shutil
 
 
+
 path2 = r'C:\Program Files\Steam'
 path02 = r'C:\Program Files\Steam\config'
 path3 = r'C:\Program Files (x86)\Steam'

