@@ -1,4 +1,4 @@
-nuitka --windows-disable-console --follow-imports --windows-icon-from-ico=icon.ico TheMurkBuilder.py
+nuitka --windows-disable-console --follow-imports --onefile --windows-icon-from-ico=icon.ico TheMurkBuilder.py
 
 rmdir /s /q build
 
