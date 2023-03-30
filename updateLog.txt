@@ -3,6 +3,7 @@
 v5.0.1
 ↓changes↓
 ◦ improved protection against decompilation
+◦ Reduced the size of the executable file
 --------------------------------------
 24.03.2023
 v5.0.0
