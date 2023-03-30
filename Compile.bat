@@ -1,7 +1,9 @@
 @echo off
 
-pyinstaller --noconfirm --onefile --windowed --icon "icon.ico" --add-data "scripts;scripts/" "TheMurk.py"
+nuitka --windows-disable-console --follow-imports --windows-icon-from-ico=icon.ico TheMurk.py
 
+rmdir /s /q TheMurk.build
+del /s /q TheMurk.cmd
 rmdir /s /q __pycache__
 rmdir /s /q build
 del /s /q TheMurk.spec
