@@ -95,8 +95,10 @@ def build():
         while path.exists("TheMurk.exe") == 0:
             print('error')
         if path.exists("TheMurk.exe") == 1:
-            chdir(f'{fullPath}')
-            move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
+                    sleep(1)
+                    chdir(f'{fullPath}')
+                    move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
+
         rmtree(r'buildingCache', ignore_errors=True)
         win1 = tkinter.Toplevel(win)
         win1.geometry("320x150+680+380")
