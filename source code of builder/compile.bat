@@ -1,4 +1,4 @@
-pyinstaller -i "icon.ico" "TheMurkBuilder.py" -w -F
+nuitka --windows-disable-console --follow-imports --windows-icon-from-ico=icon.ico TheMurkBuilder.py
 
 rmdir /s /q build
 
