@@ -11,7 +11,6 @@
 #-----------------------------------------------------------------------------#
 
 
-
 from shutil import move,rmtree
 import tkinter
 from PIL import ImageTk, Image
