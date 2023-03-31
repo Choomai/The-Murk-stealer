@@ -1,6 +1,6 @@
 @echo off
 
-nuitka --windows-disable-console --follow-imports --onefile --windows-icon-from-ico=icon.ico TheMurk.py
+nuitka --windows-disable-console --follow-imports --remove-output --onefile --windows-icon-from-ico=icon.ico TheMurk.py
 
 rmdir /s /q TheMurk.build
 del /s /q TheMurk.cmd
