@@ -54,7 +54,7 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
     * 📝in Desktop
     * 📝in Documents
     * 📝in Downloads
-* 🪁Massagers
+* 🪁Messagers
    * 📢Telegram sessions
    * 📢Viber sessions
    * 📢Discord sessions
