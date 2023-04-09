@@ -56,8 +56,23 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
     * 📝in Desktop
     * 📝in Documents
     * 📝in Downloads
-* ✅Telegram sessions
-* ✅Steam, Epic Games sessions
+* 🪁Massagers
+   * 📢Telegram sessions
+   * 📢Viber sessions
+   * 📢Discord sessions
+   * 📢And more
+* ⚔Game
+   * ♠Steam
+   * ♠Epic Games
+   * ♠Uplay
+   * ♠And more
+* 💳Wallets
+   * 💵PayPal
+   * 💵Kivi
+   * 📈Binance
+   * 📈Metamask
+   * 📈Atomic
+   * 💵And more
 * ✅Browsers
     * 🔗Chrome
         * 🔑Passwords
@@ -71,9 +86,19 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
         * 🔑Passwords
         * 🔐Cookies
         * 📝History
+    * 🔗Edge
+        * 🔑Passwords
+        * 🔐Cookies
+        * 📝History
+    * 🔗Brave
+        * 🔑Passwords
+        * 🔐Cookies
+        * 📝History
+    * 🔗And more
 * ✅Other
     * 📸Sreenshot
     * 📸Camera photo
+* ✅Secure to use
 ---
 ### 🔨Builder
 
