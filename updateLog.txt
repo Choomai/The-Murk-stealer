@@ -1,4 +1,15 @@
 --------------------------------------
+09.04.2023
+v6.0.0
+↓changes↓
+◦ Huge update
+◦ Added more browsers
+◦ Added more messages sessions
+◦ Added more game sessions
+◦ Added more wallets
+◦ Sending logs to discord
+◦ More secure sending
+--------------------------------------
 30.03.2023
 v5.0.1
 ↓changes↓
