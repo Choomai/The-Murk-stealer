@@ -1,5 +1,6 @@
 pip install --upgrade pip
 pip install pyinstaller
+pip install nuitka
 pip install requests
 pip install pywin32
 pip install opencv-python
@@ -11,3 +12,4 @@ pip install tabulate
 pip install pycryptodome
 pip install configparser
 pip install ffpass
+pip install discord-webhook
