@@ -1,11 +1,16 @@
 pip install --upgrade pip
-pip install pyinstaller
+pip install pytest-shutil
 pip install nuitka
+pip install pyinstaller
 pip install requests
 pip install pywin32
 pip install opencv-python
 pip install Pillow
-pip install pyTelegramBotAPI
+pip install pyzipper
+pip install anonfile
+pip install subprocess.run
+pip install uuid
+pip install typing
 pip install psutil
 pip install GPUtil
 pip install tabulate
