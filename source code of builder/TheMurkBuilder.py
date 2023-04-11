@@ -95,7 +95,7 @@ def build():
         while path.exists("TheMurk.exe") == 0:
             print('error')
         if path.exists("TheMurk.exe") == 1:
-                    sleep(5)
+                    sleep(30)
                     chdir(f'{fullPath}')
                     move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
 
