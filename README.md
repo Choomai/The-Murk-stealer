@@ -124,6 +124,7 @@ How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal
 ---
 ### 💰 Donate
    <a href="https://www.donationalerts.com/r/nick_vinesmoke"><img src="https://img.shields.io/badge/Donationalerts-F37623?style=for-the-badge&logo=Cash%20App&logoColor=white"></a>
+   <a href="https://patreon.com/NickVinesmoke"><img src="https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white"></a>
 
 ---
 ### 📲Contacts
