@@ -12,6 +12,7 @@ subprocess.run
 uuid
 typing
 psutil
+xmpppy
 GPUtil
 tabulate
 pycryptodome
