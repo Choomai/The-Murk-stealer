@@ -106,7 +106,10 @@ __So firstly you need to download [python](https://www.python.org/downloads/). T
 After that, you need to create your Discord server and webhook there. [How to do it](https://hookdeck.com/webhooks/platforms/how-to-get-started-with-discord-webhooks#conclusion).
 Finally, insert the name and webhook link in the builder. And wait, secure building will take about 2 minutes.__
 
-![LOGO](Images_GitHub/builder.png)
+### 📨For Telegram
+__So firstly, go to the [@BotFather](https://t.me/BotFather) bot and create your own bot. Then, you need to save token and bot name. 
+Now you need to get your chat id. To do this, go to the next bot [@chatid_echo_bot](https://t.me/chatid_echo_bot) and save the id.  
+Insert this data in builder console. And wait, secure building will take about 2 minutes.
 
 ---
 ### ❌Builder errors
