@@ -1,4 +1,12 @@
 --------------------------------------
+18.04.2023
+v7.0.0
+↓changes↓
+◦ fixed bugs
+◦ added file grubber
+◦ now you can choose between Discort, Telegram and XMPP
+◦  re-made builder
+--------------------------------------
 14.04.2023
 v6.0.4
 ↓changes↓
