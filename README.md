@@ -96,6 +96,7 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
 * ✅Other
     * 📸Sreenshot
     * 📸Camera photo
+* ✅File grabber
 * ✅Secure to use
 ---
 ### 🔨Builder
