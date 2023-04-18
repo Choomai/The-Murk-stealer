@@ -3,7 +3,7 @@
 v7.0.0
 ↓changes↓
 ◦ fixed bugs
-◦ added file grubber
+◦ added file grabber
 ◦ now you can choose between Discort, Telegram and XMPP
 ◦  re-made builder
 --------------------------------------
