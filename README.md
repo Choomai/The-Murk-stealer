@@ -118,9 +118,8 @@ How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal
 
 ---
 ### 🧾Results(logs)
-![LOGO](Images_GitHub/example.png)
 
-![LOGO](Images_GitHub/example2.png)
+![LOGO](Images/example.png)
 
 ---
 ### 💰 Donate
