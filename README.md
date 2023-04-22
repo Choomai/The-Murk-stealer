@@ -107,7 +107,7 @@ After that, you need to create your Discord server and webhook there. [How to do
 Finally, insert the name and webhook link in the builder. And wait, secure building will take about 2 minutes.__
 
 ### 📨For Telegram
-__So firstly, go to the [@BotFather](https://t.me/BotFather) bot and create your own bot. Then, you need to save token and bot name. 
+So firstly, go to the [@BotFather](https://t.me/BotFather) bot and create your own bot. Then, you need to save token and bot name. 
 Now you need to get your chat id. To do this, go to the next bot [@chatid_echo_bot](https://t.me/chatid_echo_bot) and save the id.  
 Insert this data in builder console. And wait, secure building will take about 2 minutes.
 
