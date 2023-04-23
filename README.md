@@ -111,6 +111,9 @@ So firstly, go to the [@BotFather](https://t.me/BotFather) bot and create your o
 Now you need to get your chat id. To do this, go to the next bot [@chatid_echo_bot](https://t.me/chatid_echo_bot) and save the id.  
 Insert this data in builder console. And wait, secure building will take about 2 minutes.
 
+### 📡For XMPP (Advanced users only):
+Goto https://xmpp.org/getting-started/ and go through the process, once completed you need to make sure messages are being archived and saved to disk, find that option in your client’s settings. After that input your XMPP login into the stealer and either create a group chat or use your own Jabber ID as the "jabberreceiver" variable. As for group chats you need to find the following "groupchatname@conference.xmppserver.com". 
+
 ---
 ### ❌Builder errors
 
