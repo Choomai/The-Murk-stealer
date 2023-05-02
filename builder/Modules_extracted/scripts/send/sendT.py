@@ -1,7 +1,6 @@
 Token = ""
 ID = ""
 
-from tokenize import Token
 import requests
 from anonfile import AnonFile
 import os
