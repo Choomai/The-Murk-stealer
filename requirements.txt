@@ -1,22 +1,13 @@
-##need update##
-pip install --upgrade pip
-pip install pytest-shutil
-pip install nuitka
-pip install pyinstaller
-pip install requests
-pip install pywin32
-pip install opencv-python
-pip install Pillow
-pip install pyzipper
-pip install anonfile
-pip install subprocess.run
-pip install uuid
-pip install typing
-pip install psutil
-pip install GPUtil
-pip install tabulate
-pip install pycryptodome
-pip install configparser
-pip install ffpass
-pip install discord-webhook
-pip install browser-cookie3
+anonfile==0.2.7
+browser_cookie3==0.18.0
+discord_webhook==1.1.0
+GPUtil==1.4.0
+GPUtil==1.4.0
+Pillow==9.4.0
+Pillow==9.5.0
+psutil==5.9.4
+pycryptodome==3.17
+pywin32==305
+pyzipper==0.3.6
+Requests==2.30.0
+xmpppy==0.7.1

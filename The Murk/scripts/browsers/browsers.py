@@ -19,14 +19,10 @@ import json
 import os
 import shutil
 import sqlite3
-from pathlib import Path
-from zipfile import ZipFile
 import configparser
 import subprocess
-import ffpass
 import win32crypt
 from datetime import datetime, timedelta
-
 from Crypto.Cipher import AES
 from win32crypt import CryptUnprotectData
 
