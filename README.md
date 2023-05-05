@@ -135,6 +135,10 @@ If you have error like this:
 
 How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal-external-command/)
 
+![error](Images/error1.png)
+
+input in cmd `pip uninstall typing` and than input `y`
+
 ---
 ### 🧾Results(logs)
 Example of message in Discord

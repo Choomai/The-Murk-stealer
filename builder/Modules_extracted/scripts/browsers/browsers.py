@@ -23,7 +23,6 @@ import configparser
 import subprocess
 import win32crypt
 from datetime import datetime, timedelta
-
 from Crypto.Cipher import AES
 from win32crypt import CryptUnprotectData
 
