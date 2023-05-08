@@ -1,4 +1,12 @@
 --------------------------------------
+8.05.2023
+v8.1.0
+↓changes↓
+◦ fixed a big heap of fucking bugs
+◦ added more options
+◦ added pyinstaller
+◦ added file version
+--------------------------------------
 3.05.2023
 v8.0.1
 ↓changes↓

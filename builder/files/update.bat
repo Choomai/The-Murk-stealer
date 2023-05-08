@@ -1,6 +1,7 @@
 pip install --upgrade pip
 pip install pytest-shutil
 pip install nuitka
+pip install pyinstaller
 pip install pywin32
 pip install psutil
 pip install GPUtil
@@ -13,6 +14,5 @@ pip install discord-webhook
 pip install anonfile
 pip install xmpppy
 pip install uuid
-pip install typing
 pip install pyzipper
 pip install browser_cookie3

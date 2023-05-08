@@ -13,8 +13,6 @@
 
 ⭐Please, star this repo if it was helpful⭐
 
-❗I'm so sorry about the bugs, now It's on debugging, pls tell me if you found some❗
-
 ***
 ### ⛔Disclaimer⛔
 
@@ -167,6 +165,13 @@ If you have error like this:
 ![error](Images/error.png)
 
 How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal-external-command/)
+
+If you have error like this:
+
+![error](Images/error1.png)
+
+input in cmd `pip uninstall typing` and than input `y`
+
 
 ---
 ### 🧾Results(logs)

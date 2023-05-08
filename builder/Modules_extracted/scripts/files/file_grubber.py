@@ -87,12 +87,30 @@ def Grab(data):
             """
             get all paths to files
             """
-            filesTXT_С = list(str(_) for _ in pathlib.Path(fileDir).glob(fileExt))
-            filesDOCX_С = list(str(_) for _ in pathlib.Path(fileDir).glob(fileExt1))
-            filesTXT_D = list(str(_) for _ in pathlib.Path(fileDir1).glob(fileExt))
-            filesDOCX_D = list(str(_) for _ in pathlib.Path(fileDir1).glob(fileExt1))
-            filesTXT_E = list(str(_) for _ in pathlib.Path(fileDir2).glob(fileExt))
-            filesDOCX_E = list(str(_) for _ in pathlib.Path(fileDir2).glob(fileExt1))
+            try:
+                filesTXT_С = list(str(_) for _ in pathlib.Path(fileDir).glob(fileExt))
+            except Exception as e:
+                print(e)
+            try:
+                filesDOCX_С = list(str(_) for _ in pathlib.Path(fileDir).glob(fileExt1))
+            except Exception as e:
+                print(e)
+            try:
+                filesTXT_D = list(str(_) for _ in pathlib.Path(fileDir1).glob(fileExt))
+            except Exception as e:
+                print(e)
+            try:
+                filesDOCX_D = list(str(_) for _ in pathlib.Path(fileDir1).glob(fileExt1))
+            except Exception as e:
+                print(e)
+            try:
+                filesTXT_E = list(str(_) for _ in pathlib.Path(fileDir2).glob(fileExt))
+            except Exception as e:
+                print(e)
+            try:
+                filesDOCX_E = list(str(_) for _ in pathlib.Path(fileDir2).glob(fileExt1))
+            except Exception as e:
+                print(e)
             """
             copy files
             """

