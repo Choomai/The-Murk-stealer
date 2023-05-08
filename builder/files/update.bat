@@ -7,6 +7,7 @@ pip install psutil
 pip install ffpass
 pip install GPUtil
 pip install subprocess.run
+pip install py-cpuinfo
 pip install pycrypto
 pip install requests
 pip install pycryptodome
