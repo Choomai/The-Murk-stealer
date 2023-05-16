@@ -29,16 +29,16 @@ VSVersionInfo(
       [
       StringTable(
         '000004b0',
-        [StringStruct('Comments', 'https://github.com/Nick-Vinesmoke/The-Murk-stealer'),
-        StringStruct('LegalCopyright', 'Copyright \xA9 Nick Vinesmoke  2023'),
-        StringStruct('CompanyName', ''),
-        StringStruct('FileDescription', 'The Murk'),
+        [StringStruct('Comments', ' Hail to Thee in the Victor\'s Crown'),
+        StringStruct('LegalCopyright', 'Copyright \xA9 Otto von Bismarck  1871'),
+        StringStruct('CompanyName', 'German Empire'),
+        StringStruct('FileDescription', 'God with us'),
         StringStruct('FileVersion', '8.1.0.0'),
         StringStruct('ProductVersion', '8.1.0.0'),
         StringStruct('InternalName', 'TheMurk.exe'),
         StringStruct('LegalTrademarks', ''),
         StringStruct('OriginalFilename', 'TheMurk.exe'),
-        StringStruct('ProductName', 'Murk'),
+        StringStruct('ProductName', 'German Empire'),
         StringStruct('BuildID', '070523803')])
       ]), 
     VarFileInfo([VarStruct('Translation', [0, 1200])])
