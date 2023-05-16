@@ -4,6 +4,7 @@ pip install nuitka
 pip install pyinstaller
 pip install pywin32
 pip install psutil
+pip install pyarmor
 pip install ffpass
 pip install GPUtil
 pip install subprocess.run

