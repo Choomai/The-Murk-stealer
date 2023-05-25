@@ -10,4 +10,3 @@ pywin32==305
 pyzipper==0.3.6
 Requests==2.30.0
 xmpppy==0.7.1
-nuitka==1.5.8
