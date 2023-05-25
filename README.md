@@ -7,7 +7,6 @@
 <img src="https://img.shields.io/badge/The%20Murk-v8.2.0-blue?style=for-the-badge&logo=&logoColor=whit">
 <img src="https://img.shields.io/badge/platform-windows-989898?style=for-the-badge&logo=&logoColor=whit">
 
-
 🔐open source turbo🚀 stealer written on Python, all logs will be sent using discord webhooks, telegram bot or XMPP bot.
 [Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v8.2.0)
 
