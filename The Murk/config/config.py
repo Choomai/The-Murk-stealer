@@ -20,3 +20,4 @@ class Config:
     dataForMassageOther =[]
     dataForMassageWallets =[]
     dataForMassageFiles = []
+    dataForMassageVPN = []

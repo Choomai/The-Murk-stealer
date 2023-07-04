@@ -66,6 +66,9 @@ def Messagers() -> None:
     config.Config.dataForMassageOther = discord.Discord(config.Config.dataForMassageOther)
     config.Config.dataForMassageOther = whatsapp.WhatsApp(config.Config.dataForMassageOther)
 
+def VPN() -> None:
+    pass
+
 def System() -> None:
     config.Config.dataForMassageSYS = system_info.SystemInfo(config.Config.dataForMassageSYS)
 
@@ -91,6 +94,7 @@ def Main()-> None:
     Browsers()
     Games()
     Messagers()
+    VPN()
     System()
     Other()
     End()

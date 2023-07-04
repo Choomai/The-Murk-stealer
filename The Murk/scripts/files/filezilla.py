@@ -18,7 +18,7 @@ def getFilezillaDir():
     system = os.name
     home_dir = os.path.expanduser("~")
 
-    if system == "nt":  # Windows
+    if system == "nt":  
         return os.path.join(home_dir, "AppData", "Roaming", "FileZilla")
 
 
