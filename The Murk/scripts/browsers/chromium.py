@@ -56,7 +56,6 @@ names = [
 
 class Browsers:
     def __init__(self):
-        listData.append("\n\n🌐Browsers")
         Chromium()
     def Return():
         return listData
