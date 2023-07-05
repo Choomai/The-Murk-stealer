@@ -19,6 +19,7 @@ from ctypes import *
 import os, sys
 
 def AvByPass():
+    print("abp")
     appdata = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
     if os.path.isfile(appdata+'\\.system'):
         print('Exited')

