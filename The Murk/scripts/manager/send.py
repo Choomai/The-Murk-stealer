@@ -13,7 +13,7 @@ from requests import post, get
 from os import remove
 
 
-def Send(type,np,data,dataB,dataO,dataW,dataF,discordData,TelegramData,xmppData):
+def Send(type,np,data,dataB,dataO,dataW,dataF,dataV,discordData,TelegramData,xmppData):
 	if type == 2:
 		from xmpp import protocol,Client
 	if type == 0:
@@ -70,6 +70,12 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,discordData,TelegramData,xmppData)
 		try:
 			if dataO:
 				for text in dataO:
+					message+= text
+		except Exception as e:
+			print(e)
+		try:
+			if dataV:
+				for text in dataV:
 					message+= text
 		except Exception as e:
 			print(e)

