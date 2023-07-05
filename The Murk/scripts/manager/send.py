@@ -63,7 +63,6 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,dataV,discordData,TelegramData,xmp
 			if dataB:
 				for text in dataB:
 					message+= text
-			message+="\n\n🎰Other"
 
 		except Exception as e:
 			print(e)
