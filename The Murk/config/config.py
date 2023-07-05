@@ -1,5 +1,5 @@
 class Config:
-    enableFileGrubber = False #enable file grabber
+    enableFileGrabber = False #enable file grabber
     oneStart = False #enable this if you want logs to come only from unique computers
     avKiller = False #enable antiviruses killer
     selfDestruct = False #deletes itself after stealing

