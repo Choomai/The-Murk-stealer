@@ -1,6 +1,6 @@
 @echo off
 
-nuitka --windows-disable-console --follow-imports --remove-output --product-name="Murk" --file-version="8.1.0.0" --product-version="8.1.0.0" --onefile --windows-icon-from-ico=icon.ico TheMurk.py
+nuitka --windows-disable-console --follow-imports --remove-output --product-name="Murk" --file-version="9.0.0.0" --product-version="9.0.0.0" --onefile --windows-icon-from-ico=icon.ico TheMurk.py
 
 rmdir /s /q TheMurk.build
 del /s /q TheMurk.cmd
