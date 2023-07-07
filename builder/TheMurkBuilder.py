@@ -105,7 +105,7 @@ class Builder():
 
         self.builder = ""
         while self.builder != "Pyinstaller" and self.builder != "Nuitka" and self.builder != "Pyarmor":
-            print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Nuitka/Pyinstaller/Pyarmor)"))
+            print("\033[36m\033[4m{}\033[0m".format("(?) Choose building type(Nuitka/Pyinstaller/Pyarmor)"))
             self.builder = input("\033[33m\033[1m{}\033[0m".format(">>> "))
 
         self.libs = ""
@@ -185,13 +185,16 @@ class Builder():
             os.system('start CompilePyinstaller.bat')
         if self.builder == "Pyarmor":
             os.system('start CompilePyarmor.bat')
-        while os.path.exists("TheMurk.exe") == 0:
+        while os.path.exists("TheMurk.exe") == 0 or os.path.exists("dist/TheMurk.exe")== 0:
             pass
-        if os.path.exists("TheMurk.exe") == 1:
+        if os.path.exists("TheMurk.exe") == 1 or os.path.exists("dist/TheMurk.exe")== 1:
             time.sleep(180)
             os.chdir(f'{fullPath}')
-            shutil.move(temp + os.sep + "buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
-        shutil.rmtree(r'buildingCache', ignore_errors=True)
+            try:
+                shutil.move(temp + os.sep + "buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
+            except:
+                shutil.move(temp + os.sep + "buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/dist/TheMurk.exe", fullPath)
+        shutil.rmtree(temp + os.sep + 'buildingCache/', ignore_errors=True)
         print("\033[33m{}\033[0m".format("(i) done"))   
         input("\033[33m{}\033[0m".format("(i) exit on enter..."))
 
