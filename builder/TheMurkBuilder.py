@@ -178,17 +178,18 @@ class Builder():
         fullPath = os.path.abspath('Modules.zip')
         fullPath = fullPath.replace('\\Modules.zip', '')
 
-        os.chdir(temp + os.sep + '/buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/')
+        os.chdir(temp + os.sep + 'buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/')
         if self.builder == "Nuitka":
             os.system('start CompileNuitka.bat')
         if self.builder == "Pyinstaller":
             os.system('start CompilePyinstaller.bat')
         if self.builder == "Pyarmor":
             os.system('start CompilePyarmor.bat')
-        while os.path.exists("TheMurk.exe") == 0 or os.path.exists("dist/TheMurk.exe")== 0:
-            pass
-        if os.path.exists("TheMurk.exe") == 1 or os.path.exists("dist/TheMurk.exe")== 1:
-            time.sleep(180)
+        while not os.path.exists("TheMurk.exe") and not os.path.exists("dist/TheMurk.exe"):
+           pass
+
+        if os.path.exists("TheMurk.exe") or os.path.exists("dist/TheMurk.exe"):
+            time.sleep(60)
             os.chdir(f'{fullPath}')
             try:
                 shutil.move(temp + os.sep + "buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
