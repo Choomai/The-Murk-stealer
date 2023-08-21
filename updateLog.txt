@@ -1,4 +1,11 @@
 --------------------------------------
+21.07.2023
+v9.1.0
+↓changes↓
+◦ fixed bugs
+◦ added more data for discord
+◦ changed anonfiles.com to gofile.io
+--------------------------------------
 12.07.2023
 v9.0.5
 ↓changes↓
