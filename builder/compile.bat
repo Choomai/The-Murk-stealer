@@ -1,4 +1,4 @@
-nuitka --windows-disable-console --onefile --follow-imports --remove-output --windows-icon-from-ico=icon.ico TheMurkBuilder.py
+pyarmor-7 pack -e "--noconfirm --onefile --windowed --icon \"icon.ico\"" TheMurkBuilder.py
 
 rmdir /s /q build
 
