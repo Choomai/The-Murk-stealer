@@ -3,6 +3,7 @@
 v9.1.5
 ↓changes↓
 ◦ fixed bugs
+◦ reduced the size of builder
 --------------------------------------
 21.07.2023
 v9.1.0
