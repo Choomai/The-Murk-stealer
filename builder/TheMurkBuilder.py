@@ -203,7 +203,7 @@ class Builder():
             os.chdir(f'{fullPath}')
             os.makedirs("built")
             try:
-                shutil.move(temp + os.sep + "buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
+                shutil.move(temp + os.sep + "buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath+"/built")
             except:
                 shutil.move(temp + os.sep + "buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/dist/TheMurk.exe", fullPath+"/built")
 
