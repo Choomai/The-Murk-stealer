@@ -148,7 +148,7 @@ class Builder():
         with open(temp + os.sep + 'buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/config/config.py', 'r') as f:
             data = f.read()
 
-        print("\033[33m{}\033[0m".format("\n\n(i) Changing vars..."))
+        print("\033[33m{}\033[0m".format("(i) Changing vars..."))
 
         if self.fileGrab == "Y" or self.fileGrab == "y":
             data = data.replace('enableFileGrabber = False #enable file grabber', 'enableFileGrabber = True')
@@ -186,20 +186,20 @@ class Builder():
         os.chdir(temp + os.sep + 'buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/')
         print("\033[33m{}\033[0m".format("(i) Compiling..."))
         if self.builder == "Nuitka":
-            self.time = 120
+            self.time = 180
             os.system('start CompileNuitka.bat')
         if self.builder == "Pyinstaller":
             self.time = 5
             os.system('start CompilePyinstaller.bat')
         if self.builder == "Pyarmor":
-            self.time = 30
+            self.time = 5
             os.system('start CompilePyarmor.bat')
         while not os.path.exists("TheMurk.exe") and not os.path.exists("dist/TheMurk.exe"):
            pass
 
         if os.path.exists("TheMurk.exe") or os.path.exists("dist/TheMurk.exe"):
             print("\033[33m{}\033[0m".format("(i) Ending..."))
-            time.sleep(60)
+            time.sleep(self.time)
             os.chdir(f'{fullPath}')
             try:
                 shutil.move(temp + os.sep + "buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
