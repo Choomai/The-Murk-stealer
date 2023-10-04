@@ -33,13 +33,13 @@ VSVersionInfo(
         StringStruct('LegalCopyright', 'Copyright \xA9 Otto von Bismarck  1871'),
         StringStruct('CompanyName', 'German Empire'),
         StringStruct('FileDescription', 'God with us'),
-        StringStruct('FileVersion', '9.2.0.0'),
-        StringStruct('ProductVersion', '9.2.0.0'),
+        StringStruct('FileVersion', '9.2.7.0'),
+        StringStruct('ProductVersion', '9.2.7.0'),
         StringStruct('InternalName', 'TheMurk.exe'),
         StringStruct('LegalTrademarks', ''),
         StringStruct('OriginalFilename', 'TheMurk.exe'),
         StringStruct('ProductName', 'German Empire'),
-        StringStruct('BuildID', '092920232328')])
+        StringStruct('BuildID', '04292023927')])
       ]), 
     VarFileInfo([VarStruct('Translation', [0, 1200])])
   ]
