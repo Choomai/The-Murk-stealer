@@ -1,4 +1,12 @@
 --------------------------------------
+09.04.2023
+v9.2.5
+↓changes↓
+◦ fixed bugs
+◦ fixed builder
+◦ incompatibility error fixed
+◦ bad internet connection fixed
+--------------------------------------
 29.09.2023
 v9.2.0
 ↓changes↓
