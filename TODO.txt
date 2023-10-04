@@ -1,3 +1,2 @@
 ---------------- Todo list ----------------
 ~ make new builder
-~ save the build file to the folder "built"
