@@ -10,6 +10,7 @@ class TheMurk:
     def __init__(self) -> None:
         self.MainVars()
         self.Progress()
+        self.Browsers()
     
     def MainVars(self):
         self.name = ''

