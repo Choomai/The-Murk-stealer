@@ -38,6 +38,5 @@ class TheMurk:
             TxtFiles()
     
     def Browsers(self):
-        chromium.Browsers()
-        Config.msgBrowsers = chromium.Browsers.Return()
-        Config.msgBrowsers = geckodriver.GeckoDriver(Config.msgBrowsers)
+        config.msgBrowsers = Chromium()
+        config.msgBrowsers = GeckoDriver(config.msgBrowsers)

