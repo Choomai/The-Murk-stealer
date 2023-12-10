@@ -40,3 +40,13 @@ class TheMurk:
     def Browsers(self):
         config.msgBrowsers = Chromium()
         config.msgBrowsers = GeckoDriver(config.msgBrowsers)
+
+
+''' def Games():
+        config.msgOther.append("\n\n**🕹Games🕹**")
+        config.msgOther = epicGames.Epic(config.msgOther)
+        config.msgOther = Uplay.Ubisoft(config.msgOther)
+        config.msgOther = Minecraft.Minecraft(config.msgOther)
+        config.msgOther = roblox.roblox(config.msgOther)
+        config.msgOther = steam.Steam(config.msgOther)
+        config.msgOther =BattleNET.BattleNet(config.msgOther)'''

