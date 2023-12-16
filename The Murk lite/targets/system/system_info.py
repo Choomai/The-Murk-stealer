@@ -82,7 +82,7 @@ def get_size(bytes, suffix="B"):
             return f"{bytes:.2f} {unit}{suffix}"
         bytes /= factor
 
-def SystemInfo(msgdata):
+def SystemInfo():
     Log("===========System===========")
 
     uname = platform.uname()

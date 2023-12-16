@@ -29,7 +29,7 @@ def upload_file_to_gofile(file_path):
 		print(e)
 		return None
 
-def Send(type,np,data,dataB,dataO,dataW,dataF,dataV,discordData,TelegramData,xmppData):
+def Send(sendData, msgInfo):
 	if type == 2:
 		from xmpp import protocol,Client
 	if type == 0:

