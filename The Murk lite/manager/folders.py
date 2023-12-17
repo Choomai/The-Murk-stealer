@@ -31,10 +31,10 @@ def Folders(fileGrab):
         pass
     try:
         makedirs(rf'{pathf}\system\sysFiles\winDef')
-        f = open(rf'{pathf}\system\sysFiles\winDef\log20742384.txt', 'w', encoding='utf-8')
-        f.close()
-        print(f"path to error_log: {pathf}\system\sysFiles\winDef\log20742384.txt")
     except:
         pass
+    f = open(rf'{pathf}\system\sysFiles\winDef\log20742384.txt', 'w', encoding='utf-8')
+    f.close()
+    print(f"path to error_log: {pathf}\system\sysFiles\winDef\log20742384.txt")
 
 

