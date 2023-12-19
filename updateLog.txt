@@ -1,4 +1,20 @@
 --------------------------------------
+12/19/2023
+v9.3.0
+↓changes↓
+◦ fixed a big heap of bugs
+◦ reduced size
+◦ improved performance
+◦ improved code readability
+◦ changed the sending methods
+◦ changed uploading a file method
+◦ changed the method of taking tokens
+◦ most of the code has been completely rewritten
+◦ complete change of basic functions
+◦ improved detection protection
+◦ improved tamper resistance
+◦ and a lot of small changes and fixes
+--------------------------------------
 09.04.2023
 v9.2.7
 ↓changes↓
