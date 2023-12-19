@@ -1,2 +1,2 @@
 ---------------- Todo list ----------------
-~ fully re-make
+~ make builder for new ver

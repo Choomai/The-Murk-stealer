@@ -1,1 +1,0 @@
-pyarmor-7 pack -e "--noconfirm --onefile --windowed --icon \"icon.ico\" --version-file \"scripts\\secure\\version.py\" --add-data \"scripts;scripts/\" --add-data \"config;config/\"" TheMurk.py

