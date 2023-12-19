@@ -12,7 +12,7 @@
 
 from shutil import make_archive,rmtree
 from requests import post, get
-from os import getenv,sep,chdir,remove,rmdir
+from os import getenv,chdir,remove
 from manager.logger import Log
 from random import randint
 from pyzipper import AESZipFile,ZIP_STORED,WZ_AES
