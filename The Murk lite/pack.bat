@@ -2,6 +2,6 @@ pyinstaller --noconfirm --onefile --windowed --icon "preferences/icon.ico" --nam
 
 rmdir /s /q __pycache__
 rmdir /s /q build
-rm TheMurk.spec
+del TheMurk.spec
 :cmd
 pause null
