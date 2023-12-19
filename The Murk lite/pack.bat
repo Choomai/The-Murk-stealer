@@ -1,1 +1,7 @@
-pyinstaller --noconfirm --onefile --windowed --icon "D:/dev/Python/git hub/The-Murk-stealer/The Murk lite/preferences/icon.ico" --name "TheMurk" --upx-dir "D:/dev/Python/git hub/The-Murk-stealer/upx-4.2.1-win64" --version-file "D:/dev/Python/git hub/The-Murk-stealer/The Murk lite/preferences/version.py" --add-data "D:/dev/Python/git hub/The-Murk-stealer/The Murk lite/manager;manager/" --add-data "D:/dev/Python/git hub/The-Murk-stealer/The Murk lite/preferences;preferences/" --add-data "D:/dev/Python/git hub/The-Murk-stealer/The Murk lite/targets;targets/" --add-data "D:/dev/Python/git hub/The-Murk-stealer/The Murk lite/progress.py;."  "D:/dev/Python/git hub/The-Murk-stealer/The Murk lite/The_Murk.py"
+pyinstaller --noconfirm --onefile --windowed --icon "preferences/icon.ico" --name "TheMurk" --upx-dir "../upx-4.2.1-win64" --version-file "preferences/version.py" --add-data "manager;manager/" --add-data "preferences;preferences/" --add-data "targets;targets/" --add-data "progress.py;."  "The_Murk.py"
+
+rmdir /s /q __pycache__
+rmdir /s /q build
+rm TheMurk.spec
+:cmd
+pause null
