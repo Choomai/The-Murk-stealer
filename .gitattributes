@@ -1,0 +1,12 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+*.cs linguist-language=csharp
+*.cpp linguist-language=C++
+*.js linguist-language=JavaScript
+*.h linguist-language=C
+*.c linguist-language=C
+*.rc linguist-language=Assembly
+*.py linguist-language=Python
+*.bat linguist-language=Batchfile
+
+upx-4.2.1-win64/*		linguist-vendored
