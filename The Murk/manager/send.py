@@ -112,9 +112,17 @@ def Send(sendData, msgInfo):
 		message = MsgForDiscord(message, url)
 		message+="\n\n\n**The Murk|by Nick Vinesmoke**"
 		message+="\n@everyone"
-		response = post(sendData[1], data=dumps({"content": message}), headers={'Content-Type': 'application/json'})
+		try:
+			response = post(sendData[1], data=dumps({"content": message}), headers={'Content-Type': 'application/json'})
+		except Exception as e:
+			Log(f"Send(post) ---> {e}")
+			response = e
 		Log(f"Send(response) ---> {response}")
 	if sendData[0] == 1:
 		message+="\n\n\n<b>The Murk|by Nick Vinesmoke</b>"
-		response = post(f'https://api.telegram.org/bot{sendData[1]}/sendMessage', data={"chat_id": int(sendData[2]), "text": message, "parse_mode": "HTML", "disable_web_page_preview": True})
+		try:
+			response = post(f'https://api.telegram.org/bot{sendData[1]}/sendMessage', data={"chat_id": int(sendData[2]), "text": message, "parse_mode": "HTML", "disable_web_page_preview": True})
+		except Exception as e:
+			Log(f"Send(post) ---> {e}")
+			response = e
 		Log(f"Send(response) ---> {response}")
