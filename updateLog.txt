@@ -14,6 +14,7 @@ v9.3.0
 ◦ improved detection protection
 ◦ improved tamper resistance
 ◦ and a lot of small changes and fixes
+◦ changed builder
 --------------------------------------
 09.04.2023
 v9.2.7
