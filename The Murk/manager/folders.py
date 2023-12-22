@@ -9,9 +9,8 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
-"""
-All imports
-"""
+
+
 from os import environ, sep, makedirs
 from win32con import FILE_ATTRIBUTE_HIDDEN
 from win32api import SetFileAttributes

