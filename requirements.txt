@@ -8,3 +8,4 @@ pywin32==306
 pyzipper==0.3.6
 Requests==2.31.0
 WMI==1.5.1
+Nuitka
