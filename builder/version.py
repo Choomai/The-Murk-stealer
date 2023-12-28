@@ -33,13 +33,13 @@ VSVersionInfo(
         StringStruct('LegalCopyright', 'Nick Vinesmoke'),
         StringStruct('CompanyName', ''),
         StringStruct('FileDescription', 'Builder for The Murk'),
-        StringStruct('FileVersion', '9.3.0.0'),
-        StringStruct('ProductVersion', '9.3.0.0'),
+        StringStruct('FileVersion', '9.3.1.0'),
+        StringStruct('ProductVersion', '9.3.1.0'),
         StringStruct('InternalName', 'TheMurkBuilder.exe'),
         StringStruct('LegalTrademarks', ''),
         StringStruct('OriginalFilename', 'TheMurkBuilder.exe'),
         StringStruct('ProductName', 'TheMurk'),
-        StringStruct('BuildID', '12222301')])
+        StringStruct('BuildID', '122820232119')])
       ]), 
     VarFileInfo([VarStruct('Translation', [0, 1200])])
   ]

