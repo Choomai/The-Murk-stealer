@@ -76,9 +76,12 @@ class Builder():
             self.oneStart = input("\033[33m\033[1m{}\033[0m".format(">>> "))
         
         self.startId = -1
-        while self.startId < 0 and self.oneStart == "Y" or self.oneStart == "y":
+        while self.startId < 0 and (self.oneStart == "Y" or self.oneStart == "y"):
             print("\033[36m\033[4m{}\033[0m".format("(?) unique id for oneStart, \"0\" for default(only numbers)"))
-            self.startId = int(input("\033[33m\033[1m{}\033[0m".format(">>> ")))
+            try:
+                self.startId = int(input("\033[33m\033[1m{}\033[0m".format(">>> ")))
+            except:
+                pass
 
         self.avBypass = ""
         while self.avBypass != "Y" and self.avBypass != "N" and self.avBypass != "n" and self.avBypass != "y":
