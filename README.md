@@ -4,7 +4,7 @@
 <img src="https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white">
 <img src="https://img.shields.io/badge/tests-100/100-76B900?style=for-the-badge&logo=&logoColor=whit">
 <img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge&logo=&logoColor=whit">
-<img src="https://img.shields.io/badge/The%20Murk-v9.3.0-blue?style=for-the-badge&logo=&logoColor=whit">
+<img src="https://img.shields.io/badge/The%20Murk-v9.3.1-blue?style=for-the-badge&logo=&logoColor=whit">
 <img src="https://img.shields.io/badge/platform-windows-989898?style=for-the-badge&logo=&logoColor=whit">
 
 
@@ -172,6 +172,10 @@ Foremost, download the source code. Then go to `The Murk\preferences` dir and op
 > * `oneStart`
 > 
 > If you set this var as `True`, the application will be able to run only once on the same pc
+> 
+> * `id`
+> 
+> write here any integer, this var'll be used to check oneStart
 >
 > * `avbypass`
 > 
@@ -184,6 +188,10 @@ Foremost, download the source code. Then go to `The Murk\preferences` dir and op
 > * `debuging`
 > 
 > disables AntiDebug (don't change if you don't know what it is responsible for)
+>
+> * `pathToLogs`
+> 
+>the path that will be stored logs before sending, the path from user dir. Should start with `\\` and `\\` should be between dirs names
 
 Now let's figure out how to fill out the fields of `sendData`.
 
