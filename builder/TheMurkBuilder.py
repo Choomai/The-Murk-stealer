@@ -165,8 +165,8 @@ class Builder():
 
         shutil.rmtree(path, ignore_errors=True)
         try:
-            os.remove("/build")
-            os.remove("TheMurk.spec")
+            os.system("rmdir /s /q build")
+            os.system("del TheMurk.spec")
         except:
             print("\033[31m{}\033[0m".format("(!) failed to remove cache"))
         try:
