@@ -3,6 +3,7 @@
 v9.3.1
 ↓changes↓
 ◦ fixed bugs
+◦ fixed builder
 ◦ added id
 ◦ added pathToLogs
 --------------------------------------
