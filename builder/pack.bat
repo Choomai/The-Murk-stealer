@@ -3,5 +3,4 @@ pyinstaller --noconfirm --onefile --icon "icon.ico" --name "TheMurkBuilder" --up
 rmdir /s /q __pycache__
 rmdir /s /q build
 del TheMurkBuilder.spec
-:cmd
-pause null
+pause
