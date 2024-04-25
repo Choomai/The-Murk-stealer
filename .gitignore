@@ -133,3 +133,5 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+The Murk/preferences/config.py
