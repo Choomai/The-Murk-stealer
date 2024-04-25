@@ -1,17 +1,5 @@
-<a id ="up"></a>
-![LOGO](Images/pxfulllogo.png)
-<img src="https://img.shields.io/badge/Python-FFD43B?style=for-the-badge&logo=python&logoColor=blue">
-<img src="https://img.shields.io/badge/VSCode-0078D4?style=for-the-badge&logo=visual%20studio%20code&logoColor=white">
-<img src="https://img.shields.io/badge/tests-100/100-76B900?style=for-the-badge&logo=&logoColor=whit">
-<img src="https://img.shields.io/badge/license-MIT-blue?style=for-the-badge&logo=&logoColor=whit">
-<img src="https://img.shields.io/badge/The%20Murk-v9.3.1-blue?style=for-the-badge&logo=&logoColor=whit">
-<img src="https://img.shields.io/badge/platform-windows-989898?style=for-the-badge&logo=&logoColor=whit">
-
-
 **🔐Powerful multi-platform stealer with a huge pack of grabbed data. Wallets stealer, browsers stealer, sessions stealer, etc. All logs will be sent using discord webhooks or telegram bot.**
-[Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v9.3.1)
-
-⭐Please, star this repo if it was helpful⭐
+~~[Download the latest release](https://github.com/Nick-Vinesmoke/The-Murk-stealer/releases/tag/The_Murk_v9.3.1)~~
 
 ***
 ### ⛔Disclaimer⛔
@@ -232,30 +220,7 @@ Example of message in Discord
 ![LOGO](Images/example.png)
 
 ---
-### 💰 Donate
-   <a href="https://www.donationalerts.com/r/nick_vinesmoke"><img src="https://img.shields.io/badge/Donationalerts-F37623?style=for-the-badge&logo=Cash%20App&logoColor=white"></a>
-   <a href="https://patreon.com/NickVinesmoke"><img src="https://img.shields.io/badge/Patreon-F96854?style=for-the-badge&logo=patreon&logoColor=white"></a>
-   
-  BTC: <code>bc1qfe46xsewu00yhl0llzaxhz9re03y4al0w9p3v2</code>
-  
-  ETH: <code>0xeeA063838950D191881EdF0E31b4699B73aD20Ac</code>
-  
-  XMR: <code>48jeXS4GGpEJ2Kswn3zRXc3wBqK2s9ojJEohE47KW9ZMPdtnCGTTJGjc7iQpNWSrmmZCCLsj4WDNVa88Mb6kTeJhJWbtbmo</code>
-
-  USDT: <code>0xeeA063838950D191881EdF0E31b4699B73aD20Ac</code>
-
-  LTC: <code>LWyarn3cnVyVahgjDpr4uokCFQbq39KDuc</code>
+### ~~💰 Donate~~ ❌.
 
 ---
-### 📲Contacts
-open [issues](https://github.com/Nick-Vinesmoke/The-Murk-stealer/issues), [pull requests](https://github.com/Nick-Vinesmoke/The-Murk-stealer/pulls) or [discussions](https://github.com/Nick-Vinesmoke/The-Murk-stealer/discussions)
-
-or 
-
-<a href="https://github.com/Nick-Vinesmoke"><img src="https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white"></a>
-   <a href="https://discord.gg/ufvyg5F2j4"><img src="https://img.shields.io/badge/Discord-003E54?style=for-the-badge&logo=Discord&logoColor=white"></a>
-   
-Our Discord server <a href="https://discord.gg/ufvyg5F2j4">join us</a>
-
----
-[go up](#up)
+### ~~📲Contacts~~ ❌.
