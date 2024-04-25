@@ -151,7 +151,7 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
 ### 🔨Building(manually)
 **Configuring**
 
-Foremost, download the source code. Then go to `The Murk\preferences` dir and open `config.py` in any text editor. There you'll see some vars, here is an explanation of them:
+Foremost, download the source code. Then go to `The Murk\preferences` dir and rename `defaultConfig.py` to `config.py` and open it in any text editor. There you'll see some vars, here is an explanation of them:
 
 > * `enableFileGrabber`
 > 
