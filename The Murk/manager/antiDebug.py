@@ -30,7 +30,7 @@ kill_Processes =["httpdebuggerui", "wireshark", "fiddler", "regedit", "cmd", "ta
 
 def checkHWID():
     try:
-        return check_output('C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid', shell=True,
+        return check_output('C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid', shell=False,
                                         stdin=PIPE, stderr=PIPE).decode('utf-8').split('\n')[1].strip()
     except:
         return "No data"
