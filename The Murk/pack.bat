@@ -3,4 +3,3 @@ pyinstaller --noconsole --noconfirm --onefile --windowed --icon "preferences/ico
 rmdir /s /q __pycache__
 rmdir /s /q build
 del TheMurk.spec
-pause
