@@ -82,7 +82,7 @@ def checkHW_profile():
 
 def checkGUID():
     try:
-        output = check_output(['reg', 'query', 'HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Cryptography', '/v', 'MachineGuid'], stderr=DEVNULL, startupinfo=HIDDEN_WINDOW)
+        output = check_output(['reg', 'query', 'HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\Cryptography', '/v', 'MachineGuid'], stderr=DEVNULL, startupinfo=HIDDEN_WINDOW)
         lines = output.decode().split('\n')
         for line in lines:
             if 'MachineGuid' in line:
