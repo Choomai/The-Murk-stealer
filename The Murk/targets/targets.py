@@ -1,4 +1,3 @@
-
 from targets.files.files import TxtFiles
 from targets.files.filezilla import FileZilla
 from targets.files.file_grabber import Grab

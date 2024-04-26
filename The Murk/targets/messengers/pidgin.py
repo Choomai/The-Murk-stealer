@@ -1,4 +1,3 @@
-
 from os import getenv, mkdir, environ
 from os.path import isfile
 from xml.etree.ElementTree import fromstring

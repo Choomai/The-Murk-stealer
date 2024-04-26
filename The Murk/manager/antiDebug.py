@@ -1,10 +1,9 @@
 from os import _exit, environ, sep, getenv
 from os.path import exists
-from subprocess import check_output, PIPE
+from subprocess import check_output, PIPE, DEVNULL, STARTUPINFO, STARTF_USESHOWWINDOW
 from psutil import process_iter
 from uuid import UUID, getnode
 from wmi import WMI
-from subprocess import check_output, DEVNULL, STARTUPINFO, STARTF_USESHOWWINDOW
 from requests import get
 from platform import system
 from json import loads

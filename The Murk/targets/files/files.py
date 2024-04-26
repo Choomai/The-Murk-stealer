@@ -1,4 +1,3 @@
-
 from os import environ, walk, makedirs
 from os.path import join
 from shutil import copy2

@@ -1,4 +1,3 @@
-
 from PIL import ImageGrab
 from os import environ, makedirs
 from manager.logger import Log

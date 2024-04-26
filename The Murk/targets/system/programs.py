@@ -1,4 +1,3 @@
-
 from os import environ,listdir
 from manager.logger import Log
 from preferences.config import config

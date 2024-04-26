@@ -1,4 +1,3 @@
-
 from json import loads
 from os import getenv,makedirs,environ
 from manager.logger import Log

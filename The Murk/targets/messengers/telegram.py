@@ -1,4 +1,3 @@
-
 from os import getenv,environ
 from shutil import copytree,ignore_patterns
 from manager.logger import Log

@@ -1,4 +1,3 @@
-
 from os import sep,environ,makedirs,path
 from shutil import copytree, copy2
 from manager.logger import Log

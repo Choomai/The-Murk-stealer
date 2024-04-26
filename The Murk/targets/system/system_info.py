@@ -2,11 +2,11 @@ from psutil import virtual_memory,disk_partitions,disk_usage,cpu_count,cpu_freq
 from GPUtil import getGPUs
 from socket import gethostbyname, gethostname
 from platform import uname,processor
-from os import getlogin, makedirs, sep, environ
+from os import getlogin, makedirs, environ
 from os.path import exists
 from time import asctime
 from requests import get
-from subprocess import check_output, PIPE, run, STARTUPINFO, STARTF_USESHOWWINDOW
+from subprocess import check_output, PIPE, STARTUPINFO, STARTF_USESHOWWINDOW
 from wmi import WMI
 from winreg import OpenKey, HKEY_LOCAL_MACHINE, QueryValueEx
 from json import loads
@@ -187,7 +187,7 @@ Internal IP: {internal_ip}
     if manufacturer:
         info += f"\nBaseBoard Manufacturer: {manufacturer}"
     try:
-        cpu = run(["wmic", "cpu", "get", "Name"], capture_output=True, text=True, startupinfo=HIDDEN_WINDOW).stdout.strip().split('\n')[2]
+        cpu = check_output(["wmic", "cpu", "get", "Name"], shell=True, stdin=PIPE, stderr=PIPE, startupinfo=HIDDEN_WINDOW).strip().split('\n')[2]
     except:
         cpu = processor()
 

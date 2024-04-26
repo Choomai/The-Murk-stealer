@@ -1,4 +1,3 @@
-
 from win32clipboard import OpenClipboard, GetClipboardData, CloseClipboard
 from os import environ
 from manager.logger import Log

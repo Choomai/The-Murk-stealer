@@ -1,4 +1,3 @@
-
 from os import sep,environ,makedirs,path,listdir
 from shutil import copy2,copytree
 from re import findall

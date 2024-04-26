@@ -1,4 +1,3 @@
-
 from os import sep,listdir,makedirs,getenv,environ
 from shutil import copy2
 from manager.logger import Log

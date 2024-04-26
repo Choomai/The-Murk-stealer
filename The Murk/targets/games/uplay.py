@@ -1,4 +1,3 @@
-
 from os import sep,environ
 from shutil import copytree
 from manager.logger import Log

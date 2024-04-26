@@ -1,4 +1,3 @@
-
 from os import getenv, mkdir, environ
 from os.path import exists
 from winreg import QueryValue,HKEY_CURRENT_USER,OpenKey
