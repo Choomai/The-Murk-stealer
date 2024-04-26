@@ -1,3 +1,8 @@
+2024/04/26
+v9.3.2
+↓changes↓
+◦ Fixed some issue with cookies value not decrypted
+◦ Removed builder for some reason
 --------------------------------------
 12/29/2023
 v9.3.1
