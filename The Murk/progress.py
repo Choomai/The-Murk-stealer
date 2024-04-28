@@ -1,4 +1,3 @@
-
 from targets.targets import *
 from manager.manager import *
 from preferences.config import config
