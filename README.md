@@ -191,22 +191,6 @@ You can comment out any function you don't need in `progress.py`
 Install required packages and run `pack.bat`. The executable will be in `dist`. I recommended using a virtual enviorment instead of just install and pack it directly.
 
 ---
-### ❌Builder errors
-
-If you have error like this:
-
-![error](Images/error.png)
-
-How to solve it read [here](https://www.stechies.com/pip-not-recognized-internal-external-command/)
-
-If you have error like this:
-
-![error](Images/error1.png)
-
-Uninstall [typing](https://pypi.org/project/typing/) package.
-
-
----
 ### 🧾Results(logs)
 Example of message in Discord
 
