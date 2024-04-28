@@ -217,7 +217,7 @@ def GeckoDriver():
 
     browsers = {
         "firefox": appdata + "\\Mozilla\\Firefox\\Profiles",
-        "waterfox": appdata + "\\Waterfox\Profiles",
+        "waterfox": appdata + "\\Waterfox\\Profiles",
         "palemoon": appdata + "\\Moonchild Productions\\Pale Moon\\Profiles"
     }
 

