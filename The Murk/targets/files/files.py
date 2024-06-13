@@ -24,9 +24,9 @@ def TxtFiles():
     documents = fr"{user}/Documents"
 
     try:
-        makedirs(f'{destination_folder}\\Desktop')
-        makedirs(f'{destination_folder}\\Downloads')
-        makedirs(f'{destination_folder}\\Documents')
+        makedirs(f'{destination_folder}\\Desktop', exist_ok=True)
+        makedirs(f'{destination_folder}\\Downloads', exist_ok=True)
+        makedirs(f'{destination_folder}\\Documents', exist_ok=True)
     except Exception as error:
         Log(error)
 

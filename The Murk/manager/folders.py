@@ -7,7 +7,7 @@ from preferences.config import config
 def Folders():
     user = environ['USERPROFILE']
     try:
-        makedirs(f'{user}\\{config.pathToLogs}')
+        makedirs(f'{user}\\{config.pathToLogs}', exist_ok=True)
         SetFileAttributes(f'{user}\\{config.pathToLogs}', FILE_ATTRIBUTE_HIDDEN)
     except:
         pass
