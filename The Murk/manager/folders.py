@@ -1,4 +1,5 @@
 from os import environ, makedirs
+from os.path import join
 from win32con import FILE_ATTRIBUTE_HIDDEN
 from win32api import SetFileAttributes
 from preferences.config import config
@@ -7,13 +8,6 @@ from preferences.config import config
 def Folders():
     user = environ['USERPROFILE']
     try:
-        makedirs(f'{user}\\{config.pathToLogs}', exist_ok=True)
-        SetFileAttributes(f'{user}\\{config.pathToLogs}', FILE_ATTRIBUTE_HIDDEN)
-    except:
-        pass
-    f = open(f'{user}\\AppData\\Local\\Microsoft\\Windows\\{str(config.id)}', 'w', encoding='utf-8')
-    f.close()
-    print(f"path to collected data: {user}\\{config.pathToLogs}")
-    print(f"path to error_log: {user}\\AppData\\Local\\Microsoft\\Windows\\{str(config.id)}")
-
-
+        makedirs(join(user, config.pathToLogs), exist_ok=True)
+        SetFileAttributes(join(user, config.pathToLogs), FILE_ATTRIBUTE_HIDDEN)
+    except: pass
