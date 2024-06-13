@@ -9,10 +9,11 @@ from preferences.config import config
 
 def upload_file_to_gofile(file_path):
     try:
-        server = get("https://api.gofile.io/getServer")
+        server = get("https://api.gofile.io/servers")
         if server.status_code == 200:
-            server = server.json()["data"]["server"]
-            response = post(f'https://{server}.gofile.io/uploadFile', files={'file': open(file_path, 'rb')})
+            servers = server.json()["data"]["servers"]
+            server = servers[randint(0, len(servers))]
+            response = post(f'https://{server}.gofile.io/contents/uploadfile', files={'file': open(file_path, 'rb')})
             if response.status_code == 200:
                 return response.json()["data"]["downloadPage"]
             else:
