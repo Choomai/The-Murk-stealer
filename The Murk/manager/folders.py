@@ -5,7 +5,7 @@ from win32api import SetFileAttributes
 from preferences.config import config
 
 
-def Folders():
+def Folders() -> None:
     user = environ['USERPROFILE']
     try:
         makedirs(join(user, config.pathToLogs), exist_ok=True)

