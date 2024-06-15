@@ -9,3 +9,4 @@ pyzipper==0.3.*
 Requests==2.31.*
 WMI==1.5.*
 pyinstaller==6.3.*
+shadowcopy
