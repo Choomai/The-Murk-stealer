@@ -41,7 +41,7 @@ class TheMurk:
     
     def Browsers(self):
         self.msgInfo[1] += Chromium()
-        self.msgInfo[1] += GeckoDriver()
+        # self.msgInfo[1] += GeckoDriver()
 
 
     def Games(self):

