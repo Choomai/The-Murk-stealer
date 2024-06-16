@@ -1,4 +1,4 @@
-from os import sep,environ,makedirs,path,listdir
+from os import environ,makedirs,path,listdir
 from shutil import copy2,copytree
 from re import findall
 from manager.logger import Log
