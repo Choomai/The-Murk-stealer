@@ -4,8 +4,7 @@ from manager.logger import Log
 from preferences.config import config
 
 def BattleNet():
-    user = environ['USERPROFILE']
-    pathtofile = f'{user}\\{config.pathToLogs}'
+    pathtofile = config.pathToLogs
     local = environ['USERPROFILE'] + sep + r'AppData\Local'
     msgInfo = ""
     if path.exists(f"{local}\\Battle.net\\Account"):

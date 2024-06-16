@@ -34,8 +34,7 @@ def VPN():
     
     if logs:
             try:
-                user = environ['USERPROFILE']
-                pathToLogs = f'{user}\\{config.pathToLogs}\\VPN'
+                pathToLogs = f'{config.pathToLogs}\\VPN'
                 mkdir(pathToLogs)
                 for key, value in logs.items():
                     mkdir(f'{pathToLogs}\\'+key+'\\')

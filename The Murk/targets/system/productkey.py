@@ -4,8 +4,7 @@ from manager.logger import Log
 from preferences.config import config
 
 def ProductKey():
-    user = environ['USERPROFILE']
-    pathToLogs = f'{user}\\{config.pathToLogs}\\System\\productkey.txt'
+    pathToLogs = f'{config.pathToLogs}\\System\\productkey.txt'
     try:
         startupinfo = STARTUPINFO()
         startupinfo.dwFlags |= STARTF_USESHOWWINDOW

