@@ -53,3 +53,5 @@ venv.bak/
 **/*.code-workspace
 
 The Murk/preferences/config.py
+
+workbench.*
