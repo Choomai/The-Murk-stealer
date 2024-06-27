@@ -3,13 +3,12 @@
 
 from subprocess import STARTUPINFO, STARTF_USESHOWWINDOW, run
 from re import findall, search
-from os import environ
+from os.path import join
 from preferences.config import config
 from manager.logger import Log
 
 def Wifi():
-    user = environ['USERPROFILE']
-    pathToLogs = f'{config.pathToLogs}\\System'
+    pathToLogs = join(config.pathToLogs, "System")
     logs = []
     startupinfo = STARTUPINFO()
     startupinfo.dwFlags |= STARTF_USESHOWWINDOW

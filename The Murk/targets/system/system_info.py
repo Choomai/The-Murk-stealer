@@ -19,7 +19,7 @@ HIDDEN_WINDOW.dwFlags |= STARTF_USESHOWWINDOW
 
 def get_machine_guid():
     try:
-        registry_key = OpenKey(HKEY_LOCAL_MACHINE, r"SOFTWARE\Microsoft\Cryptography")
+        registry_key = OpenKey(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Cryptography")
         value, _ = QueryValueEx(registry_key, "MachineGuid")
         return value.strip()
     except Exception as e:
@@ -82,7 +82,7 @@ drive space available: {get_size(mount.free)}
 drive space used: {get_size(mount.used)}
 """
     try:
-        hwid = check_output('C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid', shell=True, stdin=PIPE, stderr=PIPE, startupinfo=HIDDEN_WINDOW).decode('utf-8').split('\n')[1].strip()
+        hwid = check_output("C:\\Windows\\System32\\wbem\\WMIC.exe csproduct get uuid", shell=True, stdin=PIPE, stderr=PIPE, startupinfo=HIDDEN_WINDOW).decode('utf-8').split('\n')[1].strip()
     except:
         Log(f"hwid ---> can't get")
         hwid = "Can't get"  
