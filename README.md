@@ -68,14 +68,10 @@ Example of message in Discord
 ### ❕❕ Data grubed
 * ✅System info
     * ❗Main
-      * ⏲Time
-      * ⌚Timezone
-      * 🏙City
-      * 🏙Region
-      * 🗺Country
+      * 🕘Time & Timezone
+      * 🏙City / Region & 🗺Country
       * 👤Username
       * 🖥PC Name
-      * 💻OS
       * 💻OS Version
       * ⚙Architecture
       * 🔧HWID
@@ -90,25 +86,9 @@ Example of message in Discord
         * 🏬Organization
         * 📯Postal
     * 🔩CPU
-        * 📜CPU model
-        * 📜Cores
-        * 📜CPU frequency
     * 🎥GPU
-        * 🔩GPU model
-        * 💾All memory in the GPU
-        * 💾Free memory in the GPU
-        * 💾Used memory in the GPU
-        * 📜GPU temperature
     * 💽RAM
-        * 💾All RAM
-        * 💾Available
-        * 💾Used
     * 💽DRIVES
-        * 📜volumes
-        * 💾All Memory
-        * 💾Available
-        * 💾Used
-        * 📜File system type
     * 🧮OTHER 
       * 🧪Antiviruses
       * 📠Processes
@@ -117,26 +97,18 @@ Example of message in Discord
       * 🔑Product key
       * 📡Wifi
       * 🗂FileZilla
-* 📁Files .txt, .docx, etc
-    * 📝in Desktop
-    * 📝in Documents
-    * 📝in Downloads
+* 📁Files .txt, .docx, etc in Desktop, Documents, Downloads
 * 🪁Messagers
    * 📢Telegram sessions
    * 📢Viber sessions
    * 📢Pidgin sessions
    * 📢Discord sessions + token-grabber
-   * 📢Skype sessions
-   * 📢WhatsApp sessions
-   * 📢And more
 * ⚔Game
-   * ♠Steam
-   * ♠Epic Games
-   * ♠Uplay
-   * ♠Roblox
-   * ♠Minecraft
-   * ♠BattleNET
-   * ♠And more
+   * Steam
+   * Epic Games
+   * Uplay
+   * battle.net
+   * Minecraft
 * 💳Wallets
    * 💵PayPal
    * 💵Kivi
