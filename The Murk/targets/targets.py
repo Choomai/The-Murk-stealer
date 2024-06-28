@@ -19,4 +19,4 @@ from targets.system.productkey import ProductKey
 # from targets.system.programs import Programs
 # from targets.system.photos import Screenshot
 from targets.wallets import Wallets
-from targets.vpn.vpn import VPN
+from targets.vpn import VPN
