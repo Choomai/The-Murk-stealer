@@ -18,5 +18,5 @@ from targets.system.productkey import ProductKey
 # from targets.system.wifi import Wifi
 # from targets.system.programs import Programs
 # from targets.system.photos import Screenshot
-from targets.wallets.wallets import Wallets
+from targets.wallets import Wallets
 from targets.vpn.vpn import VPN
