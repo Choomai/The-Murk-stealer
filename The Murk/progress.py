@@ -6,8 +6,6 @@ from sys import exit,argv
 from win32com.client import Dispatch
 from os.path import abspath
 
-
-
 class TheMurk:
     def __init__(self) -> None:
         self.msgInfo = ["",""]

