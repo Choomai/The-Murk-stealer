@@ -119,7 +119,7 @@ def decrypt_password(buff: bytes, master_key: bytes):
     payload = buff[15:]
     cipher = AES.new(master_key, AES.MODE_GCM, iv)
     decrypted_pass = cipher.decrypt(payload)
-    decrypted_pass = decrypted_pass[:-16].decode()  
+    decrypted_pass = decrypted_pass[:-16].decode(errors="replace")  
     return decrypted_pass
 
 
