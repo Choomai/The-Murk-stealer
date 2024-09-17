@@ -3,7 +3,7 @@ GPUtil==1.4.*
 Pillow==10.1.*
 psutil==5.9.*
 pyasn1==0.5.*
-pycryptodome==3.19.*
+pycryptodome==3.*
 pywin32==306
 pyzipper==0.3.*
 Requests==2.31.*

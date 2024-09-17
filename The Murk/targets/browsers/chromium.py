@@ -115,12 +115,13 @@ def get_master_key(path: str) -> bytes:
         
 
 def decrypt_password(buff: bytes, master_key: bytes) -> str:
+    if buff[:3] != bytes.fromhex("71 31 30"): raise Exception("Not V10 encryption")
     iv = buff[3:15]
-    payload = buff[15:]
+    payload = buff[15:-16]
+    tag = buff[-16:]
     cipher = AES.new(master_key, AES.MODE_GCM, iv)
-    decrypted_pass = cipher.decrypt(payload)
-    decrypted_pass = decrypted_pass[:-16].decode("utf-8")  
-    return decrypted_pass
+    decrypted_pass = cipher.decrypt_and_verify(payload, tag)
+    return decrypted_pass.decode("utf-8")
 
 
 def get_login_data(path, master_key, blink = False):
