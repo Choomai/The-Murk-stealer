@@ -10,3 +10,4 @@ Requests==2.31.*
 WMI==1.5.*
 pyinstaller==6.3.*
 shadowcopy
+pypsexec==0.3.*

